@@ -1,0 +1,638 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		8AFCA4322A83FA4B00D4B6C8 /* Pientere_TuinApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AFCA4312A83FA4B00D4B6C8 /* Pientere_TuinApp.swift */; };
+		8AFCA4342A83FA4B00D4B6C8 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AFCA4332A83FA4B00D4B6C8 /* Persistence.swift */; };
+		8AFCA4372A83FA4B00D4B6C8 /* Pientere_Tuin.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 8AFCA4352A83FA4B00D4B6C8 /* Pientere_Tuin.xcdatamodeld */; };
+		8AFCA4392A83FA4B00D4B6C8 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AFCA4382A83FA4B00D4B6C8 /* ContentView.swift */; };
+		8AFCA43B2A83FA4C00D4B6C8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8AFCA43A2A83FA4C00D4B6C8 /* Assets.xcassets */; };
+		8AFCA43F2A83FA4C00D4B6C8 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8AFCA43E2A83FA4C00D4B6C8 /* Preview Assets.xcassets */; };
+		8AFCA4492A83FA4C00D4B6C8 /* Pientere_TuinTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AFCA4482A83FA4C00D4B6C8 /* Pientere_TuinTests.swift */; };
+		8AFCA4532A83FA4C00D4B6C8 /* Pientere_TuinUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AFCA4522A83FA4C00D4B6C8 /* Pientere_TuinUITests.swift */; };
+		8AFCA4552A83FA4C00D4B6C8 /* Pientere_TuinUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AFCA4542A83FA4C00D4B6C8 /* Pientere_TuinUITestsLaunchTests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		8AFCA4452A83FA4C00D4B6C8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8AFCA4262A83FA4B00D4B6C8 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 8AFCA42D2A83FA4B00D4B6C8;
+			remoteInfo = "Pientere Tuin";
+		};
+		8AFCA44F2A83FA4C00D4B6C8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8AFCA4262A83FA4B00D4B6C8 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 8AFCA42D2A83FA4B00D4B6C8;
+			remoteInfo = "Pientere Tuin";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		8AFCA42E2A83FA4B00D4B6C8 /* Pientere Tuin.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Pientere Tuin.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		8AFCA4312A83FA4B00D4B6C8 /* Pientere_TuinApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pientere_TuinApp.swift; sourceTree = "<group>"; };
+		8AFCA4332A83FA4B00D4B6C8 /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
+		8AFCA4362A83FA4B00D4B6C8 /* Pientere_Tuin.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Pientere_Tuin.xcdatamodel; sourceTree = "<group>"; };
+		8AFCA4382A83FA4B00D4B6C8 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		8AFCA43A2A83FA4C00D4B6C8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		8AFCA43C2A83FA4C00D4B6C8 /* Pientere_Tuin.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Pientere_Tuin.entitlements; sourceTree = "<group>"; };
+		8AFCA43E2A83FA4C00D4B6C8 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		8AFCA4442A83FA4C00D4B6C8 /* Pientere TuinTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Pientere TuinTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		8AFCA4482A83FA4C00D4B6C8 /* Pientere_TuinTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pientere_TuinTests.swift; sourceTree = "<group>"; };
+		8AFCA44E2A83FA4C00D4B6C8 /* Pientere TuinUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Pientere TuinUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		8AFCA4522A83FA4C00D4B6C8 /* Pientere_TuinUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pientere_TuinUITests.swift; sourceTree = "<group>"; };
+		8AFCA4542A83FA4C00D4B6C8 /* Pientere_TuinUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pientere_TuinUITestsLaunchTests.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		8AFCA42B2A83FA4B00D4B6C8 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8AFCA4412A83FA4C00D4B6C8 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8AFCA44B2A83FA4C00D4B6C8 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		8AFCA4252A83FA4B00D4B6C8 = {
+			isa = PBXGroup;
+			children = (
+				8AFCA4302A83FA4B00D4B6C8 /* Pientere Tuin */,
+				8AFCA4472A83FA4C00D4B6C8 /* Pientere TuinTests */,
+				8AFCA4512A83FA4C00D4B6C8 /* Pientere TuinUITests */,
+				8AFCA42F2A83FA4B00D4B6C8 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		8AFCA42F2A83FA4B00D4B6C8 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				8AFCA42E2A83FA4B00D4B6C8 /* Pientere Tuin.app */,
+				8AFCA4442A83FA4C00D4B6C8 /* Pientere TuinTests.xctest */,
+				8AFCA44E2A83FA4C00D4B6C8 /* Pientere TuinUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		8AFCA4302A83FA4B00D4B6C8 /* Pientere Tuin */ = {
+			isa = PBXGroup;
+			children = (
+				8AFCA4312A83FA4B00D4B6C8 /* Pientere_TuinApp.swift */,
+				8AFCA4332A83FA4B00D4B6C8 /* Persistence.swift */,
+				8AFCA4382A83FA4B00D4B6C8 /* ContentView.swift */,
+				8AFCA43A2A83FA4C00D4B6C8 /* Assets.xcassets */,
+				8AFCA43C2A83FA4C00D4B6C8 /* Pientere_Tuin.entitlements */,
+				8AFCA4352A83FA4B00D4B6C8 /* Pientere_Tuin.xcdatamodeld */,
+				8AFCA43D2A83FA4C00D4B6C8 /* Preview Content */,
+			);
+			path = "Pientere Tuin";
+			sourceTree = "<group>";
+		};
+		8AFCA43D2A83FA4C00D4B6C8 /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				8AFCA43E2A83FA4C00D4B6C8 /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		8AFCA4472A83FA4C00D4B6C8 /* Pientere TuinTests */ = {
+			isa = PBXGroup;
+			children = (
+				8AFCA4482A83FA4C00D4B6C8 /* Pientere_TuinTests.swift */,
+			);
+			path = "Pientere TuinTests";
+			sourceTree = "<group>";
+		};
+		8AFCA4512A83FA4C00D4B6C8 /* Pientere TuinUITests */ = {
+			isa = PBXGroup;
+			children = (
+				8AFCA4522A83FA4C00D4B6C8 /* Pientere_TuinUITests.swift */,
+				8AFCA4542A83FA4C00D4B6C8 /* Pientere_TuinUITestsLaunchTests.swift */,
+			);
+			path = "Pientere TuinUITests";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		8AFCA42D2A83FA4B00D4B6C8 /* Pientere Tuin */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 8AFCA4582A83FA4C00D4B6C8 /* Build configuration list for PBXNativeTarget "Pientere Tuin" */;
+			buildPhases = (
+				8AFCA42A2A83FA4B00D4B6C8 /* Sources */,
+				8AFCA42B2A83FA4B00D4B6C8 /* Frameworks */,
+				8AFCA42C2A83FA4B00D4B6C8 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Pientere Tuin";
+			productName = "Pientere Tuin";
+			productReference = 8AFCA42E2A83FA4B00D4B6C8 /* Pientere Tuin.app */;
+			productType = "com.apple.product-type.application";
+		};
+		8AFCA4432A83FA4C00D4B6C8 /* Pientere TuinTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 8AFCA45B2A83FA4C00D4B6C8 /* Build configuration list for PBXNativeTarget "Pientere TuinTests" */;
+			buildPhases = (
+				8AFCA4402A83FA4C00D4B6C8 /* Sources */,
+				8AFCA4412A83FA4C00D4B6C8 /* Frameworks */,
+				8AFCA4422A83FA4C00D4B6C8 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				8AFCA4462A83FA4C00D4B6C8 /* PBXTargetDependency */,
+			);
+			name = "Pientere TuinTests";
+			productName = "Pientere TuinTests";
+			productReference = 8AFCA4442A83FA4C00D4B6C8 /* Pientere TuinTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		8AFCA44D2A83FA4C00D4B6C8 /* Pientere TuinUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 8AFCA45E2A83FA4C00D4B6C8 /* Build configuration list for PBXNativeTarget "Pientere TuinUITests" */;
+			buildPhases = (
+				8AFCA44A2A83FA4C00D4B6C8 /* Sources */,
+				8AFCA44B2A83FA4C00D4B6C8 /* Frameworks */,
+				8AFCA44C2A83FA4C00D4B6C8 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				8AFCA4502A83FA4C00D4B6C8 /* PBXTargetDependency */,
+			);
+			name = "Pientere TuinUITests";
+			productName = "Pientere TuinUITests";
+			productReference = 8AFCA44E2A83FA4C00D4B6C8 /* Pientere TuinUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		8AFCA4262A83FA4B00D4B6C8 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1430;
+				LastUpgradeCheck = 1430;
+				TargetAttributes = {
+					8AFCA42D2A83FA4B00D4B6C8 = {
+						CreatedOnToolsVersion = 14.3.1;
+					};
+					8AFCA4432A83FA4C00D4B6C8 = {
+						CreatedOnToolsVersion = 14.3.1;
+						TestTargetID = 8AFCA42D2A83FA4B00D4B6C8;
+					};
+					8AFCA44D2A83FA4C00D4B6C8 = {
+						CreatedOnToolsVersion = 14.3.1;
+						TestTargetID = 8AFCA42D2A83FA4B00D4B6C8;
+					};
+				};
+			};
+			buildConfigurationList = 8AFCA4292A83FA4B00D4B6C8 /* Build configuration list for PBXProject "Pientere Tuin" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 8AFCA4252A83FA4B00D4B6C8;
+			productRefGroup = 8AFCA42F2A83FA4B00D4B6C8 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				8AFCA42D2A83FA4B00D4B6C8 /* Pientere Tuin */,
+				8AFCA4432A83FA4C00D4B6C8 /* Pientere TuinTests */,
+				8AFCA44D2A83FA4C00D4B6C8 /* Pientere TuinUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		8AFCA42C2A83FA4B00D4B6C8 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8AFCA43F2A83FA4C00D4B6C8 /* Preview Assets.xcassets in Resources */,
+				8AFCA43B2A83FA4C00D4B6C8 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8AFCA4422A83FA4C00D4B6C8 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8AFCA44C2A83FA4C00D4B6C8 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		8AFCA42A2A83FA4B00D4B6C8 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8AFCA4322A83FA4B00D4B6C8 /* Pientere_TuinApp.swift in Sources */,
+				8AFCA4372A83FA4B00D4B6C8 /* Pientere_Tuin.xcdatamodeld in Sources */,
+				8AFCA4392A83FA4B00D4B6C8 /* ContentView.swift in Sources */,
+				8AFCA4342A83FA4B00D4B6C8 /* Persistence.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8AFCA4402A83FA4C00D4B6C8 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8AFCA4492A83FA4C00D4B6C8 /* Pientere_TuinTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8AFCA44A2A83FA4C00D4B6C8 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8AFCA4552A83FA4C00D4B6C8 /* Pientere_TuinUITestsLaunchTests.swift in Sources */,
+				8AFCA4532A83FA4C00D4B6C8 /* Pientere_TuinUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		8AFCA4462A83FA4C00D4B6C8 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 8AFCA42D2A83FA4B00D4B6C8 /* Pientere Tuin */;
+			targetProxy = 8AFCA4452A83FA4C00D4B6C8 /* PBXContainerItemProxy */;
+		};
+		8AFCA4502A83FA4C00D4B6C8 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 8AFCA42D2A83FA4B00D4B6C8 /* Pientere Tuin */;
+			targetProxy = 8AFCA44F2A83FA4C00D4B6C8 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		8AFCA4562A83FA4C00D4B6C8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		8AFCA4572A83FA4C00D4B6C8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+			};
+			name = Release;
+		};
+		8AFCA4592A83FA4C00D4B6C8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "Pientere Tuin/Pientere_Tuin.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"Pientere Tuin/Preview Content\"";
+				DEVELOPMENT_TEAM = STQVQUKQJM;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphoneos*]" = UIStatusBarStyleDefault;
+				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
+				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 13.3;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "studio.skipper.Pientere-Tuin";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		8AFCA45A2A83FA4C00D4B6C8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "Pientere Tuin/Pientere_Tuin.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"Pientere Tuin/Preview Content\"";
+				DEVELOPMENT_TEAM = STQVQUKQJM;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphoneos*]" = UIStatusBarStyleDefault;
+				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
+				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 13.3;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "studio.skipper.Pientere-Tuin";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		8AFCA45C2A83FA4C00D4B6C8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = STQVQUKQJM;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				MACOSX_DEPLOYMENT_TARGET = 13.3;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "studio.skipper.Pientere-TuinTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Pientere Tuin.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Pientere Tuin";
+			};
+			name = Debug;
+		};
+		8AFCA45D2A83FA4C00D4B6C8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = STQVQUKQJM;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				MACOSX_DEPLOYMENT_TARGET = 13.3;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "studio.skipper.Pientere-TuinTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Pientere Tuin.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Pientere Tuin";
+			};
+			name = Release;
+		};
+		8AFCA45F2A83FA4C00D4B6C8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = STQVQUKQJM;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				MACOSX_DEPLOYMENT_TARGET = 13.3;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "studio.skipper.Pientere-TuinUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = "Pientere Tuin";
+			};
+			name = Debug;
+		};
+		8AFCA4602A83FA4C00D4B6C8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = STQVQUKQJM;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				MACOSX_DEPLOYMENT_TARGET = 13.3;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "studio.skipper.Pientere-TuinUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = "Pientere Tuin";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		8AFCA4292A83FA4B00D4B6C8 /* Build configuration list for PBXProject "Pientere Tuin" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8AFCA4562A83FA4C00D4B6C8 /* Debug */,
+				8AFCA4572A83FA4C00D4B6C8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		8AFCA4582A83FA4C00D4B6C8 /* Build configuration list for PBXNativeTarget "Pientere Tuin" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8AFCA4592A83FA4C00D4B6C8 /* Debug */,
+				8AFCA45A2A83FA4C00D4B6C8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		8AFCA45B2A83FA4C00D4B6C8 /* Build configuration list for PBXNativeTarget "Pientere TuinTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8AFCA45C2A83FA4C00D4B6C8 /* Debug */,
+				8AFCA45D2A83FA4C00D4B6C8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		8AFCA45E2A83FA4C00D4B6C8 /* Build configuration list for PBXNativeTarget "Pientere TuinUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8AFCA45F2A83FA4C00D4B6C8 /* Debug */,
+				8AFCA4602A83FA4C00D4B6C8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		8AFCA4352A83FA4B00D4B6C8 /* Pientere_Tuin.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				8AFCA4362A83FA4B00D4B6C8 /* Pientere_Tuin.xcdatamodel */,
+			);
+			currentVersion = 8AFCA4362A83FA4B00D4B6C8 /* Pientere_Tuin.xcdatamodel */;
+			path = Pientere_Tuin.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
+	};
+	rootObject = 8AFCA4262A83FA4B00D4B6C8 /* Project object */;
+}
