@@ -159,6 +159,25 @@
 			path = Widget;
 			sourceTree = "<group>";
 		};
+		8AACAC4D2A8580480032CC1C /* API */ = {
+			isa = PBXGroup;
+			children = (
+				8AFCA46E2A83FE9B00D4B6C8 /* openapi-generator-config.yaml */,
+				8A18F95D2A85366900C881DB /* openapi.json */,
+				8AACAC2A2A857B9D0032CC1C /* ApiHandler.swift */,
+			);
+			path = API;
+			sourceTree = "<group>";
+		};
+		8AACAC4F2A8580640032CC1C /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				8AFCA4332A83FA4B00D4B6C8 /* Persistence.swift */,
+				8AFCA4352A83FA4B00D4B6C8 /* Pientere_Tuin.xcdatamodeld */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		8AFCA4252A83FA4B00D4B6C8 = {
 			isa = PBXGroup;
 			children = (
@@ -185,16 +204,13 @@
 		8AFCA4302A83FA4B00D4B6C8 /* Pientere Tuin */ = {
 			isa = PBXGroup;
 			children = (
-				8AFCA46E2A83FE9B00D4B6C8 /* openapi-generator-config.yaml */,
-				8A18F95D2A85366900C881DB /* openapi.json */,
 				8AFCA4312A83FA4B00D4B6C8 /* Pientere_TuinApp.swift */,
-				8AFCA4332A83FA4B00D4B6C8 /* Persistence.swift */,
 				8AFCA4382A83FA4B00D4B6C8 /* ContentView.swift */,
-				8AACAC2A2A857B9D0032CC1C /* ApiHandler.swift */,
 				8AACAC272A8578260032CC1C /* MeasurementList.swift */,
+				8AACAC4F2A8580640032CC1C /* Model */,
+				8AACAC4D2A8580480032CC1C /* API */,
 				8AFCA43A2A83FA4C00D4B6C8 /* Assets.xcassets */,
 				8AFCA43C2A83FA4C00D4B6C8 /* Pientere_Tuin.entitlements */,
-				8AFCA4352A83FA4B00D4B6C8 /* Pientere_Tuin.xcdatamodeld */,
 				8AFCA43D2A83FA4C00D4B6C8 /* Preview Content */,
 			);
 			path = "Pientere Tuin";
