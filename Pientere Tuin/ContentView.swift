@@ -14,7 +14,7 @@ struct ContentView: View {
     @Environment(\.managedObjectContext) private var viewContext
 
     @FetchRequest(
-        sortDescriptors: [NSSortDescriptor(keyPath: \MeasurementProjection.measuredAt, ascending: true)],
+        sortDescriptors: [NSSortDescriptor(keyPath: \MeasurementProjection.measuredAt, ascending: false)],
         animation: .default)
     private var measurements: FetchedResults<MeasurementProjection>
     
@@ -24,18 +24,21 @@ struct ContentView: View {
         NavigationView {
             List {
                 ForEach (measurements) { measurement in
-                    VStack {
-                        Text("\(measurement.moisturePercentage)")
-                        Text("\(measurement.temperatureCelcius)")
-                        Text("\(measurement.measuredAt ?? Date())")
+                    VStack(alignment: .leading) {
+                        Text("\(Image(systemName: "humidity")) \(measurement.moisturePercentage * 100.0, specifier: "%.1f")%")
+                        Text("\(Image(systemName: "thermometer.medium")) \(measurement.temperatureCelcius, specifier: "%.1f")")
+                        // Text("\(measurement.apiUUID ?? "")")
+                        Text("\(measurement.measuredAt ?? Date(), formatter: itemFormatter)")
+                            .font(.caption)
+                            .foregroundColor(.secondary)
                     }
                 }
             }
             .toolbar {
 #if os(iOS)
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    EditButton()
-                }
+//                ToolbarItem(placement: .navigationBarTrailing) {
+//                    EditButton()
+//                }
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button("Load") {
                         Task {
@@ -44,13 +47,13 @@ struct ContentView: View {
                     }
                 }
 #endif
-                ToolbarItem {
-                    Button(action: addItem) {
-                        Label("Add Item", systemImage: "plus")
-                    }
-                }
+//                ToolbarItem {
+//                    Button(action: addItem) {
+//                        Label("Add Item", systemImage: "plus")
+//                    }
+//                }
             }
-            Text("Select an item")
+//            Text("Select an item")
         }
     }
 
@@ -105,6 +108,7 @@ struct ContentView: View {
                 let dataItem = MeasurementProjection(context: viewContext)
 //                dataItem. = item.
                 dataItem.measuredAt = item.measuredAt
+                dataItem.apiUUID = item.id ?? ""
                 if let moisture = item.moisturePercentage {
                     dataItem.moisturePercentage = moisture
                 }

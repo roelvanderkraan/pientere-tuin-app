@@ -18,6 +18,7 @@ struct PersistenceController {
             newItem.timestamp = Date()
             let newMeasurement = MeasurementProjection(context: viewContext)
             newMeasurement.measuredAt = Date()
+            newMeasurement.apiUUID = UUID().uuidString
         }
         do {
             try viewContext.save()
@@ -54,5 +55,6 @@ struct PersistenceController {
             }
         })
         container.viewContext.automaticallyMergesChangesFromParent = true
+        container.viewContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
     }
 }

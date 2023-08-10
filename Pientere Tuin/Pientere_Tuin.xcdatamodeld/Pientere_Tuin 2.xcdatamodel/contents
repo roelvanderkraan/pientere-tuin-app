@@ -8,9 +8,14 @@
         <attribute name="timestamp" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
     </entity>
     <entity name="MeasurementProjection" representedClassName="MeasurementProjection" syncable="YES" codeGenerationType="class">
-        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="apiUUID" attributeType="String"/>
         <attribute name="measuredAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="moisturePercentage" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="temperatureCelcius" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <uniquenessConstraints>
+            <uniquenessConstraint>
+                <constraint value="apiUUID"/>
+            </uniquenessConstraint>
+        </uniquenessConstraints>
     </entity>
 </model>
