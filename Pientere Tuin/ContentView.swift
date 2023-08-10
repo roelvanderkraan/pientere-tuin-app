@@ -9,6 +9,7 @@ import SwiftUI
 import CoreData
 import OpenAPIRuntime
 import OpenAPIURLSession
+import Charts
 
 struct ContentView: View {
     @Environment(\.managedObjectContext) private var viewContext
@@ -23,10 +24,28 @@ struct ContentView: View {
     var body: some View {
         NavigationView {
             List {
+                Chart {
+                    ForEach (measurements) { measurement in
+                        LineMark(
+                            x: .value("Month", measurement.measuredAt ?? Date()),
+                            y: .value("Moisture", measurement.moisturePercentage * 100)
+                        )
+                        .foregroundStyle(by: .value("Type", "Moisture"))
+                        
+                        LineMark(
+                            x: .value("Month", measurement.measuredAt ?? Date()),
+                            y: .value("Temperature", measurement.temperatureCelcius)
+
+                        )
+                        .foregroundStyle(by: .value("Type", "Temperature"))
+                    }
+                }
                 ForEach (measurements) { measurement in
                     VStack(alignment: .leading) {
                         Text("\(Image(systemName: "humidity")) \(measurement.moisturePercentage * 100.0, specifier: "%.1f")%")
+                            .font(.system(size: 20.0, weight: .bold, design: .rounded))
                         Text("\(Image(systemName: "thermometer.medium")) \(measurement.temperatureCelcius, specifier: "%.1f")")
+                            .font(.system(size: 20.0, weight: .bold, design: .rounded))
                         // Text("\(measurement.apiUUID ?? "")")
                         Text("\(measurement.measuredAt ?? Date(), formatter: itemFormatter)")
                             .font(.caption)
