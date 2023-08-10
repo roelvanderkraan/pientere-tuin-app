@@ -17,14 +17,18 @@ struct MeasurementList: View {
         List {
             ForEach (measurements) { measurement in
                 VStack(alignment: .leading) {
-                    Text("\(Image(systemName: "humidity")) \(measurement.moisturePercentage * 100.0, specifier: "%.1f")%")
-                        .font(.system(size: 20.0, weight: .bold, design: .rounded))
-                    Text("\(Image(systemName: "thermometer.medium")) \(measurement.temperatureCelcius, specifier: "%.1f")°")
-                        .font(.system(size: 20.0, weight: .bold, design: .rounded))
+                    HStack {
+                        Text("\(Image(systemName: "humidity")) \(measurement.moisturePercentage * 100.0, specifier: "%.1f")%")
+                            .font(.system(size: 20.0, weight: .regular, design: .rounded))
+                        Text("\(Image(systemName: "thermometer.medium")) \(measurement.temperatureCelcius, specifier: "%.1f")°")
+                            .font(.system(size: 20.0, weight: .regular, design: .rounded))
+                        Spacer()
+                        Text("\(measurement.measuredAt ?? Date(), formatter: itemFormatter)")
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+                    }
                     // Text("\(measurement.apiUUID ?? "")")
-                    Text("\(measurement.measuredAt ?? Date(), formatter: itemFormatter)")
-                        .font(.caption)
-                        .foregroundColor(.secondary)
+                    
                 }
             }
         }
@@ -34,7 +38,7 @@ struct MeasurementList: View {
 
 private let itemFormatter: DateFormatter = {
     let formatter = DateFormatter()
-    formatter.dateStyle = .medium
+    formatter.dateStyle = .short
     formatter.timeStyle = .short
     return formatter
 }()

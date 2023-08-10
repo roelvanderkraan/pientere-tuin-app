@@ -10,16 +10,17 @@ import CoreData
 import OpenAPIRuntime
 import OpenAPIURLSession
 import Charts
+import MapKit
 
 struct ContentView: View {
     @Environment(\.managedObjectContext) private var viewContext
-
+    
+    let apiHandler: ApiHandler
+    
     @FetchRequest(
         sortDescriptors: [NSSortDescriptor(keyPath: \MeasurementProjection.measuredAt, ascending: false)],
         animation: .default)
     private var measurements: FetchedResults<MeasurementProjection>
-    
-    let client: Client
     
     var body: some View {
         NavigationView {
@@ -28,7 +29,7 @@ struct ContentView: View {
                     if let latestMeasurement = measurements.first {
                         HStack {
                             Text("\(Image(systemName: "humidity")) \(latestMeasurement.moisturePercentage * 100, specifier: "%.1f")%")
-                                .font(.system(size: 30.0, weight: .bold, design: .rounded))
+                                .font(.system(size: 30.0, weight: .regular, design: .rounded))
                             Spacer()
                             Text("\(latestMeasurement.measuredAt ?? Date(), formatter: itemFormatter)")
                                 .foregroundColor(.secondary)
@@ -53,7 +54,7 @@ struct ContentView: View {
                     if let latestMeasurement = measurements.first {
                         HStack {
                             Text("\(Image(systemName: "thermometer.medium")) \(latestMeasurement.temperatureCelcius, specifier: "%.1f")°")
-                                .font(.system(size: 30.0, weight: .bold, design: .rounded))
+                                .font(.system(size: 30.0, weight: .regular, design: .rounded))
                             Spacer()
                             Text("\(latestMeasurement.measuredAt ?? Date(), formatter: itemFormatter)")
                                 .foregroundColor(.secondary)
@@ -69,110 +70,41 @@ struct ContentView: View {
                         }
                     }
                     .chartForegroundStyleScale([
-                        "Temperature": .black
+                        "Temperature": .green
                     ])
                     .padding(EdgeInsets(top: 8, leading: 0, bottom: 8, trailing: 8))
                 }
                 Section {
                     NavigationLink {
                         MeasurementList()
+                            .environment(\.managedObjectContext, viewContext)
                     } label: {
                         Text("All measurements")
                     }
-
                 }
             }
             .navigationTitle("Pientere Tuin")
             .toolbar {
-#if os(iOS)
-//                ToolbarItem(placement: .navigationBarTrailing) {
-//                    EditButton()
-//                }
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    Button("Load") {
+                    Button {
                         Task {
-                            try? await updateTuinData()
+                            try? await apiHandler.updateTuinData(context: viewContext)
                         }
+                    } label: {
+                        Label("Refresh alles", systemImage: "arrow.counterclockwise")
                     }
                 }
-#endif
-//                ToolbarItem {
-//                    Button(action: addItem) {
-//                        Label("Add Item", systemImage: "plus")
-//                    }
-//                }
             }
-//            Text("Select an item")
         }
-    }
-
-    private func addItem() {
-        withAnimation {
-            let newItem = Item(context: viewContext)
-            newItem.timestamp = Date()
-
-            do {
-                try viewContext.save()
-            } catch {
-                // Replace this implementation with code to handle the error appropriately.
-                // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-                let nsError = error as NSError
-                fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
+        .refreshable {
+            Task {
+                try? await apiHandler.updateTuinData(context: viewContext)
             }
         }
     }
     
     init() {
-        self.client = Client(
-            serverURL: try! Servers.server1(),
-            transport: URLSessionTransport()
-        )
-    }
-    
-    func updateTuinData() async throws {
-        let response = try await client.mijnPientereTuin(
-            .init(
-                headers: Operations.mijnPientereTuin.Input.Headers(wecity_api_key: "ee3f7468-11fb-43b6-b870-49f9435524c1")
-            )
-        )
-        
-        switch response {
-        case let .ok(okResponse):
-            debugPrint("OK!")
-            debugPrint(okResponse.body)
-            switch okResponse.body {
-            case .json(let json):
-                writeToCoreData(apiData: json.content)
-            }
-        case .undocumented(statusCode: let statusCode, _):
-            debugPrint("Error getting data from server, status: \(statusCode)")
-        }
-    }
-    
-    func writeToCoreData(apiData: [Components.Schemas.MeasurementProjection]?) {
-        if let apiData = apiData {
-            for item in apiData {
-                let dataItem = MeasurementProjection(context: viewContext)
-//                dataItem. = item.
-                dataItem.measuredAt = item.measuredAt
-                dataItem.apiUUID = item.id 
-                if let moisture = item.moisturePercentage {
-                    dataItem.moisturePercentage = moisture
-                }
-                if let temperature = item.temperatureCelsius {
-                    dataItem.temperatureCelcius = Float(temperature)
-                }
-            }
-            
-            do {
-                try viewContext.save()
-            } catch {
-                // Replace this implementation with code to handle the error appropriately.
-                // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-                let nsError = error as NSError
-                fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
-            }
-        }
+        self.apiHandler = ApiHandler()
     }
 }
 

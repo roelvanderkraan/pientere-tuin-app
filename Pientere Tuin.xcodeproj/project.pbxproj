@@ -9,6 +9,16 @@
 /* Begin PBXBuildFile section */
 		8A18F95E2A85366900C881DB /* openapi.json in Resources */ = {isa = PBXBuildFile; fileRef = 8A18F95D2A85366900C881DB /* openapi.json */; };
 		8AACAC282A8578260032CC1C /* MeasurementList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AACAC272A8578260032CC1C /* MeasurementList.swift */; };
+		8AACAC2B2A857B9D0032CC1C /* ApiHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AACAC2A2A857B9D0032CC1C /* ApiHandler.swift */; };
+		8AACAC342A857D710032CC1C /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8AACAC332A857D710032CC1C /* WidgetKit.framework */; };
+		8AACAC362A857D710032CC1C /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8AACAC352A857D710032CC1C /* SwiftUI.framework */; };
+		8AACAC392A857D710032CC1C /* WidgetBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AACAC382A857D710032CC1C /* WidgetBundle.swift */; };
+		8AACAC3B2A857D710032CC1C /* WidgetLiveActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AACAC3A2A857D710032CC1C /* WidgetLiveActivity.swift */; };
+		8AACAC3D2A857D710032CC1C /* PientereWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AACAC3C2A857D710032CC1C /* PientereWidget.swift */; };
+		8AACAC402A857D720032CC1C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8AACAC3F2A857D720032CC1C /* Assets.xcassets */; };
+		8AACAC422A857D720032CC1C /* Widget.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 8AACAC3E2A857D710032CC1C /* Widget.intentdefinition */; };
+		8AACAC432A857D720032CC1C /* Widget.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 8AACAC3E2A857D710032CC1C /* Widget.intentdefinition */; };
+		8AACAC462A857D720032CC1C /* WidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 8AACAC312A857D710032CC1C /* WidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		8AFCA4322A83FA4B00D4B6C8 /* Pientere_TuinApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AFCA4312A83FA4B00D4B6C8 /* Pientere_TuinApp.swift */; };
 		8AFCA4342A83FA4B00D4B6C8 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AFCA4332A83FA4B00D4B6C8 /* Persistence.swift */; };
 		8AFCA4372A83FA4B00D4B6C8 /* Pientere_Tuin.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 8AFCA4352A83FA4B00D4B6C8 /* Pientere_Tuin.xcdatamodeld */; };
@@ -24,6 +34,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		8AACAC442A857D720032CC1C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8AFCA4262A83FA4B00D4B6C8 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 8AACAC302A857D710032CC1C;
+			remoteInfo = WidgetExtension;
+		};
 		8AFCA4452A83FA4C00D4B6C8 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 8AFCA4262A83FA4B00D4B6C8 /* Project object */;
@@ -40,9 +57,33 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		8AACAC4A2A857D720032CC1C /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				8AACAC462A857D720032CC1C /* WidgetExtension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		8A18F95D2A85366900C881DB /* openapi.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = openapi.json; sourceTree = "<group>"; };
 		8AACAC272A8578260032CC1C /* MeasurementList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeasurementList.swift; sourceTree = "<group>"; };
+		8AACAC2A2A857B9D0032CC1C /* ApiHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiHandler.swift; sourceTree = "<group>"; };
+		8AACAC312A857D710032CC1C /* WidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = WidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		8AACAC332A857D710032CC1C /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
+		8AACAC352A857D710032CC1C /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
+		8AACAC382A857D710032CC1C /* WidgetBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetBundle.swift; sourceTree = "<group>"; };
+		8AACAC3A2A857D710032CC1C /* WidgetLiveActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetLiveActivity.swift; sourceTree = "<group>"; };
+		8AACAC3C2A857D710032CC1C /* PientereWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PientereWidget.swift; sourceTree = "<group>"; };
+		8AACAC3E2A857D710032CC1C /* Widget.intentdefinition */ = {isa = PBXFileReference; lastKnownFileType = file.intentdefinition; path = Widget.intentdefinition; sourceTree = "<group>"; };
+		8AACAC3F2A857D720032CC1C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		8AACAC412A857D720032CC1C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8AAF6B552A85064400EDC1E0 /* Pientere_Tuin 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Pientere_Tuin 2.xcdatamodel"; sourceTree = "<group>"; };
 		8AFCA42E2A83FA4B00D4B6C8 /* Pientere Tuin.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Pientere Tuin.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8AFCA4312A83FA4B00D4B6C8 /* Pientere_TuinApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pientere_TuinApp.swift; sourceTree = "<group>"; };
@@ -61,6 +102,15 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		8AACAC2E2A857D710032CC1C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8AACAC362A857D710032CC1C /* SwiftUI.framework in Frameworks */,
+				8AACAC342A857D710032CC1C /* WidgetKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		8AFCA42B2A83FA4B00D4B6C8 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -87,12 +137,36 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		8AACAC322A857D710032CC1C /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				8AACAC332A857D710032CC1C /* WidgetKit.framework */,
+				8AACAC352A857D710032CC1C /* SwiftUI.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		8AACAC372A857D710032CC1C /* Widget */ = {
+			isa = PBXGroup;
+			children = (
+				8AACAC382A857D710032CC1C /* WidgetBundle.swift */,
+				8AACAC3A2A857D710032CC1C /* WidgetLiveActivity.swift */,
+				8AACAC3C2A857D710032CC1C /* PientereWidget.swift */,
+				8AACAC3E2A857D710032CC1C /* Widget.intentdefinition */,
+				8AACAC3F2A857D720032CC1C /* Assets.xcassets */,
+				8AACAC412A857D720032CC1C /* Info.plist */,
+			);
+			path = Widget;
+			sourceTree = "<group>";
+		};
 		8AFCA4252A83FA4B00D4B6C8 = {
 			isa = PBXGroup;
 			children = (
 				8AFCA4302A83FA4B00D4B6C8 /* Pientere Tuin */,
 				8AFCA4472A83FA4C00D4B6C8 /* Pientere TuinTests */,
 				8AFCA4512A83FA4C00D4B6C8 /* Pientere TuinUITests */,
+				8AACAC372A857D710032CC1C /* Widget */,
+				8AACAC322A857D710032CC1C /* Frameworks */,
 				8AFCA42F2A83FA4B00D4B6C8 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -103,6 +177,7 @@
 				8AFCA42E2A83FA4B00D4B6C8 /* Pientere Tuin.app */,
 				8AFCA4442A83FA4C00D4B6C8 /* Pientere TuinTests.xctest */,
 				8AFCA44E2A83FA4C00D4B6C8 /* Pientere TuinUITests.xctest */,
+				8AACAC312A857D710032CC1C /* WidgetExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -115,6 +190,7 @@
 				8AFCA4312A83FA4B00D4B6C8 /* Pientere_TuinApp.swift */,
 				8AFCA4332A83FA4B00D4B6C8 /* Persistence.swift */,
 				8AFCA4382A83FA4B00D4B6C8 /* ContentView.swift */,
+				8AACAC2A2A857B9D0032CC1C /* ApiHandler.swift */,
 				8AACAC272A8578260032CC1C /* MeasurementList.swift */,
 				8AFCA43A2A83FA4C00D4B6C8 /* Assets.xcassets */,
 				8AFCA43C2A83FA4C00D4B6C8 /* Pientere_Tuin.entitlements */,
@@ -152,6 +228,23 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		8AACAC302A857D710032CC1C /* WidgetExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 8AACAC472A857D720032CC1C /* Build configuration list for PBXNativeTarget "WidgetExtension" */;
+			buildPhases = (
+				8AACAC2D2A857D710032CC1C /* Sources */,
+				8AACAC2E2A857D710032CC1C /* Frameworks */,
+				8AACAC2F2A857D710032CC1C /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = WidgetExtension;
+			productName = WidgetExtension;
+			productReference = 8AACAC312A857D710032CC1C /* WidgetExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 		8AFCA42D2A83FA4B00D4B6C8 /* Pientere Tuin */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 8AFCA4582A83FA4C00D4B6C8 /* Build configuration list for PBXNativeTarget "Pientere Tuin" */;
@@ -159,11 +252,13 @@
 				8AFCA42A2A83FA4B00D4B6C8 /* Sources */,
 				8AFCA42B2A83FA4B00D4B6C8 /* Frameworks */,
 				8AFCA42C2A83FA4B00D4B6C8 /* Resources */,
+				8AACAC4A2A857D720032CC1C /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 				8AFCA46D2A83FE6100D4B6C8 /* PBXTargetDependency */,
+				8AACAC452A857D720032CC1C /* PBXTargetDependency */,
 			);
 			name = "Pientere Tuin";
 			packageProductDependencies = (
@@ -220,6 +315,9 @@
 				LastSwiftUpdateCheck = 1430;
 				LastUpgradeCheck = 1430;
 				TargetAttributes = {
+					8AACAC302A857D710032CC1C = {
+						CreatedOnToolsVersion = 14.3.1;
+					};
 					8AFCA42D2A83FA4B00D4B6C8 = {
 						CreatedOnToolsVersion = 14.3.1;
 					};
@@ -254,11 +352,20 @@
 				8AFCA42D2A83FA4B00D4B6C8 /* Pientere Tuin */,
 				8AFCA4432A83FA4C00D4B6C8 /* Pientere TuinTests */,
 				8AFCA44D2A83FA4C00D4B6C8 /* Pientere TuinUITests */,
+				8AACAC302A857D710032CC1C /* WidgetExtension */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		8AACAC2F2A857D710032CC1C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8AACAC402A857D720032CC1C /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		8AFCA42C2A83FA4B00D4B6C8 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -287,11 +394,24 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		8AACAC2D2A857D710032CC1C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8AACAC422A857D720032CC1C /* Widget.intentdefinition in Sources */,
+				8AACAC3B2A857D710032CC1C /* WidgetLiveActivity.swift in Sources */,
+				8AACAC392A857D710032CC1C /* WidgetBundle.swift in Sources */,
+				8AACAC3D2A857D710032CC1C /* PientereWidget.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		8AFCA42A2A83FA4B00D4B6C8 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				8AFCA4322A83FA4B00D4B6C8 /* Pientere_TuinApp.swift in Sources */,
+				8AACAC2B2A857B9D0032CC1C /* ApiHandler.swift in Sources */,
+				8AACAC432A857D720032CC1C /* Widget.intentdefinition in Sources */,
 				8AFCA4372A83FA4B00D4B6C8 /* Pientere_Tuin.xcdatamodeld in Sources */,
 				8AACAC282A8578260032CC1C /* MeasurementList.swift in Sources */,
 				8AFCA4392A83FA4B00D4B6C8 /* ContentView.swift in Sources */,
@@ -319,6 +439,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		8AACAC452A857D720032CC1C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 8AACAC302A857D710032CC1C /* WidgetExtension */;
+			targetProxy = 8AACAC442A857D720032CC1C /* PBXContainerItemProxy */;
+		};
 		8AFCA4462A83FA4C00D4B6C8 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 8AFCA42D2A83FA4B00D4B6C8 /* Pientere Tuin */;
@@ -336,6 +461,65 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
+		8AACAC482A857D720032CC1C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = STQVQUKQJM;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Widget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Widget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "studio.skipper.Pientere-Tuin.Widget";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		8AACAC492A857D720032CC1C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = STQVQUKQJM;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Widget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Widget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "studio.skipper.Pientere-Tuin.Widget";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
 		8AFCA4562A83FA4C00D4B6C8 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -448,6 +632,7 @@
 		8AFCA4592A83FA4C00D4B6C8 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "Pientere Tuin/Pientere_Tuin.entitlements";
@@ -486,6 +671,7 @@
 		8AFCA45A2A83FA4C00D4B6C8 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "Pientere Tuin/Pientere_Tuin.entitlements";
@@ -614,6 +800,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		8AACAC472A857D720032CC1C /* Build configuration list for PBXNativeTarget "WidgetExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8AACAC482A857D720032CC1C /* Debug */,
+				8AACAC492A857D720032CC1C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		8AFCA4292A83FA4B00D4B6C8 /* Build configuration list for PBXProject "Pientere Tuin" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
