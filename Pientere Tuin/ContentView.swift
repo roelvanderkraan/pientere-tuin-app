@@ -24,35 +24,65 @@ struct ContentView: View {
     var body: some View {
         NavigationView {
             List {
-                Chart {
-                    ForEach (measurements) { measurement in
-                        LineMark(
-                            x: .value("Month", measurement.measuredAt ?? Date()),
-                            y: .value("Moisture", measurement.moisturePercentage * 100)
-                        )
-                        .foregroundStyle(by: .value("Type", "Moisture"))
-                        
-                        LineMark(
-                            x: .value("Month", measurement.measuredAt ?? Date()),
-                            y: .value("Temperature", measurement.temperatureCelcius)
-
-                        )
-                        .foregroundStyle(by: .value("Type", "Temperature"))
+                Section("Soil moisture") {
+                    if let latestMeasurement = measurements.first {
+                        HStack {
+                            Text("\(Image(systemName: "humidity")) \(latestMeasurement.moisturePercentage * 100, specifier: "%.1f")%")
+                                .font(.system(size: 30.0, weight: .bold, design: .rounded))
+                            Spacer()
+                            Text("\(latestMeasurement.measuredAt ?? Date(), formatter: itemFormatter)")
+                                .foregroundColor(.secondary)
+                        }
                     }
+                    Chart {
+                        ForEach (measurements) { measurement in
+                            LineMark(
+                                x: .value("Month", measurement.measuredAt ?? Date()),
+                                y: .value("Moisture", measurement.moisturePercentage * 100)
+                                
+                            )
+                            .foregroundStyle(by: .value("Type", "Moisture"))
+                        }
+                    }
+                    .chartForegroundStyleScale([
+                        "Moisture": .blue
+                    ])
+                    .padding(EdgeInsets(top: 8, leading: 0, bottom: 8, trailing: 8))
                 }
-                ForEach (measurements) { measurement in
-                    VStack(alignment: .leading) {
-                        Text("\(Image(systemName: "humidity")) \(measurement.moisturePercentage * 100.0, specifier: "%.1f")%")
-                            .font(.system(size: 20.0, weight: .bold, design: .rounded))
-                        Text("\(Image(systemName: "thermometer.medium")) \(measurement.temperatureCelcius, specifier: "%.1f")")
-                            .font(.system(size: 20.0, weight: .bold, design: .rounded))
-                        // Text("\(measurement.apiUUID ?? "")")
-                        Text("\(measurement.measuredAt ?? Date(), formatter: itemFormatter)")
-                            .font(.caption)
-                            .foregroundColor(.secondary)
+                Section("Soil temperature") {
+                    if let latestMeasurement = measurements.first {
+                        HStack {
+                            Text("\(Image(systemName: "thermometer.medium")) \(latestMeasurement.temperatureCelcius, specifier: "%.1f")°")
+                                .font(.system(size: 30.0, weight: .bold, design: .rounded))
+                            Spacer()
+                            Text("\(latestMeasurement.measuredAt ?? Date(), formatter: itemFormatter)")
+                                .foregroundColor(.secondary)
+                        }
                     }
+                    Chart {
+                        ForEach (measurements) { measurement in
+                            LineMark(
+                                x: .value("Month", measurement.measuredAt ?? Date()),
+                                y: .value("Temperature", measurement.temperatureCelcius)
+                            )
+                            .foregroundStyle(by: .value("Type", "Temperature"))
+                        }
+                    }
+                    .chartForegroundStyleScale([
+                        "Temperature": .black
+                    ])
+                    .padding(EdgeInsets(top: 8, leading: 0, bottom: 8, trailing: 8))
+                }
+                Section {
+                    NavigationLink {
+                        MeasurementList()
+                    } label: {
+                        Text("All measurements")
+                    }
+
                 }
             }
+            .navigationTitle("Pientere Tuin")
             .toolbar {
 #if os(iOS)
 //                ToolbarItem(placement: .navigationBarTrailing) {
@@ -100,9 +130,9 @@ struct ContentView: View {
     }
     
     func updateTuinData() async throws {
-        let response = try await client.get_mijn_pientere_tuin_measurements(
+        let response = try await client.mijnPientereTuin(
             .init(
-                headers: Operations.get_mijn_pientere_tuin_measurements.Input.Headers(wecity_api_key: "ee3f7468-11fb-43b6-b870-49f9435524c1")
+                headers: Operations.mijnPientereTuin.Input.Headers(wecity_api_key: "ee3f7468-11fb-43b6-b870-49f9435524c1")
             )
         )
         
@@ -116,8 +146,6 @@ struct ContentView: View {
             }
         case .undocumented(statusCode: let statusCode, _):
             debugPrint("Error getting data from server, status: \(statusCode)")
-        case .tooManyRequests(_):
-            debugPrint("Too many requests")
         }
     }
     
@@ -127,7 +155,7 @@ struct ContentView: View {
                 let dataItem = MeasurementProjection(context: viewContext)
 //                dataItem. = item.
                 dataItem.measuredAt = item.measuredAt
-                dataItem.apiUUID = item.id ?? ""
+                dataItem.apiUUID = item.id 
                 if let moisture = item.moisturePercentage {
                     dataItem.moisturePercentage = moisture
                 }
@@ -150,8 +178,8 @@ struct ContentView: View {
 
 private let itemFormatter: DateFormatter = {
     let formatter = DateFormatter()
-    formatter.dateStyle = .short
-    formatter.timeStyle = .medium
+    formatter.dateStyle = .none
+    formatter.timeStyle = .short
     return formatter
 }()
 
