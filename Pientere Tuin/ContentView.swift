@@ -7,31 +7,41 @@
 
 import SwiftUI
 import CoreData
+import OpenAPIRuntime
+import OpenAPIURLSession
 
 struct ContentView: View {
     @Environment(\.managedObjectContext) private var viewContext
 
     @FetchRequest(
-        sortDescriptors: [NSSortDescriptor(keyPath: \Item.timestamp, ascending: true)],
+        sortDescriptors: [NSSortDescriptor(keyPath: \MeasurementProjection.measuredAt, ascending: true)],
         animation: .default)
-    private var items: FetchedResults<Item>
-
+    private var measurements: FetchedResults<MeasurementProjection>
+    
+    let client: Client
+    
     var body: some View {
         NavigationView {
             List {
-                ForEach(items) { item in
-                    NavigationLink {
-                        Text("Item at \(item.timestamp!, formatter: itemFormatter)")
-                    } label: {
-                        Text(item.timestamp!, formatter: itemFormatter)
+                ForEach (measurements) { measurement in
+                    VStack {
+                        Text("\(measurement.moisturePercentage)")
+                        Text("\(measurement.temperatureCelcius)")
+                        Text("\(measurement.measuredAt ?? Date())")
                     }
                 }
-                .onDelete(perform: deleteItems)
             }
             .toolbar {
 #if os(iOS)
                 ToolbarItem(placement: .navigationBarTrailing) {
                     EditButton()
+                }
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button("Load") {
+                        Task {
+                            try? await updateTuinData()
+                        }
+                    }
                 }
 #endif
                 ToolbarItem {
@@ -59,11 +69,50 @@ struct ContentView: View {
             }
         }
     }
-
-    private func deleteItems(offsets: IndexSet) {
-        withAnimation {
-            offsets.map { items[$0] }.forEach(viewContext.delete)
-
+    
+    init() {
+        self.client = Client(
+            serverURL: try! Servers.server1(),
+            transport: URLSessionTransport()
+        )
+    }
+    
+    func updateTuinData() async throws {
+        let response = try await client.get_mijn_pientere_tuin_measurements(
+            .init(
+                headers: Operations.get_mijn_pientere_tuin_measurements.Input.Headers(wecity_api_key: "ee3f7468-11fb-43b6-b870-49f9435524c1")
+            )
+        )
+        
+        switch response {
+        case let .ok(okResponse):
+            debugPrint("OK!")
+            debugPrint(okResponse.body)
+            switch okResponse.body {
+            case .json(let json):
+                writeToCoreData(apiData: json.content)
+            }
+        case .undocumented(statusCode: let statusCode, _):
+            debugPrint("Error getting data from server, status: \(statusCode)")
+        case .tooManyRequests(_):
+            debugPrint("Too many requests")
+        }
+    }
+    
+    func writeToCoreData(apiData: [Components.Schemas.MeasurementProjection]?) {
+        if let apiData = apiData {
+            for item in apiData {
+                let dataItem = MeasurementProjection(context: viewContext)
+//                dataItem. = item.
+                dataItem.measuredAt = item.measuredAt
+                if let moisture = item.moisturePercentage {
+                    dataItem.moisturePercentage = moisture
+                }
+                if let temperature = item.temperatureCelsius {
+                    dataItem.temperatureCelcius = Float(temperature)
+                }
+            }
+            
             do {
                 try viewContext.save()
             } catch {

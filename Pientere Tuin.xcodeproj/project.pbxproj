@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8A45F6A22A841D1B0089A7C4 /* openapi.yaml in Resources */ = {isa = PBXBuildFile; fileRef = 8A45F6A12A841D1B0089A7C4 /* openapi.yaml */; };
 		8AFCA4322A83FA4B00D4B6C8 /* Pientere_TuinApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AFCA4312A83FA4B00D4B6C8 /* Pientere_TuinApp.swift */; };
 		8AFCA4342A83FA4B00D4B6C8 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AFCA4332A83FA4B00D4B6C8 /* Persistence.swift */; };
 		8AFCA4372A83FA4B00D4B6C8 /* Pientere_Tuin.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 8AFCA4352A83FA4B00D4B6C8 /* Pientere_Tuin.xcdatamodeld */; };
@@ -16,6 +17,9 @@
 		8AFCA4492A83FA4C00D4B6C8 /* Pientere_TuinTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AFCA4482A83FA4C00D4B6C8 /* Pientere_TuinTests.swift */; };
 		8AFCA4532A83FA4C00D4B6C8 /* Pientere_TuinUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AFCA4522A83FA4C00D4B6C8 /* Pientere_TuinUITests.swift */; };
 		8AFCA4552A83FA4C00D4B6C8 /* Pientere_TuinUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AFCA4542A83FA4C00D4B6C8 /* Pientere_TuinUITestsLaunchTests.swift */; };
+		8AFCA4682A83FDF200D4B6C8 /* OpenAPIRuntime in Frameworks */ = {isa = PBXBuildFile; productRef = 8AFCA4672A83FDF200D4B6C8 /* OpenAPIRuntime */; };
+		8AFCA46B2A83FE3200D4B6C8 /* OpenAPIURLSession in Frameworks */ = {isa = PBXBuildFile; productRef = 8AFCA46A2A83FE3200D4B6C8 /* OpenAPIURLSession */; };
+		8AFCA46F2A83FE9B00D4B6C8 /* openapi-generator-config.yaml in Resources */ = {isa = PBXBuildFile; fileRef = 8AFCA46E2A83FE9B00D4B6C8 /* openapi-generator-config.yaml */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,6 +40,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		8A45F6A12A841D1B0089A7C4 /* openapi.yaml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = openapi.yaml; sourceTree = "<group>"; };
+		8AAF6B552A85064400EDC1E0 /* Pientere_Tuin 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Pientere_Tuin 2.xcdatamodel"; sourceTree = "<group>"; };
 		8AFCA42E2A83FA4B00D4B6C8 /* Pientere Tuin.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Pientere Tuin.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8AFCA4312A83FA4B00D4B6C8 /* Pientere_TuinApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pientere_TuinApp.swift; sourceTree = "<group>"; };
 		8AFCA4332A83FA4B00D4B6C8 /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
@@ -49,6 +55,7 @@
 		8AFCA44E2A83FA4C00D4B6C8 /* Pientere TuinUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Pientere TuinUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8AFCA4522A83FA4C00D4B6C8 /* Pientere_TuinUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pientere_TuinUITests.swift; sourceTree = "<group>"; };
 		8AFCA4542A83FA4C00D4B6C8 /* Pientere_TuinUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pientere_TuinUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		8AFCA46E2A83FE9B00D4B6C8 /* openapi-generator-config.yaml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = "openapi-generator-config.yaml"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +63,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8AFCA46B2A83FE3200D4B6C8 /* OpenAPIURLSession in Frameworks */,
+				8AFCA4682A83FDF200D4B6C8 /* OpenAPIRuntime in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -99,6 +108,8 @@
 		8AFCA4302A83FA4B00D4B6C8 /* Pientere Tuin */ = {
 			isa = PBXGroup;
 			children = (
+				8AFCA46E2A83FE9B00D4B6C8 /* openapi-generator-config.yaml */,
+				8A45F6A12A841D1B0089A7C4 /* openapi.yaml */,
 				8AFCA4312A83FA4B00D4B6C8 /* Pientere_TuinApp.swift */,
 				8AFCA4332A83FA4B00D4B6C8 /* Persistence.swift */,
 				8AFCA4382A83FA4B00D4B6C8 /* ContentView.swift */,
@@ -149,8 +160,13 @@
 			buildRules = (
 			);
 			dependencies = (
+				8AFCA46D2A83FE6100D4B6C8 /* PBXTargetDependency */,
 			);
 			name = "Pientere Tuin";
+			packageProductDependencies = (
+				8AFCA4672A83FDF200D4B6C8 /* OpenAPIRuntime */,
+				8AFCA46A2A83FE3200D4B6C8 /* OpenAPIURLSession */,
+			);
 			productName = "Pientere Tuin";
 			productReference = 8AFCA42E2A83FA4B00D4B6C8 /* Pientere Tuin.app */;
 			productType = "com.apple.product-type.application";
@@ -223,6 +239,11 @@
 				Base,
 			);
 			mainGroup = 8AFCA4252A83FA4B00D4B6C8;
+			packageReferences = (
+				8AFCA4612A83FDD500D4B6C8 /* XCRemoteSwiftPackageReference "swift-openapi-generator" */,
+				8AFCA4662A83FDF200D4B6C8 /* XCRemoteSwiftPackageReference "swift-openapi-runtime" */,
+				8AFCA4692A83FE3200D4B6C8 /* XCRemoteSwiftPackageReference "swift-openapi-urlsession" */,
+			);
 			productRefGroup = 8AFCA42F2A83FA4B00D4B6C8 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -240,7 +261,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				8AFCA43F2A83FA4C00D4B6C8 /* Preview Assets.xcassets in Resources */,
+				8A45F6A22A841D1B0089A7C4 /* openapi.yaml in Resources */,
 				8AFCA43B2A83FA4C00D4B6C8 /* Assets.xcassets in Resources */,
+				8AFCA46F2A83FE9B00D4B6C8 /* openapi-generator-config.yaml in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -301,6 +324,10 @@
 			isa = PBXTargetDependency;
 			target = 8AFCA42D2A83FA4B00D4B6C8 /* Pientere Tuin */;
 			targetProxy = 8AFCA44F2A83FA4C00D4B6C8 /* PBXContainerItemProxy */;
+		};
+		8AFCA46D2A83FE6100D4B6C8 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			productRef = 8AFCA46C2A83FE6100D4B6C8 /* OpenAPIGenerator */;
 		};
 /* End PBXTargetDependency section */
 
@@ -621,13 +648,59 @@
 		};
 /* End XCConfigurationList section */
 
+/* Begin XCRemoteSwiftPackageReference section */
+		8AFCA4612A83FDD500D4B6C8 /* XCRemoteSwiftPackageReference "swift-openapi-generator" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/apple/swift-openapi-generator";
+			requirement = {
+				kind = upToNextMinorVersion;
+				minimumVersion = 0.1.8;
+			};
+		};
+		8AFCA4662A83FDF200D4B6C8 /* XCRemoteSwiftPackageReference "swift-openapi-runtime" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/apple/swift-openapi-runtime";
+			requirement = {
+				kind = upToNextMinorVersion;
+				minimumVersion = 0.1.8;
+			};
+		};
+		8AFCA4692A83FE3200D4B6C8 /* XCRemoteSwiftPackageReference "swift-openapi-urlsession" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/apple/swift-openapi-urlsession";
+			requirement = {
+				kind = upToNextMinorVersion;
+				minimumVersion = 0.1.2;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		8AFCA4672A83FDF200D4B6C8 /* OpenAPIRuntime */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8AFCA4662A83FDF200D4B6C8 /* XCRemoteSwiftPackageReference "swift-openapi-runtime" */;
+			productName = OpenAPIRuntime;
+		};
+		8AFCA46A2A83FE3200D4B6C8 /* OpenAPIURLSession */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8AFCA4692A83FE3200D4B6C8 /* XCRemoteSwiftPackageReference "swift-openapi-urlsession" */;
+			productName = OpenAPIURLSession;
+		};
+		8AFCA46C2A83FE6100D4B6C8 /* OpenAPIGenerator */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8AFCA4612A83FDD500D4B6C8 /* XCRemoteSwiftPackageReference "swift-openapi-generator" */;
+			productName = "plugin:OpenAPIGenerator";
+		};
+/* End XCSwiftPackageProductDependency section */
+
 /* Begin XCVersionGroup section */
 		8AFCA4352A83FA4B00D4B6C8 /* Pientere_Tuin.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				8AAF6B552A85064400EDC1E0 /* Pientere_Tuin 2.xcdatamodel */,
 				8AFCA4362A83FA4B00D4B6C8 /* Pientere_Tuin.xcdatamodel */,
 			);
-			currentVersion = 8AFCA4362A83FA4B00D4B6C8 /* Pientere_Tuin.xcdatamodel */;
+			currentVersion = 8AAF6B552A85064400EDC1E0 /* Pientere_Tuin 2.xcdatamodel */;
 			path = Pientere_Tuin.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

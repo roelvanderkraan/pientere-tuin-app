@@ -16,6 +16,8 @@ struct PersistenceController {
         for _ in 0..<10 {
             let newItem = Item(context: viewContext)
             newItem.timestamp = Date()
+            let newMeasurement = MeasurementProjection(context: viewContext)
+            newMeasurement.measuredAt = Date()
         }
         do {
             try viewContext.save()
