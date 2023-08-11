@@ -25,14 +25,24 @@ struct ContentView: View {
     var body: some View {
         NavigationView {
             List {
-                Section("Soil moisture") {
+                Section {
                     if let latestMeasurement = measurements.first {
-                        HStack {
-                            Text("\(Image(systemName: "humidity")) \(latestMeasurement.moisturePercentage * 100, specifier: "%.1f")%")
-                                .font(.system(size: 30.0, weight: .regular, design: .rounded))
-                            Spacer()
-                            Text("\(latestMeasurement.measuredAt ?? Date(), formatter: itemFormatter)")
-                                .foregroundColor(.secondary)
+                        VStack(alignment: .leading) {
+                            HStack(alignment: .firstTextBaseline) {
+                                Text("\(Image(systemName: "humidity")) Soil humidity")
+                                    .font(.system(.body, design: .default, weight: .medium))
+                                    .foregroundColor(.blue)
+                                Spacer()
+                                Text("\(latestMeasurement.measuredAt ?? Date(), formatter: itemFormatter)")
+                                    .foregroundColor(.secondary)
+                            }
+                            HStack(alignment: .firstTextBaseline) {
+                                Text("\(latestMeasurement.moisturePercentage * 100, specifier: "%.1f")")
+                                    .font(.system(.largeTitle, design: .rounded, weight: .bold))
+                                Text("%")
+                                    .font(.system(.body, design: .rounded))
+                                    .foregroundColor(.secondary)
+                            }
                         }
                     }
                     Chart {
@@ -50,15 +60,28 @@ struct ContentView: View {
                     ])
                     .padding(EdgeInsets(top: 8, leading: 0, bottom: 8, trailing: 8))
                 }
-                Section("Soil temperature") {
+                Section {
                     if let latestMeasurement = measurements.first {
-                        HStack {
-                            Text("\(Image(systemName: "thermometer.medium")) \(latestMeasurement.temperatureCelcius, specifier: "%.1f")°")
-                                .font(.system(size: 30.0, weight: .regular, design: .rounded))
-                            Spacer()
-                            Text("\(latestMeasurement.measuredAt ?? Date(), formatter: itemFormatter)")
-                                .foregroundColor(.secondary)
+                        VStack(alignment: .leading) {
+                            HStack(alignment: .firstTextBaseline) {
+                                Text("\(Image(systemName: "thermometer.medium")) Soil temperature")
+                                    .font(.system(.body, design: .default, weight: .medium))
+                                    .foregroundColor(.green)
+                                Spacer()
+                                Text("\(latestMeasurement.measuredAt ?? Date(), formatter: itemFormatter)")
+                                    .foregroundColor(.secondary)
+                            }
+                            HStack(alignment: .firstTextBaseline) {
+                                Text("\(latestMeasurement.temperatureCelcius, specifier: "%.1f")")
+                                    .font(.system(.largeTitle, design: .rounded, weight: .bold))
+
+                                //.font(.system(size: 30.0, weight: .bold, design: .rounded))
+                                Text("°C")
+                                    .font(.system(.body, design: .rounded))
+                                    .foregroundColor(.secondary)
+                            }
                         }
+                        
                     }
                     Chart {
                         ForEach (measurements) { measurement in
