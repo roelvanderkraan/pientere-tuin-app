@@ -52,6 +52,14 @@ struct ApiHandler {
             }
         case .undocumented(statusCode: let statusCode, _):
             debugPrint("Error getting data from server, status: \(statusCode)")
+        case .badRequest(_):
+            debugPrint("Bad request")
+        case .unauthorized(_):
+            debugPrint("Unauthorized, check API key")
+        case .notFound(_):
+            debugPrint("API not found")
+        case .serverError(statusCode: let statusCode, _):
+            debugPrint("Server error, status: \(statusCode)")
         }
     }
     

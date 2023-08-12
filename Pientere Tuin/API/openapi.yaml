@@ -1,0 +1,185 @@
+---
+openapi: 3.0.1
+info:
+  title: Mijn Pientere Tuin API
+  description: Dit is de Open API-specificatie van de Mijn Pientere Tuin API. Gebruik
+    de “Authorize” link en jouw persoonlijk API-key om de API te testen. Kijk in de
+    Kennisbank voor meer informatie over het gebruik van de Mijn Pientere Tuin API.
+  contact:
+    name: WeCity
+    email: support@wecity.nl
+  version: 1.0.0
+servers:
+- url: https://services.platform.wecity.nl
+security:
+- WecityApiKey: []
+paths:
+  "/mijn-pientere-tuin/measurements":
+    get:
+      tags:
+      - pientere-tuinen-measurement-controller
+      operationId: mijnPientereTuin
+      parameters:
+      - name: page
+        in: query
+        required: false
+        schema:
+          type: integer
+          format: int32
+      - name: wecity-api-key
+        in: header
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/PageMeasurementProjection"
+        '400':
+          description: Bad request. User ID must be an integer and larger than 0.
+        '401':
+          description: Authorization information is missing or invalid.
+        '404':
+          description: A user with the specified ID was not found.
+        '5XX':
+          description: Unexpected error.
+components:
+  securitySchemes:
+    WecityApiKey:
+      type: apiKey
+      in: header
+      name: wecity-api-key
+  schemas:
+    Links:
+      type: object
+      additionalProperties:
+        "$ref": "#/components/schemas/Link"
+    PageMetadata:
+      type: object
+      properties:
+        size:
+          type: integer
+          format: int64
+        totalElements:
+          type: integer
+          format: int64
+        totalPages:
+          type: integer
+          format: int64
+        number:
+          type: integer
+          format: int64
+    MeasurementProjection:
+      required:
+      - id
+      - measuredAt
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        measuredAt:
+          type: string
+          format: date-time
+        latitude:
+          type: number
+          format: float
+        longitude:
+          type: number
+          format: float
+        temperatureCelsius:
+          type: number
+          format: float
+        moisturePercentage:
+          type: number
+          format: float
+        gardenOrientation:
+          type: string
+        gardenHardeningPercentage:
+          type: number
+          format: float
+        gardenSize:
+          type: string
+        soilType:
+          type: string
+    PageMeasurementProjection:
+      type: object
+      properties:
+        totalPages:
+          type: integer
+          format: int32
+        totalElements:
+          type: integer
+          format: int64
+        size:
+          type: integer
+          format: int32
+        content:
+          type: array
+          items:
+            "$ref": "#/components/schemas/MeasurementProjection"
+        number:
+          type: integer
+          format: int32
+        sort:
+          "$ref": "#/components/schemas/SortObject"
+        pageable:
+          "$ref": "#/components/schemas/PageableObject"
+        first:
+          type: boolean
+        last:
+          type: boolean
+        numberOfElements:
+          type: integer
+          format: int32
+        empty:
+          type: boolean
+    PageableObject:
+      type: object
+      properties:
+        offset:
+          type: integer
+          format: int64
+        sort:
+          "$ref": "#/components/schemas/SortObject"
+        pageNumber:
+          type: integer
+          format: int32
+        pageSize:
+          type: integer
+          format: int32
+        paged:
+          type: boolean
+        unpaged:
+          type: boolean
+    SortObject:
+      type: object
+      properties:
+        empty:
+          type: boolean
+        sorted:
+          type: boolean
+        unsorted:
+          type: boolean
+    Link:
+      type: object
+      properties:
+        href:
+          type: string
+        hreflang:
+          type: string
+        title:
+          type: string
+        type:
+          type: string
+        deprecation:
+          type: string
+        profile:
+          type: string
+        name:
+          type: string
+        templated:
+          type: boolean
+

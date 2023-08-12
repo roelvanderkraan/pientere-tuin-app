@@ -24,7 +24,7 @@ struct ContentView: View {
     
     @State var chartScale: ChartScale = .month
     @State var isEditingGarden: Bool = false
-    @State var garden: Garden
+    @ObservedObject var garden: Garden
     
     var body: some View {
         NavigationView {
@@ -41,14 +41,14 @@ struct ContentView: View {
                         measurements: FetchRequest<MeasurementProjection>(
                             sortDescriptors: [NSSortDescriptor(keyPath: \MeasurementProjection.measuredAt, ascending: false)],
                             predicate: .filter(key: "measuredAt", date: Date(), scale: chartScale)))
-                        .environment(\.managedObjectContext, viewContext)
+                    .environment(\.managedObjectContext, viewContext)
                 }
                 Section {
                     TemperatureItem(
                         measurements: FetchRequest<MeasurementProjection>(
                             sortDescriptors: [NSSortDescriptor(keyPath: \MeasurementProjection.measuredAt, ascending: false)],
                             predicate: .filter(key: "measuredAt", date: Date(), scale: chartScale)))
-                        .environment(\.managedObjectContext, viewContext)
+                    .environment(\.managedObjectContext, viewContext)
                 }
                 Section {
                     NavigationLink {
@@ -64,7 +64,7 @@ struct ContentView: View {
                     }
                 }
             }
-            .navigationTitle("Pientere Tuin")
+            .navigationTitle(garden.name ?? "Pientere Tuin")
             .toolbar {
                 ToolbarItem {
                     Button {
@@ -88,7 +88,19 @@ struct ContentView: View {
     
     init(garden: Garden) {
         self.apiHandler = ApiHandler()
-        _garden = State(initialValue: garden)
+        self.garden = garden
+    }
+    
+    private func getMapRect() -> MKCoordinateRegion? {
+        if let latestMeasurement = measurements.first {
+            let region = MKCoordinateRegion(
+                center: CLLocationCoordinate2D(latitude: CLLocationDegrees(latestMeasurement.latitude), longitude: CLLocationDegrees(latestMeasurement.longitude)),
+                latitudinalMeters: 750,
+                longitudinalMeters: 750
+            )
+            return region
+        }
+        return nil
     }
 }
 

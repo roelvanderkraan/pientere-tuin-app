@@ -7,10 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		8A18F95E2A85366900C881DB /* openapi.json in Resources */ = {isa = PBXBuildFile; fileRef = 8A18F95D2A85366900C881DB /* openapi.json */; };
 		8A3D136D2A87D12B00DF4EF1 /* GardenEdit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A3D136C2A87D12B00DF4EF1 /* GardenEdit.swift */; };
 		8A3D13722A87D30D00DF4EF1 /* Binding+inits.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A3D13712A87D30D00DF4EF1 /* Binding+inits.swift */; };
 		8A3D13772A87DACC00DF4EF1 /* GardenStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A3D13762A87DACC00DF4EF1 /* GardenStore.swift */; };
+		8A3D13792A87DCE500DF4EF1 /* openapi.yaml in Resources */ = {isa = PBXBuildFile; fileRef = 8A3D13782A87DCE500DF4EF1 /* openapi.yaml */; };
 		8A649DD72A87A51200CC38DE /* HumidityItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A649DD62A87A51200CC38DE /* HumidityItem.swift */; };
 		8A649DDA2A87A76700CC38DE /* NSPredicate+date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A649DD92A87A76700CC38DE /* NSPredicate+date.swift */; };
 		8A649DDD2A87AAA100CC38DE /* TemperatureItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A649DDC2A87AAA100CC38DE /* TemperatureItem.swift */; };
@@ -78,10 +78,10 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		8A18F95D2A85366900C881DB /* openapi.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = openapi.json; sourceTree = "<group>"; };
 		8A3D136C2A87D12B00DF4EF1 /* GardenEdit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GardenEdit.swift; sourceTree = "<group>"; };
 		8A3D13712A87D30D00DF4EF1 /* Binding+inits.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Binding+inits.swift"; sourceTree = "<group>"; };
 		8A3D13762A87DACC00DF4EF1 /* GardenStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GardenStore.swift; sourceTree = "<group>"; };
+		8A3D13782A87DCE500DF4EF1 /* openapi.yaml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = openapi.yaml; sourceTree = "<group>"; };
 		8A649DD62A87A51200CC38DE /* HumidityItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HumidityItem.swift; sourceTree = "<group>"; };
 		8A649DD92A87A76700CC38DE /* NSPredicate+date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSPredicate+date.swift"; sourceTree = "<group>"; };
 		8A649DDC2A87AAA100CC38DE /* TemperatureItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemperatureItem.swift; sourceTree = "<group>"; };
@@ -193,7 +193,7 @@
 			isa = PBXGroup;
 			children = (
 				8AFCA46E2A83FE9B00D4B6C8 /* openapi-generator-config.yaml */,
-				8A18F95D2A85366900C881DB /* openapi.json */,
+				8A3D13782A87DCE500DF4EF1 /* openapi.yaml */,
 				8AACAC2A2A857B9D0032CC1C /* ApiHandler.swift */,
 			);
 			path = API;
@@ -421,8 +421,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8A18F95E2A85366900C881DB /* openapi.json in Resources */,
 				8AFCA43F2A83FA4C00D4B6C8 /* Preview Assets.xcassets in Resources */,
+				8A3D13792A87DCE500DF4EF1 /* openapi.yaml in Resources */,
 				8AFCA43B2A83FA4C00D4B6C8 /* Assets.xcassets in Resources */,
 				8AFCA46F2A83FE9B00D4B6C8 /* openapi-generator-config.yaml in Resources */,
 			);
