@@ -13,6 +13,9 @@ struct PersistenceController {
     static var preview: PersistenceController = {
         let result = PersistenceController(inMemory: true)
         let viewContext = result.container.viewContext
+        let newGarden = Garden(context: viewContext)
+        newGarden.apiKey = "ee3f7468-11fb-43b6-b870-49f9435524c1"
+        newGarden.name = "Jonge Jan tuin"
         for count in 0..<10 {
             let newItem = Item(context: viewContext)
             newItem.timestamp = Date()

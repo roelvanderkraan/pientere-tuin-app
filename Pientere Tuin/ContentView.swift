@@ -23,6 +23,8 @@ struct ContentView: View {
     private var measurements: FetchedResults<MeasurementProjection>
     
     @State var chartScale: ChartScale = .month
+    @State var isEditingGarden: Bool = false
+    @State var garden: Garden
     
     var body: some View {
         NavigationView {
@@ -57,22 +59,36 @@ struct ContentView: View {
                     }
                     Button("Refresh all measurements") {
                         Task {
-                            try? await apiHandler.updateTuinData(context: viewContext, loadAll: true)
+                            try? await apiHandler.updateTuinData(context: viewContext, loadAll: true, garden: garden)
                         }
                     }
                 }
             }
             .navigationTitle("Pientere Tuin")
+            .toolbar {
+                ToolbarItem {
+                    Button {
+                        isEditingGarden.toggle()
+                    } label: {
+                        Label("Edit garden", systemImage: "gear")
+                    }
+
+                }
+            }
+            .sheet(isPresented: $isEditingGarden) {
+                GardenEdit(garden: garden, isPresented: $isEditingGarden)
+            }
         }
         .refreshable {
             Task {
-                try? await apiHandler.updateTuinData(context: viewContext)
+                try? await apiHandler.updateTuinData(context: viewContext, garden: garden)
             }
         }
     }
     
-    init() {
+    init(garden: Garden) {
         self.apiHandler = ApiHandler()
+        _garden = State(initialValue: garden)
     }
 }
 
@@ -93,6 +109,9 @@ enum ChartScale: String, CaseIterable, Identifiable {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView().environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
+        let context = PersistenceController.preview.container.viewContext
+        let garden = GardenStore.testGarden(in: context)
+        ContentView(garden: garden)
+            .environment(\.managedObjectContext, context)
     }
 }

@@ -13,7 +13,7 @@ struct Pientere_TuinApp: App {
 
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            ContentView(garden: GardenStore.getGarden(in: persistenceController.container.viewContext))
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
         }
     }

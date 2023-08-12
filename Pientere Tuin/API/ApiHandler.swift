@@ -25,12 +25,12 @@ struct ApiHandler {
     ///   - context: Context to store the measurements in
     ///   - page: Page to start parsing
     ///   - loadAll: Should the parser load all or just the 1st page
-    func updateTuinData(context: NSManagedObjectContext, page: Int = 0, loadAll: Bool = false) async throws {
+    func updateTuinData(context: NSManagedObjectContext, page: Int = 0, loadAll: Bool = false, garden: Garden) async throws {
         debugPrint("Requesting page \(page)")
         let response = try await client.mijnPientereTuin(
             .init(
                 query: Operations.mijnPientereTuin.Input.Query(page: Int32(page)),
-                headers: Operations.mijnPientereTuin.Input.Headers(wecity_api_key: "ee3f7468-11fb-43b6-b870-49f9435524c1")
+                headers: Operations.mijnPientereTuin.Input.Headers(wecity_api_key: garden.apiKey)
             )
         )
         
@@ -40,13 +40,13 @@ struct ApiHandler {
             //debugPrint(okResponse.body)
             switch okResponse.body {
             case .json(let json):
-                writeToCoreData(apiData: json.content, context: context)
+                writeToCoreData(apiData: json.content, context: context, garden: garden)
                 
                 // Check if there are more pages to parse
                 if loadAll && !(json.last ?? false) {
                     Task {
                         try await Task.sleep(for: .seconds(10))
-                        try await updateTuinData(context: context, page: page+1, loadAll: true)
+                        try await updateTuinData(context: context, page: page+1, loadAll: true, garden: garden)
                     }
                 }
             }
@@ -55,7 +55,7 @@ struct ApiHandler {
         }
     }
     
-    private func writeToCoreData(apiData: [Components.Schemas.MeasurementProjection]?, context: NSManagedObjectContext) {
+    private func writeToCoreData(apiData: [Components.Schemas.MeasurementProjection]?, context: NSManagedObjectContext, garden: Garden) {
         if let apiData = apiData {
             for item in apiData {
                 let dataItem = MeasurementProjection(context: context)
@@ -73,6 +73,7 @@ struct ApiHandler {
                 if let longitude = item.longitude {
                     dataItem.longitude = longitude
                 }
+                dataItem.inGarden = garden
             }
             
             do {

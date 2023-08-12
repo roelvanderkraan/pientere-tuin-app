@@ -25,7 +25,7 @@ extension NSPredicate {
         }
         let startDate = calendar.date(byAdding: offsetComponents as DateComponents, to: date)!
         debugPrint("\(startDate) - \(date)")
-        return NSPredicate(format: "\(key) >= %@ && \(key) < %@",
-                           startDate as NSDate, date as NSDate)
+        return NSPredicate(format: "\(key) >= %@",
+                           startDate as NSDate)
     }
 }
