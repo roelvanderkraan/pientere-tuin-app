@@ -13,11 +13,13 @@ struct PersistenceController {
     static var preview: PersistenceController = {
         let result = PersistenceController(inMemory: true)
         let viewContext = result.container.viewContext
-        for _ in 0..<10 {
+        for count in 0..<10 {
             let newItem = Item(context: viewContext)
             newItem.timestamp = Date()
             let newMeasurement = MeasurementProjection(context: viewContext)
             newMeasurement.measuredAt = Date()
+            newMeasurement.moisturePercentage = Float(count) * 0.05
+            newMeasurement.temperatureCelcius = Float(count) * 5.0
             newMeasurement.apiUUID = UUID().uuidString
         }
         do {

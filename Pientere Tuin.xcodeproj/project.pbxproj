@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		8A18F95E2A85366900C881DB /* openapi.json in Resources */ = {isa = PBXBuildFile; fileRef = 8A18F95D2A85366900C881DB /* openapi.json */; };
+		8A649DD72A87A51200CC38DE /* HumidityItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A649DD62A87A51200CC38DE /* HumidityItem.swift */; };
+		8A649DDA2A87A76700CC38DE /* NSPredicate+date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A649DD92A87A76700CC38DE /* NSPredicate+date.swift */; };
+		8A649DDD2A87AAA100CC38DE /* TemperatureItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A649DDC2A87AAA100CC38DE /* TemperatureItem.swift */; };
 		8AACAC282A8578260032CC1C /* MeasurementList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AACAC272A8578260032CC1C /* MeasurementList.swift */; };
 		8AACAC2B2A857B9D0032CC1C /* ApiHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AACAC2A2A857B9D0032CC1C /* ApiHandler.swift */; };
 		8AACAC342A857D710032CC1C /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8AACAC332A857D710032CC1C /* WidgetKit.framework */; };
@@ -73,6 +76,9 @@
 
 /* Begin PBXFileReference section */
 		8A18F95D2A85366900C881DB /* openapi.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = openapi.json; sourceTree = "<group>"; };
+		8A649DD62A87A51200CC38DE /* HumidityItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HumidityItem.swift; sourceTree = "<group>"; };
+		8A649DD92A87A76700CC38DE /* NSPredicate+date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSPredicate+date.swift"; sourceTree = "<group>"; };
+		8A649DDC2A87AAA100CC38DE /* TemperatureItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemperatureItem.swift; sourceTree = "<group>"; };
 		8A68FD272A8662E600DF6F56 /* Pientere_Tuin 3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Pientere_Tuin 3.xcdatamodel"; sourceTree = "<group>"; };
 		8AACAC272A8578260032CC1C /* MeasurementList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeasurementList.swift; sourceTree = "<group>"; };
 		8AACAC2A2A857B9D0032CC1C /* ApiHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiHandler.swift; sourceTree = "<group>"; };
@@ -207,6 +213,9 @@
 			children = (
 				8AFCA4312A83FA4B00D4B6C8 /* Pientere_TuinApp.swift */,
 				8AFCA4382A83FA4B00D4B6C8 /* ContentView.swift */,
+				8A649DD62A87A51200CC38DE /* HumidityItem.swift */,
+				8A649DDC2A87AAA100CC38DE /* TemperatureItem.swift */,
+				8A649DD92A87A76700CC38DE /* NSPredicate+date.swift */,
 				8AACAC272A8578260032CC1C /* MeasurementList.swift */,
 				8AACAC4F2A8580640032CC1C /* Model */,
 				8AACAC4D2A8580480032CC1C /* API */,
@@ -427,12 +436,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				8AFCA4322A83FA4B00D4B6C8 /* Pientere_TuinApp.swift in Sources */,
+				8A649DDD2A87AAA100CC38DE /* TemperatureItem.swift in Sources */,
+				8A649DD72A87A51200CC38DE /* HumidityItem.swift in Sources */,
 				8AACAC2B2A857B9D0032CC1C /* ApiHandler.swift in Sources */,
 				8AACAC432A857D720032CC1C /* Widget.intentdefinition in Sources */,
 				8AFCA4372A83FA4B00D4B6C8 /* Pientere_Tuin.xcdatamodeld in Sources */,
 				8AACAC282A8578260032CC1C /* MeasurementList.swift in Sources */,
 				8AFCA4392A83FA4B00D4B6C8 /* ContentView.swift in Sources */,
 				8AFCA4342A83FA4B00D4B6C8 /* Persistence.swift in Sources */,
+				8A649DDA2A87A76700CC38DE /* NSPredicate+date.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -22,80 +22,31 @@ struct ContentView: View {
         animation: .default)
     private var measurements: FetchedResults<MeasurementProjection>
     
+    @State var chartScale: ChartScale = .month
+    
     var body: some View {
         NavigationView {
             List {
+                Picker("Chart scale", selection: $chartScale) {
+                    Text("D").tag(ChartScale.day)
+                    Text("W").tag(ChartScale.week)
+                    Text("M").tag(ChartScale.month)
+                    Text("All").tag(ChartScale.all)
+                }
+                .pickerStyle(.segmented)
                 Section {
-                    if let latestMeasurement = measurements.first {
-                        VStack(alignment: .leading) {
-                            HStack(alignment: .firstTextBaseline) {
-                                Text("\(Image(systemName: "humidity")) Soil humidity")
-                                    .font(.system(.body, design: .default, weight: .medium))
-                                    .foregroundColor(.blue)
-                                Spacer()
-                                Text("\(latestMeasurement.measuredAt ?? Date(), formatter: itemFormatter)")
-                                    .foregroundColor(.secondary)
-                            }
-                            HStack(alignment: .firstTextBaseline) {
-                                Text("\(latestMeasurement.moisturePercentage * 100, specifier: "%.1f")")
-                                    .font(.system(.largeTitle, design: .rounded, weight: .bold))
-                                Text("%")
-                                    .font(.system(.body, design: .rounded))
-                                    .foregroundColor(.secondary)
-                            }
-                        }
-                    }
-                    Chart {
-                        ForEach (measurements) { measurement in
-                            LineMark(
-                                x: .value("Month", measurement.measuredAt ?? Date()),
-                                y: .value("Moisture", measurement.moisturePercentage * 100)
-                                
-                            )
-                            .foregroundStyle(by: .value("Type", "Moisture"))
-                        }
-                    }
-                    .chartForegroundStyleScale([
-                        "Moisture": .blue
-                    ])
-                    .padding(EdgeInsets(top: 8, leading: 0, bottom: 8, trailing: 8))
+                    HumidityItem(
+                        measurements: FetchRequest<MeasurementProjection>(
+                            sortDescriptors: [NSSortDescriptor(keyPath: \MeasurementProjection.measuredAt, ascending: false)],
+                            predicate: .filter(key: "measuredAt", date: Date(), scale: chartScale)))
+                        .environment(\.managedObjectContext, viewContext)
                 }
                 Section {
-                    if let latestMeasurement = measurements.first {
-                        VStack(alignment: .leading) {
-                            HStack(alignment: .firstTextBaseline) {
-                                Text("\(Image(systemName: "thermometer.medium")) Soil temperature")
-                                    .font(.system(.body, design: .default, weight: .medium))
-                                    .foregroundColor(.green)
-                                Spacer()
-                                Text("\(latestMeasurement.measuredAt ?? Date(), formatter: itemFormatter)")
-                                    .foregroundColor(.secondary)
-                            }
-                            HStack(alignment: .firstTextBaseline) {
-                                Text("\(latestMeasurement.temperatureCelcius, specifier: "%.1f")")
-                                    .font(.system(.largeTitle, design: .rounded, weight: .bold))
-
-                                //.font(.system(size: 30.0, weight: .bold, design: .rounded))
-                                Text("°C")
-                                    .font(.system(.body, design: .rounded))
-                                    .foregroundColor(.secondary)
-                            }
-                        }
-                        
-                    }
-                    Chart {
-                        ForEach (measurements) { measurement in
-                            LineMark(
-                                x: .value("Month", measurement.measuredAt ?? Date()),
-                                y: .value("Temperature", measurement.temperatureCelcius)
-                            )
-                            .foregroundStyle(by: .value("Type", "Temperature"))
-                        }
-                    }
-                    .chartForegroundStyleScale([
-                        "Temperature": .green
-                    ])
-                    .padding(EdgeInsets(top: 8, leading: 0, bottom: 8, trailing: 8))
+                    TemperatureItem(
+                        measurements: FetchRequest<MeasurementProjection>(
+                            sortDescriptors: [NSSortDescriptor(keyPath: \MeasurementProjection.measuredAt, ascending: false)],
+                            predicate: .filter(key: "measuredAt", date: Date(), scale: chartScale)))
+                        .environment(\.managedObjectContext, viewContext)
                 }
                 Section {
                     NavigationLink {
@@ -104,20 +55,14 @@ struct ContentView: View {
                     } label: {
                         Text("All measurements")
                     }
-                }
-            }
-            .navigationTitle("Pientere Tuin")
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Button {
+                    Button("Refresh all measurements") {
                         Task {
-                            try? await apiHandler.updateTuinData(context: viewContext)
+                            try? await apiHandler.updateTuinData(context: viewContext, loadAll: true)
                         }
-                    } label: {
-                        Label("Refresh alles", systemImage: "arrow.counterclockwise")
                     }
                 }
             }
+            .navigationTitle("Pientere Tuin")
         }
         .refreshable {
             Task {
@@ -137,6 +82,14 @@ private let itemFormatter: DateFormatter = {
     formatter.timeStyle = .short
     return formatter
 }()
+
+enum ChartScale: String, CaseIterable, Identifiable {
+    case week
+    case month
+    case day
+    case all
+    var id: Self { self }
+}
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {

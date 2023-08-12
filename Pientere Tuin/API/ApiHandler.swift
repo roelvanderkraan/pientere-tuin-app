@@ -20,7 +20,12 @@ struct ApiHandler {
         )
     }
     
-    func updateTuinData(context: NSManagedObjectContext, page: Int = 0) async throws {
+    /// Loads measurements from Pientere Tuinen API
+    /// - Parameters:
+    ///   - context: Context to store the measurements in
+    ///   - page: Page to start parsing
+    ///   - loadAll: Should the parser load all or just the 1st page
+    func updateTuinData(context: NSManagedObjectContext, page: Int = 0, loadAll: Bool = false) async throws {
         debugPrint("Requesting page \(page)")
         let response = try await client.mijnPientereTuin(
             .init(
@@ -38,10 +43,10 @@ struct ApiHandler {
                 writeToCoreData(apiData: json.content, context: context)
                 
                 // Check if there are more pages to parse
-                if !(json.last ?? false) {
+                if loadAll && !(json.last ?? false) {
                     Task {
-                        try await Task.sleep(for:.seconds(60))
-                        try await updateTuinData(context: context, page: page+1)
+                        try await Task.sleep(for: .seconds(10))
+                        try await updateTuinData(context: context, page: page+1, loadAll: true)
                     }
                 }
             }
