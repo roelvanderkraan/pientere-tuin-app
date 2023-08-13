@@ -82,6 +82,7 @@
 		8A3D13712A87D30D00DF4EF1 /* Binding+inits.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Binding+inits.swift"; sourceTree = "<group>"; };
 		8A3D13762A87DACC00DF4EF1 /* GardenStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GardenStore.swift; sourceTree = "<group>"; };
 		8A3D13782A87DCE500DF4EF1 /* openapi.yaml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = openapi.yaml; sourceTree = "<group>"; };
+		8A48C0A92A88E31400C4F2EA /* Pientere-Tuin-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "Pientere-Tuin-Info.plist"; sourceTree = SOURCE_ROOT; };
 		8A649DD62A87A51200CC38DE /* HumidityItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HumidityItem.swift; sourceTree = "<group>"; };
 		8A649DD92A87A76700CC38DE /* NSPredicate+date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSPredicate+date.swift"; sourceTree = "<group>"; };
 		8A649DDC2A87AAA100CC38DE /* TemperatureItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemperatureItem.swift; sourceTree = "<group>"; };
@@ -235,6 +236,7 @@
 		8AFCA4302A83FA4B00D4B6C8 /* Pientere Tuin */ = {
 			isa = PBXGroup;
 			children = (
+				8A48C0A92A88E31400C4F2EA /* Pientere-Tuin-Info.plist */,
 				8A3D13742A87D8D800DF4EF1 /* Extensions */,
 				8AFCA4312A83FA4B00D4B6C8 /* Pientere_TuinApp.swift */,
 				8AFCA4382A83FA4B00D4B6C8 /* ContentView.swift */,
@@ -700,6 +702,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Pientere-Tuin-Info.plist";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -739,6 +742,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Pientere-Tuin-Info.plist";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
