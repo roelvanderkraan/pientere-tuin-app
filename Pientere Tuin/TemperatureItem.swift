@@ -12,6 +12,8 @@ struct TemperatureItem: View {
     @FetchRequest var measurements: FetchedResults<MeasurementProjection>
         
     @Environment(\.managedObjectContext) private var viewContext
+    
+    @Binding var scale: ChartScale
 
     
     var body: some View {
@@ -61,6 +63,60 @@ struct TemperatureItem: View {
             .chartLegend(.hidden)
             .padding(EdgeInsets(top: 0, leading: 0, bottom: 8, trailing: 8))
             .chartYAxisLabel("°C")
+            .chartYAxis {
+                AxisMarks(values: .automatic(desiredCount: 3))
+                AxisMarks(
+                    values: .automatic(desiredCount: 3)
+                ) {
+                    AxisGridLine()
+                }
+            }
+            .chartXAxis {
+                switch scale {
+                case .day:
+                    AxisMarks(values: .stride(by: .hour, count: 5)) { value in
+                        if let date = value.as(Date.self) {
+                            let hour = Calendar.current.component(.hour, from: date)
+                            switch hour {
+                            case 0, 12:
+                                AxisValueLabel(format: .dateTime.hour())
+                            default:
+                                AxisValueLabel(format: .dateTime.hour(.defaultDigits(amPM: .omitted)))
+                            }
+                        }
+                        
+                        AxisGridLine()
+                        AxisTick()
+                    }
+                case .week:
+                    AxisMarks(values: .stride(by: .day, count: 1)) { value in
+                        if let date = value.as(Date.self) {
+                            AxisValueLabel(format: .dateTime.weekday())
+                        }
+                        
+                        AxisGridLine()
+                        AxisTick()
+                    }
+                case .month:
+                    AxisMarks(values: .stride(by: .day, count: 5)) { value in
+                        if let date = value.as(Date.self) {
+                            AxisValueLabel(format: .dateTime.day())
+                        }
+                        
+                        AxisGridLine()
+                        AxisTick()
+                    }
+                case .all:
+                    AxisMarks(values: .stride(by: .month, count: 1)) { value in
+                        if let date = value.as(Date.self) {
+                            AxisValueLabel(format: .dateTime.month())
+                        }
+                        
+                        AxisGridLine()
+                        AxisTick()
+                    }
+                }
+            }
         }
     }
 }
@@ -74,11 +130,11 @@ private let itemFormatter: DateFormatter = {
 
 struct TemperatureItem_Previews: PreviewProvider {
     static var previews: some View {
-        HumidityItem(
+        TemperatureItem(
             measurements: FetchRequest<MeasurementProjection>(
                 sortDescriptors: [NSSortDescriptor(keyPath: \MeasurementProjection.measuredAt, ascending: false)],
                 predicate: .filter(key: "measuredAt", date: Date(), scale: .month)
-            )
+            ), scale: .constant(.month)
         )
             .environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
     }

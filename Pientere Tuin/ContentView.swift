@@ -40,14 +40,17 @@ struct ContentView: View {
                     HumidityItem(
                         measurements: FetchRequest<MeasurementProjection>(
                             sortDescriptors: [NSSortDescriptor(keyPath: \MeasurementProjection.measuredAt, ascending: false)],
-                            predicate: .filter(key: "measuredAt", date: Date(), scale: chartScale)))
+                            predicate: .filter(key: "measuredAt", date: Date(), scale: chartScale)),
+                        scale: $chartScale
+                    )
                     .environment(\.managedObjectContext, viewContext)
                 }
                 Section {
                     TemperatureItem(
                         measurements: FetchRequest<MeasurementProjection>(
                             sortDescriptors: [NSSortDescriptor(keyPath: \MeasurementProjection.measuredAt, ascending: false)],
-                            predicate: .filter(key: "measuredAt", date: Date(), scale: chartScale)))
+                            predicate: .filter(key: "measuredAt", date: Date(), scale: chartScale)),
+                        scale: $chartScale)
                     .environment(\.managedObjectContext, viewContext)
                 }
                 Section {
