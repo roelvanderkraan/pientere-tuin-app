@@ -60,6 +60,8 @@ struct ApiHandler {
             debugPrint("API not found")
         case .serverError(statusCode: let statusCode, _):
             debugPrint("Server error, status: \(statusCode)")
+        case .tooManyRequests(_):
+            debugPrint("Too many requests, 1 request per 10 seconds allowed.")
         }
     }
     

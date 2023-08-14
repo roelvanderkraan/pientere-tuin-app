@@ -13,18 +13,24 @@ import BackgroundTasks
 struct Pientere_TuinApp: App {
     @Environment(\.scenePhase) private var phase
     let persistenceController = PersistenceController.shared
+    @State private var apiTimer = ApiTimer()
 
     var body: some Scene {
         WindowGroup {
-            ContentView(garden: GardenStore.getGarden(in: persistenceController.container.viewContext))
+            ContentView(
+                garden: GardenStore.getGarden(in: persistenceController.container.viewContext),
+                apiTimer: apiTimer
+            )
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
         }
         .onChange(of: phase) { newPhase in
             switch newPhase {
             //case .background: scheduleAppRefresh()
             case .active:
-                Task {
-                    await refreshData()
+                if apiTimer.isParseAllowed() {
+                    Task {
+                        await refreshData()
+                    }
                 }
             default: break
             }

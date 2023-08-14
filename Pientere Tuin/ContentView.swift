@@ -25,6 +25,7 @@ struct ContentView: View {
     @State var chartScale: ChartScale = .month
     @State var isEditingGarden: Bool = false
     @ObservedObject var garden: Garden
+    var apiTimer: ApiTimer
     
     var body: some View {
         NavigationView {
@@ -83,14 +84,16 @@ struct ContentView: View {
             }
         }
         .refreshable {
-            Task {
+            if apiTimer.isParseAllowed() {
+                apiTimer.lastParseDate = Date()
                 try? await apiHandler.updateTuinData(context: viewContext, garden: garden)
             }
         }
     }
     
-    init(garden: Garden) {
+    init(garden: Garden, apiTimer: ApiTimer) {
         self.apiHandler = ApiHandler()
+        self.apiTimer = apiTimer
         self.garden = garden
     }
     
@@ -114,19 +117,11 @@ private let itemFormatter: DateFormatter = {
     return formatter
 }()
 
-enum ChartScale: String, CaseIterable, Identifiable {
-    case week
-    case month
-    case day
-    case all
-    var id: Self { self }
-}
-
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         let context = PersistenceController.preview.container.viewContext
         let garden = GardenStore.testGarden(in: context)
-        ContentView(garden: garden)
+        ContentView(garden: garden, apiTimer: ApiTimer())
             .environment(\.managedObjectContext, context)
     }
 }

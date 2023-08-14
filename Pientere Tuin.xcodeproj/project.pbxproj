@@ -25,6 +25,8 @@
 		8AACAC422A857D720032CC1C /* Widget.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 8AACAC3E2A857D710032CC1C /* Widget.intentdefinition */; };
 		8AACAC432A857D720032CC1C /* Widget.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 8AACAC3E2A857D710032CC1C /* Widget.intentdefinition */; };
 		8AACAC462A857D720032CC1C /* WidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 8AACAC312A857D710032CC1C /* WidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		8AF06D812A8A8E6900D30A83 /* ChartScale.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AF06D802A8A8E6900D30A83 /* ChartScale.swift */; };
+		8AF06D842A8AA4C400D30A83 /* ApiTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AF06D832A8AA4C400D30A83 /* ApiTimer.swift */; };
 		8AFCA4322A83FA4B00D4B6C8 /* Pientere_TuinApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AFCA4312A83FA4B00D4B6C8 /* Pientere_TuinApp.swift */; };
 		8AFCA4342A83FA4B00D4B6C8 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AFCA4332A83FA4B00D4B6C8 /* Persistence.swift */; };
 		8AFCA4372A83FA4B00D4B6C8 /* Pientere_Tuin.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 8AFCA4352A83FA4B00D4B6C8 /* Pientere_Tuin.xcdatamodeld */; };
@@ -99,6 +101,8 @@
 		8AACAC3F2A857D720032CC1C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8AACAC412A857D720032CC1C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8AAF6B552A85064400EDC1E0 /* Pientere_Tuin 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Pientere_Tuin 2.xcdatamodel"; sourceTree = "<group>"; };
+		8AF06D802A8A8E6900D30A83 /* ChartScale.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartScale.swift; sourceTree = "<group>"; };
+		8AF06D832A8AA4C400D30A83 /* ApiTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiTimer.swift; sourceTree = "<group>"; };
 		8AFCA42E2A83FA4B00D4B6C8 /* Pientere Tuin.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Pientere Tuin.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8AFCA4312A83FA4B00D4B6C8 /* Pientere_TuinApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pientere_TuinApp.swift; sourceTree = "<group>"; };
 		8AFCA4332A83FA4B00D4B6C8 /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
@@ -196,6 +200,7 @@
 				8AFCA46E2A83FE9B00D4B6C8 /* openapi-generator-config.yaml */,
 				8A3D13782A87DCE500DF4EF1 /* openapi.yaml */,
 				8AACAC2A2A857B9D0032CC1C /* ApiHandler.swift */,
+				8AF06D832A8AA4C400D30A83 /* ApiTimer.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -206,6 +211,7 @@
 				8AFCA4332A83FA4B00D4B6C8 /* Persistence.swift */,
 				8AFCA4352A83FA4B00D4B6C8 /* Pientere_Tuin.xcdatamodeld */,
 				8A3D13762A87DACC00DF4EF1 /* GardenStore.swift */,
+				8AF06D802A8A8E6900D30A83 /* ChartScale.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -465,9 +471,11 @@
 				8AFCA4322A83FA4B00D4B6C8 /* Pientere_TuinApp.swift in Sources */,
 				8A649DDD2A87AAA100CC38DE /* TemperatureItem.swift in Sources */,
 				8A649DD72A87A51200CC38DE /* HumidityItem.swift in Sources */,
+				8AF06D812A8A8E6900D30A83 /* ChartScale.swift in Sources */,
 				8AACAC2B2A857B9D0032CC1C /* ApiHandler.swift in Sources */,
 				8A3D136D2A87D12B00DF4EF1 /* GardenEdit.swift in Sources */,
 				8AACAC432A857D720032CC1C /* Widget.intentdefinition in Sources */,
+				8AF06D842A8AA4C400D30A83 /* ApiTimer.swift in Sources */,
 				8AFCA4372A83FA4B00D4B6C8 /* Pientere_Tuin.xcdatamodeld in Sources */,
 				8A3D13722A87D30D00DF4EF1 /* Binding+inits.swift in Sources */,
 				8A3D13772A87DACC00DF4EF1 /* GardenStore.swift in Sources */,
