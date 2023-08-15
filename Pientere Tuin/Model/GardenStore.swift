@@ -32,4 +32,9 @@ struct GardenStore {
         newGarden.name = "Jonge Jan tuin"
         return newGarden
     }
+    
+    static func testNewGarden(in context: NSManagedObjectContext) -> Garden {
+        let newGarden = Garden(context: context)
+        return newGarden
+    }
 }

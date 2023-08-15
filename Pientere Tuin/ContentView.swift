@@ -24,6 +24,7 @@ struct ContentView: View {
     
     @State var chartScale: ChartScale = .month
     @State var isEditingGarden: Bool = false
+    @State var isAddingGarden: Bool = false
     @ObservedObject var garden: Garden
     var apiTimer: ApiTimer
     
@@ -82,11 +83,25 @@ struct ContentView: View {
             .sheet(isPresented: $isEditingGarden) {
                 GardenEdit(garden: garden, isPresented: $isEditingGarden)
             }
+            .sheet(isPresented: $isAddingGarden) {
+                Task {
+                    try? await apiHandler.updateTuinData(context: viewContext, loadAll: true, garden: garden)
+                }
+            } content: {
+                GardenNew(garden: garden, isPresented: $isAddingGarden, apiHandler: apiHandler)
+                    .interactiveDismissDisabled()
+            }
+
         }
         .refreshable {
             if apiTimer.isParseAllowed() {
                 apiTimer.lastParseDate = Date()
                 try? await apiHandler.updateTuinData(context: viewContext, garden: garden)
+            }
+        }
+        .onAppear {
+            if garden.apiKey == nil {
+                isAddingGarden = true
             }
         }
     }

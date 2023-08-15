@@ -46,7 +46,9 @@ struct Pientere_TuinApp: App {
         viewContext.automaticallyMergesChangesFromParent = true
         viewContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
         let garden = GardenStore.getGarden(in: viewContext)
-        try? await apiHandler.updateTuinData(context: viewContext, garden: garden)
+        if garden.apiKey != nil {
+            try? await apiHandler.updateTuinData(context: viewContext, garden: garden)
+        }
     }
     
     /// Schedules background refresh of data, every 15 minutes

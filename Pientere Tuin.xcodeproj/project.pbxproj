@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8A138FD92A8B945C003247BA /* GardenNew.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A138FD82A8B945C003247BA /* GardenNew.swift */; };
+		8A138FDC2A8B9A88003247BA /* Garden+validate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A138FDB2A8B9A88003247BA /* Garden+validate.swift */; };
+		8A138FDF2A8B9D0B003247BA /* ApiErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A138FDE2A8B9D0B003247BA /* ApiErrors.swift */; };
 		8A3D136D2A87D12B00DF4EF1 /* GardenEdit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A3D136C2A87D12B00DF4EF1 /* GardenEdit.swift */; };
 		8A3D13722A87D30D00DF4EF1 /* Binding+inits.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A3D13712A87D30D00DF4EF1 /* Binding+inits.swift */; };
 		8A3D13772A87DACC00DF4EF1 /* GardenStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A3D13762A87DACC00DF4EF1 /* GardenStore.swift */; };
@@ -80,6 +83,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		8A138FD82A8B945C003247BA /* GardenNew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GardenNew.swift; sourceTree = "<group>"; };
+		8A138FDB2A8B9A88003247BA /* Garden+validate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Garden+validate.swift"; sourceTree = "<group>"; };
+		8A138FDE2A8B9D0B003247BA /* ApiErrors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiErrors.swift; sourceTree = "<group>"; };
 		8A3D136C2A87D12B00DF4EF1 /* GardenEdit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GardenEdit.swift; sourceTree = "<group>"; };
 		8A3D13712A87D30D00DF4EF1 /* Binding+inits.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Binding+inits.swift"; sourceTree = "<group>"; };
 		8A3D13762A87DACC00DF4EF1 /* GardenStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GardenStore.swift; sourceTree = "<group>"; };
@@ -158,6 +164,8 @@
 		8A3D136F2A87D23100DF4EF1 /* Garden */ = {
 			isa = PBXGroup;
 			children = (
+				8A138FD82A8B945C003247BA /* GardenNew.swift */,
+				8A138FDB2A8B9A88003247BA /* Garden+validate.swift */,
 				8A3D136C2A87D12B00DF4EF1 /* GardenEdit.swift */,
 			);
 			path = Garden;
@@ -201,6 +209,7 @@
 				8A3D13782A87DCE500DF4EF1 /* openapi.yaml */,
 				8AACAC2A2A857B9D0032CC1C /* ApiHandler.swift */,
 				8AF06D832A8AA4C400D30A83 /* ApiTimer.swift */,
+				8A138FDE2A8B9D0B003247BA /* ApiErrors.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -214,6 +223,14 @@
 				8AF06D802A8A8E6900D30A83 /* ChartScale.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		8AF06D862A8AAA8900D30A83 /* Measurement */ = {
+			isa = PBXGroup;
+			children = (
+				8AACAC272A8578260032CC1C /* MeasurementList.swift */,
+			);
+			path = Measurement;
 			sourceTree = "<group>";
 		};
 		8AFCA4252A83FA4B00D4B6C8 = {
@@ -249,7 +266,7 @@
 				8A3D136F2A87D23100DF4EF1 /* Garden */,
 				8A649DD62A87A51200CC38DE /* HumidityItem.swift */,
 				8A649DDC2A87AAA100CC38DE /* TemperatureItem.swift */,
-				8AACAC272A8578260032CC1C /* MeasurementList.swift */,
+				8AF06D862A8AAA8900D30A83 /* Measurement */,
 				8AACAC4F2A8580640032CC1C /* Model */,
 				8AACAC4D2A8580480032CC1C /* API */,
 				8AFCA43A2A83FA4C00D4B6C8 /* Assets.xcassets */,
@@ -470,6 +487,7 @@
 			files = (
 				8AFCA4322A83FA4B00D4B6C8 /* Pientere_TuinApp.swift in Sources */,
 				8A649DDD2A87AAA100CC38DE /* TemperatureItem.swift in Sources */,
+				8A138FD92A8B945C003247BA /* GardenNew.swift in Sources */,
 				8A649DD72A87A51200CC38DE /* HumidityItem.swift in Sources */,
 				8AF06D812A8A8E6900D30A83 /* ChartScale.swift in Sources */,
 				8AACAC2B2A857B9D0032CC1C /* ApiHandler.swift in Sources */,
@@ -478,8 +496,10 @@
 				8AF06D842A8AA4C400D30A83 /* ApiTimer.swift in Sources */,
 				8AFCA4372A83FA4B00D4B6C8 /* Pientere_Tuin.xcdatamodeld in Sources */,
 				8A3D13722A87D30D00DF4EF1 /* Binding+inits.swift in Sources */,
+				8A138FDF2A8B9D0B003247BA /* ApiErrors.swift in Sources */,
 				8A3D13772A87DACC00DF4EF1 /* GardenStore.swift in Sources */,
 				8AACAC282A8578260032CC1C /* MeasurementList.swift in Sources */,
+				8A138FDC2A8B9A88003247BA /* Garden+validate.swift in Sources */,
 				8AFCA4392A83FA4B00D4B6C8 /* ContentView.swift in Sources */,
 				8AFCA4342A83FA4B00D4B6C8 /* Persistence.swift in Sources */,
 				8A649DDA2A87A76700CC38DE /* NSPredicate+date.swift in Sources */,
