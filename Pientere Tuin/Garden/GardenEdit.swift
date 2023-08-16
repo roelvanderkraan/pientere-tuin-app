@@ -35,17 +35,41 @@ struct GardenEdit: View {
                 } footer: {
                     Text("Vul hier de API key in uit je Pientere Tuin account.")
                 }
-                Section("Data management") {
-                    Button("\(Image(systemName: "arrow.triangle.2.circlepath")) Reload measurements") {
+                Section("Garden") {
+                    Link(destination: URL(string: "https://service-portal.platform.wecity.nl/pientere-tuinen")!) {
+                        Label("Edit garden information", systemImage: "safari")
+                    }
+                }
+                Section {
+                    Link(destination: URL(string: "https://help.wecity.nl/pientere-tuinen")!) {
+                        Label("Knowledgebase", systemImage: "graduationcap")
+                    }
+                    Link(destination: URL(string: "mailto:roel@goeieplantjes.nl")!)  {
+                        Label("App feedback", systemImage: "paperplane")
+                    }
+                } header: {
+                    Text("Information")
+                } footer: {
+                    Text("Please let me know how I can make this app more useful for you.")
+                }
+                Section {
+                    Button {
                         Task {
                             try? await ApiHandler.shared.updateTuinData(context: viewContext, loadAll: true, garden: garden)
                         }
                         isPresented.toggle()
+                    } label: {
+                        Label("Reload measurements", systemImage: "arrow.triangle.2.circlepath")
                     }
                     Button(role: .destructive) {
                         isDeletingAll.toggle()
                     } label: {
-                        Text("\(Image(systemName: "trash")) Delete all measurements")                    }
+                        Label("Delete all measurements", systemImage: "trash")
+                            .foregroundColor(.red)
+                        
+                    }
+                } header: {
+                    Text("Data management")
                 }
             }
             .textFieldStyle(.roundedBorder)
