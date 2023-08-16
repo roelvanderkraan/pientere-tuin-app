@@ -11,7 +11,6 @@ import CoreData
 struct GardenEdit: View {
     @ObservedObject var garden: Garden
     @Binding var isPresented: Bool
-    var apiHandler: ApiHandler
     @State var isDeletingAll: Bool = false
     
     @Environment(\.managedObjectContext) private var viewContext
@@ -19,9 +18,6 @@ struct GardenEdit: View {
     var body: some View {
         NavigationView {
             List {
-                Section("Garden name") {
-                    TextField("Name", text: Binding($garden.name, replacingNilWith: ""))
-                }
                 Section {
                     TextField(text: Binding($garden.apiKey, replacingNilWith: "")) {
                         Text("API key")
@@ -42,7 +38,7 @@ struct GardenEdit: View {
                 Section("Data management") {
                     Button("\(Image(systemName: "arrow.triangle.2.circlepath")) Reload measurements") {
                         Task {
-                            try? await apiHandler.updateTuinData(context: viewContext, loadAll: true, garden: garden)
+                            try? await ApiHandler.shared.updateTuinData(context: viewContext, loadAll: true, garden: garden)
                         }
                         isPresented.toggle()
                     }
@@ -82,7 +78,7 @@ struct GardenEdit_Previews: PreviewProvider {
     static var previews: some View {
         let context =  PersistenceController.preview.container.viewContext
         
-        GardenEdit(garden: GardenStore.testGarden(in: context), isPresented: .constant(true), apiHandler: ApiHandler())
+        GardenEdit(garden: GardenStore.testGarden(in: context), isPresented: .constant(true))
             .environment(\.managedObjectContext, context)
     }
 }

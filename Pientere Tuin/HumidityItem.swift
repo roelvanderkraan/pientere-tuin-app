@@ -17,8 +17,7 @@ struct HumidityItem: View {
     
     var body: some View {
         VStack {
-            Chart {
-                ForEach (measurements) { measurement in
+            Chart(measurements) { measurement in
                     LineMark(
                         x: .value("Hour", measurement.measuredAt ?? Date(), unit: .hour),
                         y: .value("Moisture", measurement.moisturePercentage * 100)
@@ -32,7 +31,6 @@ struct HumidityItem: View {
                         )
                     )
                     .alignsMarkStylesWithPlotArea()
-                }
             }
             .chartForegroundStyleScale([
                 "Moisture": .blue

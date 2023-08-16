@@ -41,13 +41,12 @@ struct Pientere_TuinApp: App {
     /// Refreshes data from API in background thread
     /// Should run +/- every hour, since data in the API is only updated hourly
     private func refreshData() async {
-        let apiHandler = ApiHandler()
         let viewContext = persistenceController.container.newBackgroundContext()
         viewContext.automaticallyMergesChangesFromParent = true
         viewContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
         let garden = GardenStore.getGarden(in: viewContext)
         if garden.apiKey != nil {
-            try? await apiHandler.updateTuinData(context: viewContext, garden: garden)
+            try? await ApiHandler.shared.updateTuinData(context: viewContext, garden: garden)
         }
     }
     

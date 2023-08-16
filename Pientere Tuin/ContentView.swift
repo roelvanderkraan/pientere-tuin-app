@@ -15,8 +15,6 @@ import MapKit
 struct ContentView: View {
     @Environment(\.managedObjectContext) private var viewContext
     
-    let apiHandler: ApiHandler
-    
     @FetchRequest(
         sortDescriptors: [SortDescriptor(\.measuredAt, order: .reverse)],
         animation: .default)
@@ -53,8 +51,17 @@ struct ContentView: View {
                         
                     }
                 }
+                Section {
+                    if let lastMeasurement = measurements.first {
+                        NavigationLink {
+                            GardenDetails(latestMeasurement: lastMeasurement)
+                        } label: {
+                            Text("Garden details")
+                        }
+                    }
+                }
             }
-            .navigationTitle(garden.name ?? "Pientere Tuin")
+            .navigationTitle("Pientere Tuin")
             .toolbar {
                 ToolbarItem {
                     Button {
@@ -66,15 +73,15 @@ struct ContentView: View {
                 }
             }
             .sheet(isPresented: $isEditingGarden) {
-                GardenEdit(garden: garden, isPresented: $isEditingGarden, apiHandler: apiHandler)
+                GardenEdit(garden: garden, isPresented: $isEditingGarden)
                     .environment(\.managedObjectContext, viewContext)
             }
             .sheet(isPresented: $isAddingGarden) {
                 Task {
-                    try? await apiHandler.updateTuinData(context: viewContext, loadAll: true, garden: garden)
+                    try? await ApiHandler.shared.updateTuinData(context: viewContext, loadAll: true, garden: garden)
                 }
             } content: {
-                GardenNew(garden: garden, isPresented: $isAddingGarden, apiHandler: apiHandler)
+                GardenNew(garden: garden, isPresented: $isAddingGarden)
                     .environment(\.managedObjectContext, viewContext)
                     .interactiveDismissDisabled()
             }
@@ -83,7 +90,7 @@ struct ContentView: View {
         .refreshable {
             if apiTimer.isParseAllowed() {
                 apiTimer.lastParseDate = Date()
-                try? await apiHandler.updateTuinData(context: viewContext, garden: garden)
+                try? await ApiHandler.shared.updateTuinData(context: viewContext, garden: garden)
             }
         }
         .onAppear {
@@ -94,21 +101,8 @@ struct ContentView: View {
     }
     
     init(garden: Garden, apiTimer: ApiTimer) {
-        self.apiHandler = ApiHandler()
         self.apiTimer = apiTimer
         self.garden = garden
-    }
-    
-    private func getMapRect() -> MKCoordinateRegion? {
-        if let latestMeasurement = measurements.first {
-            let region = MKCoordinateRegion(
-                center: CLLocationCoordinate2D(latitude: CLLocationDegrees(latestMeasurement.latitude), longitude: CLLocationDegrees(latestMeasurement.longitude)),
-                latitudinalMeters: 750,
-                longitudinalMeters: 750
-            )
-            return region
-        }
-        return nil
     }
 }
 

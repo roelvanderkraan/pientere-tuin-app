@@ -12,7 +12,6 @@ struct GardenNew: View {
     @Binding var isPresented: Bool
     @State var isError: Bool = false
     @State var errorMessage: String?
-    var apiHandler: ApiHandler
     
     @Environment(\.managedObjectContext) private var viewContext
     
@@ -100,7 +99,7 @@ struct GardenNew: View {
         }
         Task {
             do {
-                try await apiHandler.updateTuinData(context: viewContext, loadAll: true, garden: garden)
+                try await ApiHandler.shared.updateTuinData(context: viewContext, loadAll: true, garden: garden)
                 dismiss()
             } catch is NotAuthorizedError {
                 isError = true
@@ -127,7 +126,7 @@ struct GardenNew_Previews: PreviewProvider {
     static var previews: some View {
         let context =  PersistenceController.preview.container.viewContext
 
-        GardenNew(garden: GardenStore.testNewGarden(in: context), isPresented: .constant(true), apiHandler: ApiHandler())
+        GardenNew(garden: GardenStore.testNewGarden(in: context), isPresented: .constant(true))
             .environment(\.managedObjectContext, context)
     }
 }
