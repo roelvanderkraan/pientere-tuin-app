@@ -18,7 +18,7 @@ struct ContentView: View {
     let apiHandler: ApiHandler
     
     @FetchRequest(
-        sortDescriptors: [NSSortDescriptor(keyPath: \MeasurementProjection.measuredAt, ascending: false)],
+        sortDescriptors: [SortDescriptor(\.measuredAt, order: .reverse)],
         animation: .default)
     private var measurements: FetchedResults<MeasurementProjection>
     
@@ -31,36 +31,26 @@ struct ContentView: View {
     var body: some View {
         NavigationView {
             List {
-                Picker("Chart scale", selection: $chartScale) {
-                    Text("D").tag(ChartScale.day)
-                    Text("W").tag(ChartScale.week)
-                    Text("M").tag(ChartScale.month)
-                    Text("All").tag(ChartScale.all)
-                }
-                .pickerStyle(.segmented)
                 Section {
-                    HumidityItem(
-                        measurements: FetchRequest<MeasurementProjection>(
-                            sortDescriptors: [NSSortDescriptor(keyPath: \MeasurementProjection.measuredAt, ascending: false)],
-                            predicate: .filter(key: "measuredAt", date: Date(), scale: chartScale)),
-                        scale: $chartScale
-                    )
-                    .environment(\.managedObjectContext, viewContext)
+                    if let lastMeasurement = measurements.first {
+                        NavigationLink {
+                            HumidityDetails()
+                                .environment(\.managedObjectContext, viewContext)
+                        } label: {
+                            HumidityCard(latestMeasurement: lastMeasurement)
+                        }
+                        
+                    }
                 }
                 Section {
-                    TemperatureItem(
-                        measurements: FetchRequest<MeasurementProjection>(
-                            sortDescriptors: [NSSortDescriptor(keyPath: \MeasurementProjection.measuredAt, ascending: false)],
-                            predicate: .filter(key: "measuredAt", date: Date(), scale: chartScale)),
-                        scale: $chartScale)
-                    .environment(\.managedObjectContext, viewContext)
-                }
-                Section {
-                    NavigationLink {
-                        MeasurementList()
-                            .environment(\.managedObjectContext, viewContext)
-                    } label: {
-                        Text("All measurements")
+                    if let lastMeasurement = measurements.first {
+                        NavigationLink {
+                            TemperatureDetails()
+                                .environment(\.managedObjectContext, viewContext)
+                        } label: {
+                            TemperatureCard(latestMeasurement: lastMeasurement)
+                        }
+                        
                     }
                 }
             }

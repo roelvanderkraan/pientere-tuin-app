@@ -19,55 +19,64 @@ struct GardenNew: View {
     var body: some View {
         NavigationView {
             List {
-                VStack(alignment: .leading) {
-                    Text("To see your sensor data in this app, get your API key from the Pientere Tuinen website.")
-                }
-
-                Link(destination: URL(string: "https://service-portal.platform.wecity.nl/api-subscriptions")!) {
-                    Label("Open the website", systemImage: "safari")
-                }
+                Section {
+                    VStack(alignment: .leading) {
+                        Text("To see your sensor data in this app, get your API key from the Pientere Tuinen website.")
+                    }
+                    
+                    Link(destination: URL(string: "https://service-portal.platform.wecity.nl/api-subscriptions")!) {
+                        Label("Open the website", systemImage: "link")
+                    }
                     .buttonStyle(.bordered)
                     .listRowSeparator(.hidden)
                     .padding(EdgeInsets(top: 0, leading: 0, bottom: 8, trailing: 0))
-
-                Text("Paste the API key in this textfield:")
-                    .listRowSeparator(.hidden)
-
-                TextField("API key", text: Binding($garden.apiKey, replacingNilWith: ""))
-                    .textFieldStyle(.roundedBorder)
-                    .disableAutocorrection(true)
-                    .autocapitalization(.none)
-                    .fontDesign(.monospaced)
-                    .bold()
-                    .onSubmit {
+                    
+                    Text("Paste the API key in this textfield:")
+                        .listRowSeparator(.hidden)
+                    
+                    TextField("API key", text: Binding($garden.apiKey, replacingNilWith: ""))
+                        .textFieldStyle(.roundedBorder)
+                        .disableAutocorrection(true)
+                        .autocapitalization(.none)
+                        .fontDesign(.monospaced)
+                        .bold()
+                        .onSubmit {
+                            validateApiKey()
+                        }
+                        .submitLabel(.done)
+                    if let errorMessage = errorMessage {
+                        Label(errorMessage, systemImage: "exclamationmark.circle.fill")
+                            .foregroundColor(.orange)
+                            .listRowSeparator(.hidden)
+                    }
+                    PasteButton(payloadType: String.self) { strings in
+                        guard let first = strings.first else { return }
+                        garden.apiKey = first.trimmingCharacters(in: .whitespacesAndNewlines)
                         validateApiKey()
                     }
-                    .submitLabel(.done)
-                if let errorMessage = errorMessage {
-                    Label(errorMessage, systemImage: "exclamationmark.circle.fill")
-                        .foregroundColor(.orange)
-                        .listRowSeparator(.hidden)
-                }
-                PasteButton(payloadType: String.self) { strings in
-                    guard let first = strings.first else { return }
-                    garden.apiKey = first.trimmingCharacters(in: .whitespacesAndNewlines)
-                    validateApiKey()
-                }
                     .listRowSeparator(.hidden)
-                
-                Button {
-                    validateApiKey()
-                } label: {
-                    Text("Done")
-                        .frame(maxWidth: .infinity)
+                    
+                    Button {
+                        validateApiKey()
+                    } label: {
+                        Text("Done")
+                            .frame(maxWidth: .infinity)
+                    }
+                    .scaledToFill()
+                    .buttonStyle(.borderedProminent)
+                    .padding(EdgeInsets(top: 8, leading: 0, bottom: 8, trailing: 0))
+                    .font(.headline)
+                    //...listRowSeparator(.hidden)
                 }
-                .scaledToFill()
-                .buttonStyle(.borderedProminent)
-                .padding(EdgeInsets(top: 8, leading: 0, bottom: 8, trailing: 0))
-                .font(.headline)
-                //...listRowSeparator(.hidden)
+                Section {
+                    VStack(alignment: .leading) {
+                        Link(destination: URL(string: "https://pienteretuinen.nl/")!) {
+                            Text("Vraag een sensor aan")
+                        }
+                        .padding(EdgeInsets(top: 4, leading: 0, bottom: 8, trailing: 0))
+                    }
+                }
             }
-            .listStyle(.automatic)
             .toolbar {
                 ToolbarItem {
                     Button("Done") {

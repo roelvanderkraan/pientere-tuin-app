@@ -9,36 +9,25 @@ import SwiftUI
 import Charts
 
 struct TemperatureItem: View {
-    @FetchRequest var measurements: FetchedResults<MeasurementProjection>
+    @FetchRequest(
+        sortDescriptors: [SortDescriptor(\.measuredAt, order: .reverse)],
+        animation: .default)
+    private var measurements: FetchedResults<MeasurementProjection>
         
     @Environment(\.managedObjectContext) private var viewContext
     
-    @Binding var scale: ChartScale
+    @State var scale: ChartScale = .month
 
     
     var body: some View {
         VStack {
-            if let latestMeasurement = measurements.first {
-                VStack(alignment: .leading) {
-                    HStack(alignment: .firstTextBaseline) {
-                        Text("\(Image(systemName: "thermometer.medium")) Soil temperature")
-                            .font(.system(.body, design: .default, weight: .medium))
-                            .foregroundColor(.green)
-                        Spacer()
-                        Text("\(latestMeasurement.measuredAt ?? Date(), formatter: itemFormatter)")
-                            .foregroundColor(.secondary)
-                    }
-                    HStack(alignment: .firstTextBaseline) {
-                        Text("\(latestMeasurement.temperatureCelcius, specifier: "%.0f")")
-                            .font(.system(.largeTitle, design: .rounded, weight: .bold))
-                        Text("°C")
-                            .font(.system(.body, design: .rounded))
-                            .foregroundColor(.secondary)
-                    }
-                }
-                .padding(EdgeInsets(top: 8, leading: 0, bottom: 0, trailing: 0))
-                
+            Picker("Chart scale", selection: $scale) {
+                Text("D").tag(ChartScale.day)
+                Text("W").tag(ChartScale.week)
+                Text("M").tag(ChartScale.month)
+                Text("All").tag(ChartScale.all)
             }
+            .pickerStyle(.segmented)
             Chart {
                 ForEach (measurements) { measurement in
                     if measurement.temperatureCelcius != 0.0 {
@@ -118,6 +107,9 @@ struct TemperatureItem: View {
                 }
             }
         }
+        .onChange(of: scale) { newValue in
+            measurements.nsPredicate = .filter(key: "measuredAt", date: Date(), scale: newValue)
+        }
     }
 }
 
@@ -130,12 +122,7 @@ private let itemFormatter: DateFormatter = {
 
 struct TemperatureItem_Previews: PreviewProvider {
     static var previews: some View {
-        TemperatureItem(
-            measurements: FetchRequest<MeasurementProjection>(
-                sortDescriptors: [NSSortDescriptor(keyPath: \MeasurementProjection.measuredAt, ascending: false)],
-                predicate: .filter(key: "measuredAt", date: Date(), scale: .month)
-            ), scale: .constant(.month)
-        )
+        TemperatureItem()
             .environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
     }
 }

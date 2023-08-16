@@ -17,25 +17,6 @@ struct HumidityItem: View {
     
     var body: some View {
         VStack {
-            if let latestMeasurement = measurements.first {
-                VStack(alignment: .leading) {
-                    HStack(alignment: .firstTextBaseline) {
-                        Text("\(Image(systemName: "humidity")) Soil humidity")
-                            .font(.system(.body, design: .default, weight: .medium))
-                            .foregroundColor(.blue)
-                        Spacer()
-                        Text("\(latestMeasurement.measuredAt ?? Date(), formatter: itemFormatter)")
-                            .foregroundColor(.secondary)
-                    }
-                    HStack(alignment: .firstTextBaseline) {
-                        Text("\(latestMeasurement.moisturePercentage * 100, specifier: "%.1f")")
-                            .font(.system(.largeTitle, design: .rounded, weight: .bold))
-                        Text("%")
-                            .font(.system(.body, design: .rounded))
-                            .foregroundColor(.secondary)
-                    }
-                }
-            }
             Chart {
                 ForEach (measurements) { measurement in
                     LineMark(
