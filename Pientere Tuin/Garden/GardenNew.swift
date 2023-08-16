@@ -25,10 +25,11 @@ struct GardenNew: View {
 
                 Link(destination: URL(string: "https://service-portal.platform.wecity.nl/api-subscriptions")!) {
                     Label("Open the website", systemImage: "safari")
-                        .frame(maxWidth: .infinity)
                 }
                     .buttonStyle(.bordered)
                     .listRowSeparator(.hidden)
+                    .padding(EdgeInsets(top: 0, leading: 0, bottom: 8, trailing: 0))
+
                 Text("Paste the API key in this textfield:")
                     .listRowSeparator(.hidden)
 

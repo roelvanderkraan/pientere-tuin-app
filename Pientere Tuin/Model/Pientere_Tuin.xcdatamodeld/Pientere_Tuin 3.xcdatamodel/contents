@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="21754" systemVersion="22F82" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="21754" systemVersion="22G74" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="Garden" representedClassName="Garden" syncable="YES" codeGenerationType="class">
         <attribute name="apiKey" optional="YES" attributeType="String"/>
         <attribute name="name" optional="YES" attributeType="String"/>
+        <relationship name="measurements" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="MeasurementProjection" inverseName="inGarden" inverseEntity="MeasurementProjection"/>
     </entity>
     <entity name="Item" representedClassName="Item" syncable="YES" codeGenerationType="class">
         <attribute name="timestamp" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
@@ -18,7 +19,7 @@
         <attribute name="moisturePercentage" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="soilType" optional="YES" attributeType="String"/>
         <attribute name="temperatureCelcius" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES"/>
-        <relationship name="inGarden" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Garden"/>
+        <relationship name="inGarden" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Garden" inverseName="measurements" inverseEntity="Garden"/>
         <uniquenessConstraints>
             <uniquenessConstraint>
                 <constraint value="apiUUID"/>

@@ -62,11 +62,6 @@ struct ContentView: View {
                     } label: {
                         Text("All measurements")
                     }
-                    Button("Refresh all measurements") {
-                        Task {
-                            try? await apiHandler.updateTuinData(context: viewContext, loadAll: true, garden: garden)
-                        }
-                    }
                 }
             }
             .navigationTitle(garden.name ?? "Pientere Tuin")
@@ -81,7 +76,8 @@ struct ContentView: View {
                 }
             }
             .sheet(isPresented: $isEditingGarden) {
-                GardenEdit(garden: garden, isPresented: $isEditingGarden)
+                GardenEdit(garden: garden, isPresented: $isEditingGarden, apiHandler: apiHandler)
+                    .environment(\.managedObjectContext, viewContext)
             }
             .sheet(isPresented: $isAddingGarden) {
                 Task {
@@ -89,6 +85,7 @@ struct ContentView: View {
                 }
             } content: {
                 GardenNew(garden: garden, isPresented: $isAddingGarden, apiHandler: apiHandler)
+                    .environment(\.managedObjectContext, viewContext)
                     .interactiveDismissDisabled()
             }
 

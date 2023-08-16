@@ -44,7 +44,7 @@ struct ApiHandler {
             debugPrint("OK response")
             switch okResponse.body {
             case .json(let json):
-                debugPrint(json.content)
+                //debugPrint(json.content)
                 writeToCoreData(apiData: json.content, context: context, garden: garden)
                 
                 // Check if there are more pages to parse. Continue until we hit the last page

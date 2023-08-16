@@ -10,7 +10,7 @@ import Foundation
 /// Class to handle the timing of API operations given the limits. The API of Pientere Tuinen allows 1 read call per 10 seconds.
 class ApiTimer {
     var lastParseDate: Date?
-    var refreshInterval: TimeInterval = 1 * 60 // in seconds
+    var refreshInterval: TimeInterval = 1 * 11 // in seconds
     
     /// - Returns: If parsing is allowed considering the API request limites.
     func isParseAllowed() -> Bool {
