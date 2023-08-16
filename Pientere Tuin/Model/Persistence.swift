@@ -24,6 +24,7 @@ struct PersistenceController {
             newMeasurement.moisturePercentage = Float(count) * 0.05
             newMeasurement.temperatureCelcius = Float(count) * 5.0
             newMeasurement.apiUUID = UUID().uuidString
+            newMeasurement.soilTypeObject = .gardenSoil
         }
         do {
             try viewContext.save()

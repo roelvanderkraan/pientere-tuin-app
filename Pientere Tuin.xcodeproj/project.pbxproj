@@ -23,6 +23,7 @@
 		8A6842D62A8CEDB800B4B9A7 /* Formatters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A6842D52A8CEDB800B4B9A7 /* Formatters.swift */; };
 		8A6842D92A8CEF3000B4B9A7 /* HumidityCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A6842D82A8CEF3000B4B9A7 /* HumidityCard.swift */; };
 		8A6842DC2A8CEFAB00B4B9A7 /* HumidityDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A6842DB2A8CEFAB00B4B9A7 /* HumidityDetails.swift */; };
+		8A6D65512A8D5E9B00B9E2CB /* HumidityState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A6D65502A8D5E9B00B9E2CB /* HumidityState.swift */; };
 		8A9F139B2A8D0844003529B7 /* GardenCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A9F139A2A8D0844003529B7 /* GardenCard.swift */; };
 		8AA1F1E62A8D481800721F6F /* MeasurementProjection+types.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AA1F1E52A8D481800721F6F /* MeasurementProjection+types.swift */; };
 		8AACAC282A8578260032CC1C /* MeasurementList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AACAC272A8578260032CC1C /* MeasurementList.swift */; };
@@ -109,6 +110,7 @@
 		8A6842D82A8CEF3000B4B9A7 /* HumidityCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HumidityCard.swift; sourceTree = "<group>"; };
 		8A6842DB2A8CEFAB00B4B9A7 /* HumidityDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HumidityDetails.swift; sourceTree = "<group>"; };
 		8A68FD272A8662E600DF6F56 /* Pientere_Tuin 3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Pientere_Tuin 3.xcdatamodel"; sourceTree = "<group>"; };
+		8A6D65502A8D5E9B00B9E2CB /* HumidityState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HumidityState.swift; sourceTree = "<group>"; };
 		8A9F139A2A8D0844003529B7 /* GardenCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GardenCard.swift; sourceTree = "<group>"; };
 		8AA1F1E52A8D481800721F6F /* MeasurementProjection+types.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MeasurementProjection+types.swift"; sourceTree = "<group>"; };
 		8AACAC272A8578260032CC1C /* MeasurementList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeasurementList.swift; sourceTree = "<group>"; };
@@ -249,6 +251,7 @@
 			children = (
 				8A6842CE2A8CECA600B4B9A7 /* TemperatureCard.swift */,
 				8A6842D82A8CEF3000B4B9A7 /* HumidityCard.swift */,
+				8A6D65502A8D5E9B00B9E2CB /* HumidityState.swift */,
 				8A6842DB2A8CEFAB00B4B9A7 /* HumidityDetails.swift */,
 				8A6842CC2A8CEB3F00B4B9A7 /* TemperatureDetails.swift */,
 				8AACAC272A8578260032CC1C /* MeasurementList.swift */,
@@ -516,6 +519,7 @@
 				8A649DD72A87A51200CC38DE /* HumidityItem.swift in Sources */,
 				8A9F139B2A8D0844003529B7 /* GardenCard.swift in Sources */,
 				8AF06D812A8A8E6900D30A83 /* ChartScale.swift in Sources */,
+				8A6D65512A8D5E9B00B9E2CB /* HumidityState.swift in Sources */,
 				8AACAC2B2A857B9D0032CC1C /* ApiHandler.swift in Sources */,
 				8A3D136D2A87D12B00DF4EF1 /* GardenEdit.swift in Sources */,
 				8AACAC432A857D720032CC1C /* Widget.intentdefinition in Sources */,

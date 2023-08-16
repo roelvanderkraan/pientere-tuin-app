@@ -89,18 +89,108 @@ extension MeasurementProjection {
         switch self.soilTypeObject {
         case .undefined:
             return nil
-        case .sand_1_1:
+        case .sand:
             return "Zand"
-        case .loam_2:
+        case .lightClay:
             return "Lichte klei"
-        case .sandy_loam_3:
+        case .zavel:
             return "Zavel"
-        case .sand_5:
+        case .gardenSoil:
             return "Tuinaarde"
-        case .sandy_loam_6:
+        case .pottingSoil:
             return "Potgrond"
         }
     }
+    
+    var goodHumidity: Range<Float>? {
+        switch self.soilTypeObject {
+        case .undefined:
+            return nil
+        case .sand:
+            return 0.04..<0.10
+        case .lightClay:
+            return 0.23..<0.38
+        case .zavel:
+            return 0.16..<0.33
+        case .gardenSoil:
+            return 0.13..<0.31
+        case .pottingSoil:
+            return 0.34..<0.49
+        }
+    }
+    
+    var stressHumidity: Range<Float>? {
+        switch self.soilTypeObject {
+        case .undefined:
+            return nil
+        case .sand:
+            return 0.02..<0.04
+        case .lightClay:
+            return 0.16..<0.23
+        case .zavel:
+            return 0.10..<0.16
+        case .gardenSoil:
+            return 0.08..<0.13
+        case .pottingSoil:
+            return 0.26..<0.34
+        }
+    }
+    
+    var tooWetHumidity: Range<Float>? {
+        switch self.soilTypeObject {
+        case .undefined:
+            return nil
+        case .sand:
+            return 0.10..<0.4
+        case .lightClay:
+            return 0.38..<0.48
+        case .zavel:
+            return 0.33..<0.48
+        case .gardenSoil:
+            return 0.31..<0.49
+        case .pottingSoil:
+            return 0.49..<0.64
+        }
+    }
+    
+    var tooDryHumidity: Range<Float>? {
+        switch self.soilTypeObject {
+        case .undefined:
+            return nil
+        case .sand:
+            return 0.0..<0.2
+        case .lightClay:
+            return 0.0..<0.16
+        case .zavel:
+            return 0.0..<0.10
+        case .gardenSoil:
+            return 0.0..<0.08
+        case .pottingSoil:
+            return 0.0..<0.26
+        }
+    }
+    
+    var humidityState: HumidityState {
+        if self.goodHumidity?.contains(moisturePercentage) ?? false {
+            return .healthy
+        } else if self.stressHumidity?.contains(moisturePercentage) ?? false {
+            return .stress
+        } else if self.tooWetHumidity?.contains(moisturePercentage) ?? false {
+            return .tooWet
+        } else if self.tooDryHumidity?.contains(moisturePercentage) ?? false {
+            return .tooDry
+        }
+        return .unknown
+    }
+}
+
+enum HumidityState: Int {
+    case unknown
+    case saturated
+    case tooWet
+    case healthy
+    case stress
+    case tooDry
 }
 
 enum GardenSize: String {
@@ -125,9 +215,9 @@ enum GardenOrientation: String {
 
 enum SoilType: String {
     case undefined = "undefined"
-    case sand_1_1 = "sand_1_1"
-    case loam_2 = "loam_2"
-    case sandy_loam_3 = "sandy_loam_3"
-    case sand_5 = "sand_5"
-    case sandy_loam_6 = "sandy_loam_6"
+    case sand = "sand_1_1"
+    case lightClay = "loam_2"
+    case zavel = "sandy_loam_3"
+    case gardenSoil = "sand_5"
+    case pottingSoil = "sandy_loam_6"
 }
