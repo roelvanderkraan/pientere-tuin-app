@@ -9,14 +9,37 @@ import SwiftUI
 import Charts
 
 struct HumidityItem: View {
-    @FetchRequest var measurements: FetchedResults<MeasurementProjection>
+    @FetchRequest(
+        sortDescriptors: [SortDescriptor(\.measuredAt, order: .reverse)],
+        animation: .default)
+    private var measurements: FetchedResults<MeasurementProjection>
         
     @Environment(\.managedObjectContext) private var viewContext
     
-    @Binding var scale: ChartScale
+    @ObservedObject var preferences = Preferences.shared
     
     var body: some View {
-        VStack {
+        VStack(alignment: .leading) {
+            Picker("Chart scale", selection: $preferences.chartScale) {
+                Text("D").tag(ChartScale.day)
+                Text("W").tag(ChartScale.week)
+                Text("M").tag(ChartScale.month)
+                Text("All").tag(ChartScale.all)
+            }
+            .pickerStyle(.segmented)
+            HStack(alignment: .firstTextBaseline) {
+                Text("\(Image(systemName: "humidity")) Average soil humidity")
+                    .font(.system(.body, design: .default, weight: .medium))
+                    .foregroundColor(.blue)
+                Spacer()
+            }
+            HStack(alignment: .firstTextBaseline) {
+                Text("\(MeasurementStore.getAverage(measurements: measurements).moisturePercentage * 100, specifier: "%.1f")")
+                    .font(.system(.largeTitle, design: .rounded, weight: .bold))
+                Text("%")
+                    .font(.system(.body, design: .rounded))
+                    .foregroundColor(.secondary)
+            }
             Chart(measurements) { measurement in
                     LineMark(
                         x: .value("Hour", measurement.measuredAt ?? Date(), unit: .hour),
@@ -30,6 +53,7 @@ struct HumidityItem: View {
                             endPoint: .top
                         )
                     )
+                    .lineStyle(StrokeStyle(lineWidth: 3))
                     .alignsMarkStylesWithPlotArea()
             }
             .chartForegroundStyleScale([
@@ -39,7 +63,7 @@ struct HumidityItem: View {
             .padding([.trailing], 8)
             .chartYAxisLabel("%")
             .chartXAxis {
-                switch scale {
+                switch preferences.chartScale {
                 case .day:
                     AxisMarks(values: .stride(by: .hour, count: 5)) { value in
                         if let date = value.as(Date.self) {
@@ -86,6 +110,12 @@ struct HumidityItem: View {
             }
         }
         .padding([.bottom, .top], 8)
+        .onChange(of: preferences.chartScale) { newValue in
+            measurements.nsPredicate = .filter(key: "measuredAt", date: Date(), scale: newValue)
+        }
+        .onAppear {
+            measurements.nsPredicate = .filter(key: "measuredAt", date: Date(), scale: preferences.chartScale)
+        }
     }
 }
 
@@ -98,12 +128,7 @@ private let itemFormatter: DateFormatter = {
 
 struct HumidityItem_Previews: PreviewProvider {
     static var previews: some View {
-        HumidityItem(
-            measurements: FetchRequest<MeasurementProjection>(
-                sortDescriptors: [NSSortDescriptor(keyPath: \MeasurementProjection.measuredAt, ascending: false)],
-                predicate: .filter(key: "measuredAt", date: Date(), scale: .month)
-            ), scale: .constant(.month)
-        )
+        HumidityItem()
             .environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
     }
 }

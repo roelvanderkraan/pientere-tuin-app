@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum ChartScale: String, CaseIterable, Identifiable {
+enum ChartScale: String, CaseIterable, Identifiable, Equatable {
     case week
     case month
     case day

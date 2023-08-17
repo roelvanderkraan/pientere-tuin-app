@@ -7,6 +7,7 @@
 
 import Foundation
 import CoreData
+import SwiftUI
 
 struct MeasurementStore {
     static func addTestMeasurement(to viewContext: NSManagedObjectContext) -> MeasurementProjection {
@@ -17,5 +18,21 @@ struct MeasurementStore {
         measurement.apiUUID = UUID().uuidString
         measurement.inGarden = GardenStore.testNewGarden(in: viewContext)
         return measurement
+    }
+    
+    static func getAverage(measurements: FetchedResults<MeasurementProjection>) -> MeasurementAverage {
+        let sumMoisture = measurements.reduce(0) {
+            $0 + $1.moisturePercentage
+        }
+        let sumTemperature = measurements.reduce(0) { partialResult, measurement in
+            partialResult + measurement.temperatureCelcius
+        }
+        let count = Float(measurements.count)
+        return MeasurementAverage(moisturePercentage: sumMoisture/count, soilTemperature: sumTemperature/count)
+    }
+    
+    struct MeasurementAverage {
+        var moisturePercentage: Float
+        var soilTemperature: Float
     }
 }

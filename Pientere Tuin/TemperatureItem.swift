@@ -16,18 +16,30 @@ struct TemperatureItem: View {
         
     @Environment(\.managedObjectContext) private var viewContext
     
-    @State var scale: ChartScale = .month
-
-    
+    @ObservedObject var preferences = Preferences.shared
+        
     var body: some View {
-        VStack {
-            Picker("Chart scale", selection: $scale) {
+        VStack(alignment: .leading) {
+            Picker("Chart scale", selection: $preferences.chartScale) {
                 Text("D").tag(ChartScale.day)
                 Text("W").tag(ChartScale.week)
                 Text("M").tag(ChartScale.month)
                 Text("All").tag(ChartScale.all)
             }
             .pickerStyle(.segmented)
+            HStack(alignment: .firstTextBaseline) {
+                Text("\(Image(systemName: "thermometer.medium")) Average soil temperature")
+                    .font(.system(.body, design: .default, weight: .medium))
+                    .foregroundColor(.green)
+                Spacer()
+            }
+            HStack(alignment: .firstTextBaseline) {
+                Text("\(MeasurementStore.getAverage(measurements: measurements).soilTemperature, specifier: "%.1f")")
+                    .font(.system(.largeTitle, design: .rounded, weight: .bold))
+                Text("°C")
+                    .font(.system(.body, design: .rounded))
+                    .foregroundColor(.secondary)
+            }
             Chart {
                 ForEach (measurements) { measurement in
                     if measurement.temperatureCelcius != 0.0 {
@@ -42,6 +54,7 @@ struct TemperatureItem: View {
                                 endPoint: .top
                             )
                         )
+                        .lineStyle(StrokeStyle(lineWidth: 3))
                         .alignsMarkStylesWithPlotArea()
                     }
                 }
@@ -61,7 +74,7 @@ struct TemperatureItem: View {
                 }
             }
             .chartXAxis {
-                switch scale {
+                switch preferences.chartScale {
                 case .day:
                     AxisMarks(values: .stride(by: .hour, count: 5)) { value in
                         if let date = value.as(Date.self) {
@@ -107,8 +120,11 @@ struct TemperatureItem: View {
                 }
             }
         }
-        .onChange(of: scale) { newValue in
+        .onChange(of: Preferences.shared.chartScale) { newValue in
             measurements.nsPredicate = .filter(key: "measuredAt", date: Date(), scale: newValue)
+        }
+        .onAppear {
+            measurements.nsPredicate = .filter(key: "measuredAt", date: Date(), scale: preferences.chartScale)
         }
     }
 }
