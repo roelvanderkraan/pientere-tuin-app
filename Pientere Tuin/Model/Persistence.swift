@@ -40,7 +40,11 @@ struct PersistenceController {
     let container: NSPersistentContainer
 
     init(inMemory: Bool = false) {
+        let containerURL = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: "group.studio.skipper.Pientere-Tuin")!
+        let storeURL = containerURL.appendingPathComponent("PientereTuin.sqlite")
+        let description = NSPersistentStoreDescription(url: storeURL)
         container = NSPersistentContainer(name: "Pientere_Tuin")
+        container.persistentStoreDescriptions = [description]
         if inMemory {
             container.persistentStoreDescriptions.first!.url = URL(fileURLWithPath: "/dev/null")
         }
