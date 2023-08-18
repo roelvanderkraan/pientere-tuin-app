@@ -15,7 +15,7 @@ struct TemperatureDetails: View {
             Section {
                 TemperatureItem()
                     .environment(\.managedObjectContext, viewContext)
-                    .frame(idealHeight: 300)
+                    .frame(idealHeight: 400)
             }
             Section {
                 NavigationLink {
@@ -26,7 +26,9 @@ struct TemperatureDetails: View {
                 }
             }
         }
-        .navigationTitle("Temperature")
+        .navigationTitle("Soil temperature")
+        .navigationBarTitleDisplayMode(.inline)
+        .listStyle(.grouped)
     }
 }
 

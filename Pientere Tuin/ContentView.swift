@@ -27,7 +27,7 @@ struct ContentView: View {
     var apiTimer: ApiTimer
     
     var body: some View {
-        NavigationView {
+        NavigationSplitView {
             List {
                 Section {
                     if let lastMeasurement = measurements.first {
@@ -37,7 +37,6 @@ struct ContentView: View {
                         } label: {
                             HumidityCard(latestMeasurement: lastMeasurement)
                         }
-                        
                     }
                 }
                 Section {
@@ -86,6 +85,9 @@ struct ContentView: View {
                     .interactiveDismissDisabled()
             }
 
+        } detail: {
+            HumidityDetails()
+                .environment(\.managedObjectContext, viewContext)
         }
         .refreshable {
             if apiTimer.isParseAllowed() {

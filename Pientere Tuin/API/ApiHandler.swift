@@ -50,7 +50,7 @@ struct ApiHandler {
                 writeToCoreData(apiData: json.content, context: context, garden: garden)
                 
                 // Check if there are more pages to parse. Continue until we hit the last page
-                if loadAll && !(json.last ?? false) {
+                if loadAll && !(json.last ?? true) {
                     Task {
                         let interval = apiRequestInterval + 1 // API has 10 seconds rate limit
                         debugPrint("Scheduling next parse for page \(page+1) in \(interval) seconds")

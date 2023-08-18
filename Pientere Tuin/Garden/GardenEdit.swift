@@ -59,7 +59,7 @@ struct GardenEdit: View {
                         }
                         isPresented.toggle()
                     } label: {
-                        Label("Reload measurements", systemImage: "arrow.triangle.2.circlepath")
+                        Label("Reload measurements", systemImage: "arrow.counterclockwise")
                     }
                     Button(role: .destructive) {
                         isDeletingAll.toggle()

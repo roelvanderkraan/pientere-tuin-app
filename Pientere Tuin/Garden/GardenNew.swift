@@ -67,7 +67,7 @@ struct GardenNew: View {
                     .font(.headline)
                     //...listRowSeparator(.hidden)
                 }
-                Section {
+                Section("Nog geen Pientere Tuinen sensor?") {
                     VStack(alignment: .leading) {
                         Link(destination: URL(string: "https://pienteretuinen.nl/")!) {
                             Text("Vraag een sensor aan")
@@ -84,6 +84,7 @@ struct GardenNew: View {
                 }
             }
             .navigationTitle("Get started")
+            .headerProminence(.increased)
         }
         
     }

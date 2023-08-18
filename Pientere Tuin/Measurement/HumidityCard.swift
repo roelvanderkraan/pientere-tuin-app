@@ -13,7 +13,7 @@ struct HumidityCard: View {
         let humidityState = latestMeasurement.humidityState
         VStack(alignment: .leading) {
             HStack(alignment: .firstTextBaseline) {
-                Text("\(Image(systemName: "humidity")) Soil humidity")
+                Text("\(Image(systemName: "drop.fill")) Soil humidity")
                     .font(.system(.body, design: .default, weight: .medium))
                     .foregroundColor(.blue)
                 Spacer()

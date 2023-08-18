@@ -12,11 +12,11 @@ import CoreData
 
 struct Provider: TimelineProvider {
     func placeholder(in context: Context) -> MeasurementEntry {
-        MeasurementEntry(date: Date(), lastHumidity: 0.12, lastTemperature: 34)
+        MeasurementEntry(date: Date(), lastHumidity: 0.12, lastTemperature: 34, humidityState: .healthy)
     }
     
     func getSnapshot(in context: Context, completion: @escaping (MeasurementEntry) -> Void) {
-        let entry = MeasurementEntry(date: Date(), lastHumidity: 0.23, lastTemperature: 56)
+        let entry = MeasurementEntry(date: Date(), lastHumidity: 0.23, lastTemperature: 56, humidityState: .healthy)
         completion(entry)
     }
     
@@ -31,16 +31,17 @@ struct Provider: TimelineProvider {
             let measurements = try context.fetch(fetchRequest)
             if let latestMeasurement = measurements.first {
                 let entry = MeasurementEntry(
-                    date: Date(),
+                    date: latestMeasurement.measuredAt ?? Date(),
                     lastHumidity: latestMeasurement.moisturePercentage,
-                    lastTemperature: latestMeasurement.temperatureCelcius
+                    lastTemperature: latestMeasurement.temperatureCelcius,
+                    humidityState: latestMeasurement.humidityState
                 )
                 entries.append(entry)
             }
         } catch {
             debugPrint("Error loading latest measurement")
         }
-        let nextUpdateDate = Calendar.current.date(byAdding: .second, value: 10, to: Date())!
+        let nextUpdateDate = Calendar.current.date(byAdding: .minute, value: 10, to: Date())!
         let timeline = Timeline(entries: entries, policy: .after(nextUpdateDate))
         completion(timeline)
     }
@@ -50,22 +51,37 @@ struct MeasurementEntry: TimelineEntry {
     let date: Date
     var lastHumidity: Float
     var lastTemperature: Float
+    var humidityState: HumidityState
 }
 
 struct WidgetEntryView : View {
     var entry: Provider.Entry
 
     var body: some View {
-        VStack(alignment: .leading) {
-            Text(entry.date, style: .time)
+        HStack {
+            VStack(alignment: .leading) {
+                Text(entry.date, style: .time)
+                    .minimumScaleFactor(0.25)
+                    .foregroundColor(.secondary)
+                Spacer()
+                Text("\(entry.lastTemperature, specifier: "%.0f")°C")
+                    .minimumScaleFactor(0.25)
+                    .font(.system(.body, design: .rounded, weight: .bold))
+                
+                Label("\(entry.lastHumidity * 100, specifier: "%.1f")%", systemImage: "drop.fill")
+                //Text("\(entry.lastHumidity * 100, specifier: "%.1f")%")
+                    .minimumScaleFactor(0.25)
+                    .font(.system(.title, design: .rounded, weight: .bold))
+                    .foregroundColor(.blue)
+                    .bold()
+                    .lineLimit(1)
+                //            Label("\(entry.lastTemperature, specifier: "%.0f")°C", systemImage: "thermometer.medium")
+                //                .font(.system(.body, design: .rounded, weight: .bold))
+            }
+            .padding()
             Spacer()
-            Label("\(entry.lastHumidity * 100, specifier: "%.1f")%", systemImage: "humidity")
-                .font(.system(.title, design: .rounded, weight: .bold))
-                .foregroundColor(.blue)
-            Label("\(entry.lastTemperature, specifier: "%.0f")°C", systemImage: "thermometer.medium")
-                .font(.system(.body, design: .rounded, weight: .bold))
         }
-        .padding()
+        
     }
 }
 
@@ -86,7 +102,9 @@ struct Widget_Previews: PreviewProvider {
         WidgetEntryView(entry: MeasurementEntry(
             date: Date(),
             lastHumidity: 0.21,
-            lastTemperature: 18)
+            lastTemperature: 18,
+            humidityState: .healthy
+        )
         )
             .previewContext(WidgetPreviewContext(family: .systemSmall))
     }

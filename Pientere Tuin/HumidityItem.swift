@@ -28,7 +28,7 @@ struct HumidityItem: View {
             }
             .pickerStyle(.segmented)
             HStack(alignment: .firstTextBaseline) {
-                Text("\(Image(systemName: "humidity")) Average soil humidity")
+                Text("\(Image(systemName: "drop.fill")) Average soil humidity")
                     .font(.system(.body, design: .default, weight: .medium))
                     .foregroundColor(.blue)
                 Spacer()
