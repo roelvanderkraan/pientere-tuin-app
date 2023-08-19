@@ -20,7 +20,7 @@ struct MeasurementStore {
         return measurement
     }
     
-    static func getAverage(measurements: FetchedResults<MeasurementProjection>) -> MeasurementAverage {
+    static func getAverage(measurements: any Collection<MeasurementProjection>) -> MeasurementAverage {
         let sumMoisture = measurements.reduce(0) {
             $0 + $1.moisturePercentage
         }

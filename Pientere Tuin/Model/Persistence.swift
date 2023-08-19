@@ -14,13 +14,13 @@ struct PersistenceController {
         let result = PersistenceController(inMemory: true)
         let viewContext = result.container.viewContext
         let newGarden = Garden(context: viewContext)
+        let calendar = Calendar.current
         newGarden.apiKey = "ee3f7468-11fb-43b6-b870-49f9435524c1"
         newGarden.name = "Jonge Jan tuin"
-        for count in 0..<10 {
-            let newItem = Item(context: viewContext)
-            newItem.timestamp = Date()
+        let date = Date()
+        for count in 0..<50 {
             let newMeasurement = MeasurementProjection(context: viewContext)
-            newMeasurement.measuredAt = Date()
+            newMeasurement.measuredAt = calendar.date(byAdding: DateComponents(hour: -5*count), to: date)
             newMeasurement.moisturePercentage = Float(count) * 0.05
             newMeasurement.temperatureCelcius = Float(count) * 5.0
             newMeasurement.apiUUID = UUID().uuidString
