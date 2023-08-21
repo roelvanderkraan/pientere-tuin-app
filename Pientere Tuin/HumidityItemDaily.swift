@@ -24,7 +24,11 @@ struct HumidityItemDaily: View {
     
     @ObservedObject var preferences = Preferences.shared
     
+    @State var selectedDate: Date?
+    @State var annotationPosition: AnnotationPosition = .automatic
+    
     var body: some View {
+        let data = getChartData()
         VStack(alignment: .leading) {
             Picker("Chart scale", selection: $preferences.chartScale) {
                 Text("D").tag(ChartScale.day)
@@ -47,7 +51,7 @@ struct HumidityItemDaily: View {
                     .foregroundColor(.secondary)
             }
             
-            Chart(getChartData()) { dayAverage in
+            Chart(data) { dayAverage in
                     LineMark(
                         x: .value("Day", dayAverage.date, unit: .hour),
                         y: .value("Moisture", dayAverage.moisturePercentage * 100)
@@ -60,14 +64,63 @@ struct HumidityItemDaily: View {
                             endPoint: .top
                         )
                     )
-                    .lineStyle(StrokeStyle(lineWidth: 3))
+                    .accessibilityHidden(true)
+                    .lineStyle(StrokeStyle(lineWidth: 2))
                     .alignsMarkStylesWithPlotArea()
-                if preferences.chartScale == .day || preferences.chartScale == .month {
+                if preferences.chartScale == .day {
                     PointMark(
                         x: .value("Day", dayAverage.date, unit: .hour),
                         y: .value("Moisture", dayAverage.moisturePercentage * 100)
                         
                     )
+                    .annotation(
+                        position: annotationPosition,
+                        alignment: .center,
+                        spacing: 0
+                    ) {
+                        if selectedDate == dayAverage.date {
+                            MeasurementAnnotation(caption: Formatters.itemFormatter.string(from: dayAverage.date), value: dayAverage.moisturePercentage * 100, unit: "%", specifier: "%.1f")
+                        }
+                    }
+                } else if preferences.chartScale == .week {
+                    PointMark(
+                        x: .value("Day", dayAverage.date, unit: .hour),
+                        y: .value("Moisture", dayAverage.moisturePercentage * 100)
+                        
+                    )
+                    .foregroundStyle(.clear)
+                    .annotation(
+                        position: annotationPosition,
+                        alignment: .center,
+                        spacing: 0
+                    ) {
+                        if selectedDate == dayAverage.date {
+                            MeasurementAnnotation(caption: Formatters.itemFormatter.string(from: dayAverage.date), value: dayAverage.moisturePercentage * 100, unit: "%", specifier: "%.1f")
+                        }
+                    }
+                } else {
+                    PointMark(
+                        x: .value("Day", dayAverage.date, unit: .hour),
+                        y: .value("Moisture", dayAverage.moisturePercentage * 100)
+                        
+                    )
+                    .annotation(
+                        position: annotationPosition,
+                        alignment: .center,
+                        spacing: 0
+                    ) {
+                        if selectedDate == dayAverage.date {
+                            MeasurementAnnotation(caption: Formatters.dateFormatter.string(from: dayAverage.date), value: dayAverage.moisturePercentage * 100, unit: "%", specifier: "%.1f")
+                        }
+                    }
+                }
+                
+                
+                if selectedDate == dayAverage.date {
+                    RuleMark(
+                        x: .value("Selected", dayAverage.date, unit: .hour)
+                    )
+                    .foregroundStyle(Color.gray.opacity(0.3))
                 }
             }
             .chartForegroundStyleScale([
@@ -76,6 +129,7 @@ struct HumidityItemDaily: View {
             .chartLegend(.hidden)
             .padding([.trailing], 8)
             .chartYAxisLabel("%")
+            .chartYScale(range: .plotDimension(startPadding:0, endPadding:30))
             .chartXAxis {
                 switch preferences.chartScale {
                 case .day:
@@ -130,6 +184,50 @@ struct HumidityItemDaily: View {
         .onAppear {
             sectionedMeasurements.nsPredicate = .filter(key: "measuredAt", date: Date(), scale: preferences.chartScale)
         }
+        .chartOverlay { proxy in
+              GeometryReader { geometry in
+                Rectangle().fill(.clear).contentShape(Rectangle())
+                  .gesture(DragGesture().onChanged { value in
+                      updateCursorPosition(at: value.location, geometry: geometry, proxy: proxy, data: data)
+                  })
+                  .onTapGesture { location in
+                      updateCursorPosition(at: location, geometry: geometry, proxy: proxy, data: data)
+                  }
+              }
+            }
+    }
+    
+    func updateCursorPosition(at: CGPoint, geometry: GeometryProxy, proxy: ChartProxy, data: [ChartableMeasurement]) {
+        let origin = geometry[proxy.plotAreaFrame].origin
+        let width = geometry[proxy.plotAreaFrame].width
+        let annotationWidth = 60.0
+        let location = CGPoint(
+            x: at.x - origin.x,
+            y: at.y - origin.y
+        )
+        let (date, humidity) = proxy.value(at: location, as: (Date, Float).self)!
+        debugPrint("Selected date: \(date ?? Date()), humidity: \(humidity)")
+        selectedDate = hourDate(of: date, data: data)
+        debugPrint("\(selectedDate)")
+        
+        if location.x < annotationWidth {
+            annotationPosition = .topTrailing
+        } else if location.x > width - annotationWidth {
+            annotationPosition = .topLeading
+        } else {
+            annotationPosition = .top
+        }
+      }
+    
+    func hourDate(of selectedDate: Date, data: [ChartableMeasurement]) -> Date? {
+        var granularity: Calendar.Component = .hour
+        if preferences.chartScale == .month || preferences.chartScale == .all {
+            granularity = .day
+        }
+        let results = data.filter({ measurement in
+            Calendar.current.isDate(measurement.date, equalTo: selectedDate, toGranularity: granularity)
+        })
+        return results.first?.date
     }
     
     func getHourlyMeasurements() -> [ChartableMeasurement] {

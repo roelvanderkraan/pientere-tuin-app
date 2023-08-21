@@ -14,4 +14,10 @@ struct Formatters {
         formatter.timeStyle = .short
         return formatter
     }()
+    
+    static let dateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.setLocalizedDateFormatFromTemplate("MMMd")
+        return formatter
+    }()
 }

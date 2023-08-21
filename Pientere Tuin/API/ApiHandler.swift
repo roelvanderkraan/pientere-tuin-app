@@ -46,11 +46,12 @@ struct ApiHandler {
             debugPrint("OK response")
             switch okResponse.body {
             case .json(let json):
-                //debugPrint(json.content)
+                debugPrint(json.content)
+                debugPrint(json.totalPages)
                 writeToCoreData(apiData: json.content, context: context, garden: garden)
                 
                 // Check if there are more pages to parse. Continue until we hit the last page
-                if loadAll && !(json.last ?? true) {
+                if loadAll && json.content?.count ?? 0 > 0 && !(json.last ?? true) {
                     Task {
                         let interval = apiRequestInterval + 1 // API has 10 seconds rate limit
                         debugPrint("Scheduling next parse for page \(page+1) in \(interval) seconds")
@@ -77,7 +78,7 @@ struct ApiHandler {
         case .tooManyRequests(_):
             debugPrint("Too many requests, 1 request per 10 seconds allowed.")
             throw TooManyRequestsError()
-        }
+         }
     }
     
     private func writeToCoreData(apiData: [Components.Schemas.MeasurementProjection]?, context: NSManagedObjectContext, garden: Garden) {
