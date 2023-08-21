@@ -13,12 +13,6 @@ struct HumidityDetails: View {
     var body: some View {
         List {
             Section {
-                HumidityItem()
-                .environment(\.managedObjectContext, viewContext)
-                .frame(idealHeight: 400)
-            }
-            
-            Section {
                 HumidityItemDaily()
                 .environment(\.managedObjectContext, viewContext)
                 .frame(idealHeight: 400)

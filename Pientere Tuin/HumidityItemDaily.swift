@@ -29,6 +29,7 @@ struct HumidityItemDaily: View {
     
     var body: some View {
         let data = getChartData()
+        let average = getAverage(data: data)
         VStack(alignment: .leading) {
             Picker("Chart scale", selection: $preferences.chartScale) {
                 Text("D").tag(ChartScale.day)
@@ -44,8 +45,8 @@ struct HumidityItemDaily: View {
                 Spacer()
             }
             HStack(alignment: .firstTextBaseline) {
-//                Text("\(MeasurementStore.getAverage(measurements: measurements).moisturePercentage * 100, specifier: "%.1f")")
-//                    .font(.system(.largeTitle, design: .rounded, weight: .bold))
+                Text("\(average.moisturePercentage * 100, specifier: "%.1f")")
+                    .font(.system(.largeTitle, design: .rounded, weight: .bold))
                 Text("%")
                     .font(.system(.body, design: .rounded))
                     .foregroundColor(.secondary)
@@ -127,6 +128,17 @@ struct HumidityItemDaily: View {
                 "Moisture": .blue
             ])
             .chartLegend(.hidden)
+            .chartOverlay { proxy in
+                GeometryReader { geometry in
+                    Rectangle().fill(.clear).contentShape(Rectangle())
+                        .gesture(DragGesture().onChanged { value in
+                            updateCursorPosition(at: value.location, geometry: geometry, proxy: proxy, data: data)
+                        })
+                        .onTapGesture { location in
+                            updateCursorPosition(at: location, geometry: geometry, proxy: proxy, data: data)
+                        }
+                }
+            }
             .padding([.trailing], 8)
             .chartYAxisLabel("%")
             .chartYScale(range: .plotDimension(startPadding:0, endPadding:30))
@@ -184,17 +196,6 @@ struct HumidityItemDaily: View {
         .onAppear {
             sectionedMeasurements.nsPredicate = .filter(key: "measuredAt", date: Date(), scale: preferences.chartScale)
         }
-        .chartOverlay { proxy in
-              GeometryReader { geometry in
-                Rectangle().fill(.clear).contentShape(Rectangle())
-                  .gesture(DragGesture().onChanged { value in
-                      updateCursorPosition(at: value.location, geometry: geometry, proxy: proxy, data: data)
-                  })
-                  .onTapGesture { location in
-                      updateCursorPosition(at: location, geometry: geometry, proxy: proxy, data: data)
-                  }
-              }
-            }
     }
     
     func updateCursorPosition(at: CGPoint, geometry: GeometryProxy, proxy: ChartProxy, data: [ChartableMeasurement]) {
@@ -240,6 +241,7 @@ struct HumidityItemDaily: View {
         }
         return hourlyMeasurements
     }
+    
     func getDailyAverages() -> [ChartableMeasurement] {
         var averageHumidities: [ChartableMeasurement] = []
 
@@ -249,6 +251,17 @@ struct HumidityItemDaily: View {
         }
         
         return averageHumidities
+    }
+    
+    func getAverage(data: [ChartableMeasurement]) -> MeasurementAverage {
+        let sumMoisture = data.reduce(0) {
+            $0 + $1.moisturePercentage
+        }
+        let sumTemperature = data.reduce(0) {
+            $0 + $1.soilTemperature
+        }
+        let count = Float(data.count)
+        return MeasurementAverage(moisturePercentage: sumMoisture/count, soilTemperature: sumTemperature/count)
     }
     
     func getChartData() -> [ChartableMeasurement] {

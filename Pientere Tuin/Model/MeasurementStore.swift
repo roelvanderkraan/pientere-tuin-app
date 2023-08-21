@@ -30,9 +30,9 @@ struct MeasurementStore {
         let count = Float(measurements.count)
         return MeasurementAverage(moisturePercentage: sumMoisture/count, soilTemperature: sumTemperature/count)
     }
-    
-    struct MeasurementAverage {
-        var moisturePercentage: Float
-        var soilTemperature: Float
-    }
+}
+
+struct MeasurementAverage {
+    var moisturePercentage: Float
+    var soilTemperature: Float
 }
