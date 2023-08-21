@@ -10,14 +10,14 @@
 		8A138FD92A8B945C003247BA /* GardenNew.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A138FD82A8B945C003247BA /* GardenNew.swift */; };
 		8A138FDC2A8B9A88003247BA /* Garden+validate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A138FDB2A8B9A88003247BA /* Garden+validate.swift */; };
 		8A138FDF2A8B9D0B003247BA /* ApiErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A138FDE2A8B9D0B003247BA /* ApiErrors.swift */; };
-		8A163D4B2A8FA78A00AB3C95 /* HumidityItemDaily.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A163D4A2A8FA78A00AB3C95 /* HumidityItemDaily.swift */; };
+		8A163D4B2A8FA78A00AB3C95 /* HumidityDailyItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A163D4A2A8FA78A00AB3C95 /* HumidityDailyItem.swift */; };
 		8A163D502A8FA8F700AB3C95 /* MeasurementProjection+section.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A163D4F2A8FA8F700AB3C95 /* MeasurementProjection+section.swift */; };
 		8A163D552A8FA9A200AB3C95 /* Date+onlydate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A163D542A8FA9A200AB3C95 /* Date+onlydate.swift */; };
 		8A3D136D2A87D12B00DF4EF1 /* GardenEdit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A3D136C2A87D12B00DF4EF1 /* GardenEdit.swift */; };
 		8A3D13722A87D30D00DF4EF1 /* Binding+inits.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A3D13712A87D30D00DF4EF1 /* Binding+inits.swift */; };
 		8A3D13772A87DACC00DF4EF1 /* GardenStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A3D13762A87DACC00DF4EF1 /* GardenStore.swift */; };
 		8A3D13792A87DCE500DF4EF1 /* openapi.yaml in Resources */ = {isa = PBXBuildFile; fileRef = 8A3D13782A87DCE500DF4EF1 /* openapi.yaml */; };
-		8A649DD72A87A51200CC38DE /* HumidityItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A649DD62A87A51200CC38DE /* HumidityItem.swift */; };
+		8A649DD72A87A51200CC38DE /* HumidityHourlyItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A649DD62A87A51200CC38DE /* HumidityHourlyItem.swift */; };
 		8A649DDA2A87A76700CC38DE /* NSPredicate+date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A649DD92A87A76700CC38DE /* NSPredicate+date.swift */; };
 		8A649DDD2A87AAA100CC38DE /* TemperatureItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A649DDC2A87AAA100CC38DE /* TemperatureItem.swift */; };
 		8A6842CD2A8CEB3F00B4B9A7 /* TemperatureDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A6842CC2A8CEB3F00B4B9A7 /* TemperatureDetails.swift */; };
@@ -45,6 +45,7 @@
 		8AACAC3D2A857D710032CC1C /* PientereWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AACAC3C2A857D710032CC1C /* PientereWidget.swift */; };
 		8AACAC402A857D720032CC1C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8AACAC3F2A857D720032CC1C /* Assets.xcassets */; };
 		8AACAC462A857D720032CC1C /* WidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 8AACAC312A857D710032CC1C /* WidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		8AC5F6E62A93C05A00677531 /* ChartModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AC5F6E52A93C05A00677531 /* ChartModel.swift */; };
 		8AF06D812A8A8E6900D30A83 /* ChartScale.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AF06D802A8A8E6900D30A83 /* ChartScale.swift */; };
 		8AF06D842A8AA4C400D30A83 /* ApiTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AF06D832A8AA4C400D30A83 /* ApiTimer.swift */; };
 		8AFCA4322A83FA4B00D4B6C8 /* Pientere_TuinApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AFCA4312A83FA4B00D4B6C8 /* Pientere_TuinApp.swift */; };
@@ -103,7 +104,7 @@
 		8A138FD82A8B945C003247BA /* GardenNew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GardenNew.swift; sourceTree = "<group>"; };
 		8A138FDB2A8B9A88003247BA /* Garden+validate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Garden+validate.swift"; sourceTree = "<group>"; };
 		8A138FDE2A8B9D0B003247BA /* ApiErrors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiErrors.swift; sourceTree = "<group>"; };
-		8A163D4A2A8FA78A00AB3C95 /* HumidityItemDaily.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HumidityItemDaily.swift; sourceTree = "<group>"; };
+		8A163D4A2A8FA78A00AB3C95 /* HumidityDailyItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HumidityDailyItem.swift; sourceTree = "<group>"; };
 		8A163D4D2A8FA8C500AB3C95 /* Pientere_Tuin 4.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Pientere_Tuin 4.xcdatamodel"; sourceTree = "<group>"; };
 		8A163D4F2A8FA8F700AB3C95 /* MeasurementProjection+section.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MeasurementProjection+section.swift"; sourceTree = "<group>"; };
 		8A163D542A8FA9A200AB3C95 /* Date+onlydate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+onlydate.swift"; sourceTree = "<group>"; };
@@ -112,7 +113,7 @@
 		8A3D13762A87DACC00DF4EF1 /* GardenStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GardenStore.swift; sourceTree = "<group>"; };
 		8A3D13782A87DCE500DF4EF1 /* openapi.yaml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = openapi.yaml; sourceTree = "<group>"; };
 		8A48C0A92A88E31400C4F2EA /* Pientere-Tuin-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "Pientere-Tuin-Info.plist"; sourceTree = SOURCE_ROOT; };
-		8A649DD62A87A51200CC38DE /* HumidityItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HumidityItem.swift; sourceTree = "<group>"; };
+		8A649DD62A87A51200CC38DE /* HumidityHourlyItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HumidityHourlyItem.swift; sourceTree = "<group>"; };
 		8A649DD92A87A76700CC38DE /* NSPredicate+date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSPredicate+date.swift"; sourceTree = "<group>"; };
 		8A649DDC2A87AAA100CC38DE /* TemperatureItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemperatureItem.swift; sourceTree = "<group>"; };
 		8A6842CC2A8CEB3F00B4B9A7 /* TemperatureDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemperatureDetails.swift; sourceTree = "<group>"; };
@@ -138,6 +139,7 @@
 		8AACAC3F2A857D720032CC1C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8AACAC412A857D720032CC1C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8AAF6B552A85064400EDC1E0 /* Pientere_Tuin 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Pientere_Tuin 2.xcdatamodel"; sourceTree = "<group>"; };
+		8AC5F6E52A93C05A00677531 /* ChartModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartModel.swift; sourceTree = "<group>"; };
 		8AF06D802A8A8E6900D30A83 /* ChartScale.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartScale.swift; sourceTree = "<group>"; };
 		8AF06D832A8AA4C400D30A83 /* ApiTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiTimer.swift; sourceTree = "<group>"; };
 		8AFCA42E2A83FA4B00D4B6C8 /* Pientere Tuin.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Pientere Tuin.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -306,8 +308,9 @@
 				8AFCA4382A83FA4B00D4B6C8 /* ContentView.swift */,
 				8A6842D52A8CEDB800B4B9A7 /* Formatters.swift */,
 				8A3D136F2A87D23100DF4EF1 /* Garden */,
-				8A649DD62A87A51200CC38DE /* HumidityItem.swift */,
-				8A163D4A2A8FA78A00AB3C95 /* HumidityItemDaily.swift */,
+				8A649DD62A87A51200CC38DE /* HumidityHourlyItem.swift */,
+				8A163D4A2A8FA78A00AB3C95 /* HumidityDailyItem.swift */,
+				8AC5F6E52A93C05A00677531 /* ChartModel.swift */,
 				8A687C112A93AF3B00AD1285 /* MeasurementAnnotation.swift */,
 				8A649DDC2A87AAA100CC38DE /* TemperatureItem.swift */,
 				8AF06D862A8AAA8900D30A83 /* Measurement */,
@@ -537,8 +540,8 @@
 				8A649DDD2A87AAA100CC38DE /* TemperatureItem.swift in Sources */,
 				8A6842D62A8CEDB800B4B9A7 /* Formatters.swift in Sources */,
 				8A138FD92A8B945C003247BA /* GardenNew.swift in Sources */,
-				8A649DD72A87A51200CC38DE /* HumidityItem.swift in Sources */,
-				8A163D4B2A8FA78A00AB3C95 /* HumidityItemDaily.swift in Sources */,
+				8A649DD72A87A51200CC38DE /* HumidityHourlyItem.swift in Sources */,
+				8A163D4B2A8FA78A00AB3C95 /* HumidityDailyItem.swift in Sources */,
 				8A9F139B2A8D0844003529B7 /* GardenCard.swift in Sources */,
 				8AF06D812A8A8E6900D30A83 /* ChartScale.swift in Sources */,
 				8A687C122A93AF3B00AD1285 /* MeasurementAnnotation.swift in Sources */,
@@ -547,6 +550,7 @@
 				8A3D136D2A87D12B00DF4EF1 /* GardenEdit.swift in Sources */,
 				8A6842D32A8CED0300B4B9A7 /* MeasurementStore.swift in Sources */,
 				8AF06D842A8AA4C400D30A83 /* ApiTimer.swift in Sources */,
+				8AC5F6E62A93C05A00677531 /* ChartModel.swift in Sources */,
 				8A6842DC2A8CEFAB00B4B9A7 /* HumidityDetails.swift in Sources */,
 				8AFCA4372A83FA4B00D4B6C8 /* Pientere_Tuin.xcdatamodeld in Sources */,
 				8A3D13722A87D30D00DF4EF1 /* Binding+inits.swift in Sources */,

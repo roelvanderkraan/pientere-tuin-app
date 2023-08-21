@@ -16,9 +16,9 @@ struct MeasurementAnnotation: View {
         VStack(alignment: .leading) {
             HStack(alignment: .firstTextBaseline) {
                 Text("\(value, specifier: specifier)")
-                    .font(.system(.body, design: .rounded, weight: .bold))
+                    .font(.system(.largeTitle, design: .rounded, weight: .bold))
                 Text(unit)
-                    .font(.system(.caption, design: .rounded))
+                    .font(.system(.body, design: .rounded))
                     .foregroundColor(.secondary)
             }
             Text(caption)
@@ -26,7 +26,9 @@ struct MeasurementAnnotation: View {
                 .foregroundColor(.secondary)
 
         }
-        .padding([.bottom], 8)
+        .padding(EdgeInsets(top: 4, leading: 8, bottom: 4, trailing: 8))
+        .background(.background)
+        .cornerRadius(8)
     }
 }
 

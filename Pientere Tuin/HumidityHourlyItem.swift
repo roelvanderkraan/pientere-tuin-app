@@ -8,7 +8,7 @@
 import SwiftUI
 import Charts
 
-struct HumidityItem: View {
+struct HumidityHourlyItem: View {
     @FetchRequest(
         sortDescriptors: [SortDescriptor(\.measuredAt, order: .reverse)],
         animation: .default)
@@ -128,7 +128,7 @@ private let itemFormatter: DateFormatter = {
 
 struct HumidityItem_Previews: PreviewProvider {
     static var previews: some View {
-        HumidityItem()
+        HumidityHourlyItem()
             .environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
     }
 }

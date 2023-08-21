@@ -8,12 +8,7 @@
 import SwiftUI
 import Charts
 
-struct HumidityItemDaily: View {
-//    @FetchRequest(
-//        sortDescriptors: [SortDescriptor(\.measuredAt, order: .reverse)],
-//        animation: .default)
-//    private var measurements: FetchedResults<MeasurementProjection>
-    
+struct HumidityDailyItem: View {    
     @SectionedFetchRequest<Date, MeasurementProjection>(
         sectionIdentifier: \.sectionMeasuredAt,
         sortDescriptors: [SortDescriptor(\.measuredAt, order: .reverse)]
@@ -22,14 +17,14 @@ struct HumidityItemDaily: View {
         
     @Environment(\.managedObjectContext) private var viewContext
     
-    @ObservedObject var preferences = Preferences.shared
+    @ObservedObject var chartModel = ChartModel()
+    @ObservedObject private var preferences = Preferences.shared
     
     @State var selectedDate: Date?
     @State var annotationPosition: AnnotationPosition = .automatic
+    @State var chartTopPadding: CGFloat = 0
     
     var body: some View {
-        let data = getChartData()
-        let average = getAverage(data: data)
         VStack(alignment: .leading) {
             Picker("Chart scale", selection: $preferences.chartScale) {
                 Text("D").tag(ChartScale.day)
@@ -38,21 +33,24 @@ struct HumidityItemDaily: View {
                 Text("All").tag(ChartScale.all)
             }
             .pickerStyle(.segmented)
-            HStack(alignment: .firstTextBaseline) {
-                Text("\(Image(systemName: "drop.fill")) Average soil humidity")
-                    .font(.system(.body, design: .default, weight: .medium))
-                    .foregroundColor(.blue)
-                Spacer()
+            if selectedDate == nil {
+                if let average = chartModel.chartAverage {
+                    HStack(alignment: .firstTextBaseline) {
+                        Text("\(Image(systemName: "drop.fill")) Average soil humidity")
+                            .font(.system(.body, design: .default, weight: .medium))
+                            .foregroundColor(.blue)
+                        Spacer()
+                    }
+                    HStack(alignment: .firstTextBaseline) {
+                        Text("\(average.moisturePercentage * 100, specifier: "%.1f")")
+                            .font(.system(.largeTitle, design: .rounded, weight: .bold))
+                        Text("%")
+                            .font(.system(.body, design: .rounded))
+                            .foregroundColor(.secondary)
+                    }
+                }
             }
-            HStack(alignment: .firstTextBaseline) {
-                Text("\(average.moisturePercentage * 100, specifier: "%.1f")")
-                    .font(.system(.largeTitle, design: .rounded, weight: .bold))
-                Text("%")
-                    .font(.system(.body, design: .rounded))
-                    .foregroundColor(.secondary)
-            }
-            
-            Chart(data) { dayAverage in
+            Chart(chartModel.chartData) { dayAverage in
                     LineMark(
                         x: .value("Day", dayAverage.date, unit: .hour),
                         y: .value("Moisture", dayAverage.moisturePercentage * 100)
@@ -68,80 +66,59 @@ struct HumidityItemDaily: View {
                     .accessibilityHidden(true)
                     .lineStyle(StrokeStyle(lineWidth: 2))
                     .alignsMarkStylesWithPlotArea()
-                if preferences.chartScale == .day {
+                if preferences.chartScale != .week {
                     PointMark(
                         x: .value("Day", dayAverage.date, unit: .hour),
                         y: .value("Moisture", dayAverage.moisturePercentage * 100)
                         
                     )
-                    .annotation(
-                        position: annotationPosition,
-                        alignment: .center,
-                        spacing: 0
-                    ) {
-                        if selectedDate == dayAverage.date {
-                            MeasurementAnnotation(caption: Formatters.itemFormatter.string(from: dayAverage.date), value: dayAverage.moisturePercentage * 100, unit: "%", specifier: "%.1f")
-                        }
-                    }
-                } else if preferences.chartScale == .week {
-                    PointMark(
-                        x: .value("Day", dayAverage.date, unit: .hour),
-                        y: .value("Moisture", dayAverage.moisturePercentage * 100)
-                        
-                    )
-                    .foregroundStyle(.clear)
-                    .annotation(
-                        position: annotationPosition,
-                        alignment: .center,
-                        spacing: 0
-                    ) {
-                        if selectedDate == dayAverage.date {
-                            MeasurementAnnotation(caption: Formatters.itemFormatter.string(from: dayAverage.date), value: dayAverage.moisturePercentage * 100, unit: "%", specifier: "%.1f")
-                        }
-                    }
-                } else {
-                    PointMark(
-                        x: .value("Day", dayAverage.date, unit: .hour),
-                        y: .value("Moisture", dayAverage.moisturePercentage * 100)
-                        
-                    )
-                    .annotation(
-                        position: annotationPosition,
-                        alignment: .center,
-                        spacing: 0
-                    ) {
-                        if selectedDate == dayAverage.date {
-                            MeasurementAnnotation(caption: Formatters.dateFormatter.string(from: dayAverage.date), value: dayAverage.moisturePercentage * 100, unit: "%", specifier: "%.1f")
-                        }
-                    }
                 }
-                
                 
                 if selectedDate == dayAverage.date {
                     RuleMark(
                         x: .value("Selected", dayAverage.date, unit: .hour)
                     )
                     .foregroundStyle(Color.gray.opacity(0.3))
+                    .annotation(
+                        position: annotationPosition,
+                        alignment: .center,
+                        spacing: 0
+                    ) {
+                        if selectedDate == dayAverage.date {
+                            switch preferences.chartScale {
+                            case .day, .week:
+                                MeasurementAnnotation(caption: Formatters.itemFormatter.string(from: dayAverage.date), value: dayAverage.moisturePercentage * 100, unit: "%", specifier: "%.1f")
+                            default:
+                                MeasurementAnnotation(caption: Formatters.dateFormatter.string(from: dayAverage.date), value: dayAverage.moisturePercentage * 100, unit: "%", specifier: "%.1f")
+                            }
+                            
+                        }
+                    }
                 }
             }
             .chartForegroundStyleScale([
                 "Moisture": .blue
             ])
             .chartLegend(.hidden)
+            .chartYScale(domain: 0...50)
             .chartOverlay { proxy in
                 GeometryReader { geometry in
                     Rectangle().fill(.clear).contentShape(Rectangle())
                         .gesture(DragGesture().onChanged { value in
-                            updateCursorPosition(at: value.location, geometry: geometry, proxy: proxy, data: data)
+                            updateCursorPosition(at: value.location, geometry: geometry, proxy: proxy, data: chartModel.chartData)
                         })
                         .onTapGesture { location in
-                            updateCursorPosition(at: location, geometry: geometry, proxy: proxy, data: data)
+                            if selectedDate == nil {
+                                updateCursorPosition(at: location, geometry: geometry, proxy: proxy, data: chartModel.chartData)
+                            } else {
+                                selectedDate = nil
+                            }
                         }
                 }
             }
-            .padding([.trailing], 8)
+            .padding(EdgeInsets(top: chartTopPadding, leading: 0, bottom: 0, trailing: 8))
             .chartYAxisLabel("%")
-            .chartYScale(range: .plotDimension(startPadding:0, endPadding:30))
+//            .chartYScale(range: .plotDimension(startPadding:0, endPadding:30))
             .chartXAxis {
                 switch preferences.chartScale {
                 case .day:
@@ -189,12 +166,22 @@ struct HumidityItemDaily: View {
                 }
             }
         }
-        .padding([.bottom, .top], 8)
         .onChange(of: preferences.chartScale) { newValue in
             sectionedMeasurements.nsPredicate = .filter(key: "measuredAt", date: Date(), scale: newValue)
+            chartModel.reloadData(measurements: sectionedMeasurements)
+            selectedDate = nil
         }
         .onAppear {
             sectionedMeasurements.nsPredicate = .filter(key: "measuredAt", date: Date(), scale: preferences.chartScale)
+            chartModel.reloadData(measurements: sectionedMeasurements)
+        }
+        .onChange(of: selectedDate) { newValue in
+            let annotationHeight = 80.0
+            if newValue == nil {
+                chartTopPadding = 0
+            } else {
+                chartTopPadding = annotationHeight
+            }
         }
     }
     
@@ -210,7 +197,7 @@ struct HumidityItemDaily: View {
         debugPrint("Selected date: \(date ?? Date()), humidity: \(humidity)")
         selectedDate = hourDate(of: date, data: data)
         debugPrint("\(selectedDate)")
-        
+
         if location.x < annotationWidth {
             annotationPosition = .topTrailing
         } else if location.x > width - annotationWidth {
@@ -220,7 +207,7 @@ struct HumidityItemDaily: View {
         }
       }
     
-    func hourDate(of selectedDate: Date, data: [ChartableMeasurement]) -> Date? {
+    private func hourDate(of selectedDate: Date, data: [ChartableMeasurement]) -> Date? {
         var granularity: Calendar.Component = .hour
         if preferences.chartScale == .month || preferences.chartScale == .all {
             granularity = .day
@@ -231,47 +218,6 @@ struct HumidityItemDaily: View {
         return results.first?.date
     }
     
-    func getHourlyMeasurements() -> [ChartableMeasurement] {
-        var hourlyMeasurements: [ChartableMeasurement] = []
-
-        for section in sectionedMeasurements {
-            for measurement in section {
-                hourlyMeasurements.append(ChartableMeasurement(date: measurement.measuredAt ?? Date(), moisturePercentage: measurement.moisturePercentage, soilTemperature: measurement.temperatureCelcius))
-            }
-        }
-        return hourlyMeasurements
-    }
-    
-    func getDailyAverages() -> [ChartableMeasurement] {
-        var averageHumidities: [ChartableMeasurement] = []
-
-        for section in sectionedMeasurements {
-            let averages = MeasurementStore.getAverage(measurements: section)
-            averageHumidities.append(ChartableMeasurement(date: section.id, moisturePercentage: averages.moisturePercentage, soilTemperature: averages.soilTemperature))
-        }
-        
-        return averageHumidities
-    }
-    
-    func getAverage(data: [ChartableMeasurement]) -> MeasurementAverage {
-        let sumMoisture = data.reduce(0) {
-            $0 + $1.moisturePercentage
-        }
-        let sumTemperature = data.reduce(0) {
-            $0 + $1.soilTemperature
-        }
-        let count = Float(data.count)
-        return MeasurementAverage(moisturePercentage: sumMoisture/count, soilTemperature: sumTemperature/count)
-    }
-    
-    func getChartData() -> [ChartableMeasurement] {
-        switch preferences.chartScale {
-        case .day, .week:
-            return getHourlyMeasurements()
-        case .month, .all:
-            return getDailyAverages()
-        }
-    }
 }
 
 struct ChartableMeasurement: Identifiable {
@@ -290,7 +236,7 @@ private let itemFormatter: DateFormatter = {
 
 struct HumidityItemDaily_Previews: PreviewProvider {
     static var previews: some View {
-        HumidityItem()
+        HumidityHourlyItem()
             .environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
     }
 }
