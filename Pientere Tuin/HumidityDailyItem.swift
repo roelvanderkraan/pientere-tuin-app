@@ -8,7 +8,9 @@
 import SwiftUI
 import Charts
 
-struct HumidityDailyItem: View {    
+struct HumidityDailyItem: View {
+    var chartType: ChartType
+    
     @SectionedFetchRequest<Date, MeasurementProjection>(
         sectionIdentifier: \.sectionMeasuredAt,
         sortDescriptors: [SortDescriptor(\.measuredAt, order: .reverse)]
@@ -17,14 +19,21 @@ struct HumidityDailyItem: View {
         
     @Environment(\.managedObjectContext) private var viewContext
     
-    @ObservedObject var chartModel = ChartModel()
+    @ObservedObject private var chartModel = ChartModel()
     @ObservedObject private var preferences = Preferences.shared
     
-    @State var selectedDate: Date?
-    @State var annotationPosition: AnnotationPosition = .automatic
-    @State var chartTopPadding: CGFloat = 0
+    @State private var selectedDate: Date?
+    @State private var annotationPosition: AnnotationPosition = .automatic
+    @State private var chartTopPadding: CGFloat = 0
+    private var annotationHeight: CGFloat = 60
+
+    init(chartType: ChartType) {
+        self.chartType = chartType
+    }
     
     var body: some View {
+        let chartYScale = chartModel.getYScale()
+        let dryValue = chartModel.getDryValue()
         VStack(alignment: .leading) {
             Picker("Chart scale", selection: $preferences.chartScale) {
                 Text("D").tag(ChartScale.day)
@@ -35,63 +44,80 @@ struct HumidityDailyItem: View {
             .pickerStyle(.segmented)
             if selectedDate == nil {
                 if let average = chartModel.chartAverage {
-                    HStack(alignment: .firstTextBaseline) {
-                        Text("\(Image(systemName: "drop.fill")) Average soil humidity")
-                            .font(.system(.body, design: .default, weight: .medium))
-                            .foregroundColor(.blue)
-                        Spacer()
+                    VStack(alignment: .leading) {
+                        HStack(alignment: .firstTextBaseline) {
+                            Text("\(Image(systemName: "drop.fill")) Average soil humidity")
+                                .font(.system(.body, design: .default, weight: .medium))
+                                .foregroundColor(.blue)
+                            Spacer()
+                        }
+                        HStack(alignment: .firstTextBaseline) {
+                            Text("\(average.moisturePercentage * 100, specifier: "%.1f")")
+                                .font(.system(.largeTitle, design: .rounded, weight: .bold))
+                            Text("%")
+                                .font(.system(.body, design: .rounded))
+                                .foregroundColor(.secondary)
+                        }
                     }
-                    HStack(alignment: .firstTextBaseline) {
-                        Text("\(average.moisturePercentage * 100, specifier: "%.1f")")
-                            .font(.system(.largeTitle, design: .rounded, weight: .bold))
-                        Text("%")
-                            .font(.system(.body, design: .rounded))
-                            .foregroundColor(.secondary)
-                    }
+                    .frame(height: annotationHeight)
                 }
             }
-            Chart(chartModel.chartData) { dayAverage in
-                    LineMark(
-                        x: .value("Day", dayAverage.date, unit: .hour),
-                        y: .value("Moisture", dayAverage.moisturePercentage * 100)
+            Chart {
+                if let dryValue = dryValue {
+                    RuleMark(
+                        y: .value("Dry", dryValue*100)
+                    )
+                    .foregroundStyle(Color.orange.opacity(0.3))
+                    .annotation(
+                        position: .top,
+                        alignment: .trailing,
+                        spacing: 0
+                    ) {
+                        Text("Dry")
+                            .foregroundStyle(.orange)
+                            .font(.footnote)
 
-                    )
-                    .foregroundStyle(
-                        .linearGradient(
-                            colors: [.yellow, .green, .blue],
-                            startPoint: .bottom,
-                            endPoint: .top
-                        )
-                    )
-                    .accessibilityHidden(true)
-                    .lineStyle(StrokeStyle(lineWidth: 2))
-                    .alignsMarkStylesWithPlotArea()
-                if preferences.chartScale != .week {
-                    PointMark(
+                    }
+                }
+                
+                ForEach(chartModel.chartData) { dayAverage in
+                    LineMark(
                         x: .value("Day", dayAverage.date, unit: .hour),
                         y: .value("Moisture", dayAverage.moisturePercentage * 100)
                         
                     )
-                }
-                
-                if selectedDate == dayAverage.date {
-                    RuleMark(
-                        x: .value("Selected", dayAverage.date, unit: .hour)
-                    )
-                    .foregroundStyle(Color.gray.opacity(0.3))
-                    .annotation(
-                        position: annotationPosition,
-                        alignment: .center,
-                        spacing: 0
-                    ) {
-                        if selectedDate == dayAverage.date {
-                            switch preferences.chartScale {
-                            case .day, .week:
-                                MeasurementAnnotation(caption: Formatters.itemFormatter.string(from: dayAverage.date), value: dayAverage.moisturePercentage * 100, unit: "%", specifier: "%.1f")
-                            default:
-                                MeasurementAnnotation(caption: Formatters.dateFormatter.string(from: dayAverage.date), value: dayAverage.moisturePercentage * 100, unit: "%", specifier: "%.1f")
-                            }
+                    .foregroundStyle(.blue)
+                    .accessibilityHidden(true)
+                    .lineStyle(StrokeStyle(lineWidth: 2))
+                    if preferences.chartScale != .week {
+                        PointMark(
+                            x: .value("Day", dayAverage.date, unit: .hour),
+                            y: .value("Moisture", dayAverage.moisturePercentage * 100)
                             
+                        )
+                    }
+                    
+                    if selectedDate == dayAverage.date {
+                        RuleMark(
+                            x: .value("Selected", dayAverage.date, unit: .hour)
+                        )
+                        .foregroundStyle(Color.gray.opacity(0.3))
+                        .annotation(
+                            position: annotationPosition,
+                            alignment: .center,
+                            spacing: 0
+                        ) {
+                            if selectedDate == dayAverage.date {
+                                switch preferences.chartScale {
+                                case .day, .week:
+                                    MeasurementAnnotation(caption: Formatters.itemFormatter.string(from: dayAverage.date), value: dayAverage.moisturePercentage * 100, unit: "%", specifier: "%.1f")
+                                        .frame(height: annotationHeight-8)
+                                default:
+                                    MeasurementAnnotation(caption: Formatters.dateFormatter.string(from: dayAverage.date), value: dayAverage.moisturePercentage * 100, unit: "%", specifier: "%.1f")
+                                        .frame(height: annotationHeight-8)
+                                }
+                                
+                            }
                         }
                     }
                 }
@@ -100,7 +126,7 @@ struct HumidityDailyItem: View {
                 "Moisture": .blue
             ])
             .chartLegend(.hidden)
-            .chartYScale(domain: 0...50)
+            .chartYScale(domain: chartYScale)
             .chartOverlay { proxy in
                 GeometryReader { geometry in
                     Rectangle().fill(.clear).contentShape(Rectangle())
@@ -176,11 +202,10 @@ struct HumidityDailyItem: View {
             chartModel.reloadData(measurements: sectionedMeasurements)
         }
         .onChange(of: selectedDate) { newValue in
-            let annotationHeight = 80.0
             if newValue == nil {
                 chartTopPadding = 0
             } else {
-                chartTopPadding = annotationHeight
+                chartTopPadding = annotationHeight+8
             }
         }
     }
@@ -217,14 +242,18 @@ struct HumidityDailyItem: View {
         })
         return results.first?.date
     }
-    
 }
 
 struct ChartableMeasurement: Identifiable {
     var date: Date
     var moisturePercentage: Float
-    var soilTemperature: Float
+    var temperatureCelcius: Float
     var id = UUID()
+}
+
+enum ChartType {
+    case moisture
+    case temperature
 }
 
 private let itemFormatter: DateFormatter = {
@@ -236,7 +265,7 @@ private let itemFormatter: DateFormatter = {
 
 struct HumidityItemDaily_Previews: PreviewProvider {
     static var previews: some View {
-        HumidityHourlyItem()
+        HumidityDailyItem(chartType: .moisture)
             .environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
     }
 }
