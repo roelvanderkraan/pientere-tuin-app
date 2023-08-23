@@ -8,9 +8,7 @@
 import SwiftUI
 import Charts
 
-struct HumidityDailyItem: View {
-    var chartType: ChartType
-    
+struct MesurementChart: View {
     @SectionedFetchRequest<Date, MeasurementProjection>(
         sectionIdentifier: \.sectionMeasuredAt,
         sortDescriptors: [SortDescriptor(\.measuredAt, order: .reverse)]
@@ -19,17 +17,13 @@ struct HumidityDailyItem: View {
         
     @Environment(\.managedObjectContext) private var viewContext
     
-    @ObservedObject private var chartModel = ChartModel()
-    @ObservedObject private var preferences = Preferences.shared
+    @ObservedObject var chartModel: ChartModel
+    @ObservedObject var preferences = Preferences.shared
     
-    @State private var selectedDate: Date?
-    @State private var annotationPosition: AnnotationPosition = .automatic
-    @State private var chartTopPadding: CGFloat = 0
-    private var annotationHeight: CGFloat = 60
-
-    init(chartType: ChartType) {
-        self.chartType = chartType
-    }
+    @State var selectedDate: Date?
+    @State var annotationPosition: AnnotationPosition = .automatic
+    @State var chartTopPadding: CGFloat = 0
+    var annotationHeight: CGFloat = 60
     
     var body: some View {
         let chartYScale = chartModel.getYScale()
@@ -46,15 +40,15 @@ struct HumidityDailyItem: View {
                 if let average = chartModel.chartAverage {
                     VStack(alignment: .leading) {
                         HStack(alignment: .firstTextBaseline) {
-                            Text("\(Image(systemName: "drop.fill")) Average soil humidity")
+                            Text("\(chartModel.typeIcon) Average \(chartModel.typeText)")
                                 .font(.system(.body, design: .default, weight: .medium))
-                                .foregroundColor(.blue)
+                                .foregroundColor(chartModel.typeColor)
                             Spacer()
                         }
                         HStack(alignment: .firstTextBaseline) {
-                            Text("\(average.moisturePercentage * 100, specifier: "%.1f")")
+                            Text("\(average.averageValue, specifier: "%.1f")")
                                 .font(.system(.largeTitle, design: .rounded, weight: .bold))
-                            Text("%")
+                            Text(chartModel.valueUnit)
                                 .font(.system(.body, design: .rounded))
                                 .foregroundColor(.secondary)
                         }
@@ -63,7 +57,7 @@ struct HumidityDailyItem: View {
                 }
             }
             Chart {
-                if let dryValue = dryValue {
+                if chartModel.chartType == .moisture, let dryValue = dryValue {
                     RuleMark(
                         y: .value("Dry", dryValue*100)
                     )
@@ -83,18 +77,19 @@ struct HumidityDailyItem: View {
                 ForEach(chartModel.chartData) { dayAverage in
                     LineMark(
                         x: .value("Day", dayAverage.date, unit: .hour),
-                        y: .value("Moisture", dayAverage.moisturePercentage * 100)
+                        y: .value(chartModel.typeText, dayAverage.value)
                         
                     )
-                    .foregroundStyle(.blue)
+                    .foregroundStyle(chartModel.typeColor)
                     .accessibilityHidden(true)
                     .lineStyle(StrokeStyle(lineWidth: 2))
                     if preferences.chartScale != .week {
                         PointMark(
                             x: .value("Day", dayAverage.date, unit: .hour),
-                            y: .value("Moisture", dayAverage.moisturePercentage * 100)
+                            y: .value(chartModel.typeText, dayAverage.value)
                             
                         )
+                        .foregroundStyle(chartModel.typeColor)
                     }
                     
                     if selectedDate == dayAverage.date {
@@ -110,10 +105,10 @@ struct HumidityDailyItem: View {
                             if selectedDate == dayAverage.date {
                                 switch preferences.chartScale {
                                 case .day, .week:
-                                    MeasurementAnnotation(caption: Formatters.itemFormatter.string(from: dayAverage.date), value: dayAverage.moisturePercentage * 100, unit: "%", specifier: "%.1f")
+                                    MeasurementAnnotation(caption: Formatters.itemFormatter.string(from: dayAverage.date), value: dayAverage.value, unit: chartModel.valueUnit, specifier: chartModel.valueSpecifier)
                                         .frame(height: annotationHeight-8)
                                 default:
-                                    MeasurementAnnotation(caption: Formatters.dateFormatter.string(from: dayAverage.date), value: dayAverage.moisturePercentage * 100, unit: "%", specifier: "%.1f")
+                                    MeasurementAnnotation(caption: Formatters.dateFormatter.string(from: dayAverage.date), value: dayAverage.value, unit: chartModel.valueUnit, specifier: "%.1f")
                                         .frame(height: annotationHeight-8)
                                 }
                                 
@@ -123,7 +118,7 @@ struct HumidityDailyItem: View {
                 }
             }
             .chartForegroundStyleScale([
-                "Moisture": .blue
+                chartModel.typeText: chartModel.typeColor
             ])
             .chartLegend(.hidden)
             .chartYScale(domain: chartYScale)
@@ -143,7 +138,7 @@ struct HumidityDailyItem: View {
                 }
             }
             .padding(EdgeInsets(top: chartTopPadding, leading: 0, bottom: 0, trailing: 8))
-            .chartYAxisLabel("%")
+            .chartYAxisLabel(chartModel.valueUnit)
 //            .chartYScale(range: .plotDimension(startPadding:0, endPadding:30))
             .chartXAxis {
                 switch preferences.chartScale {
@@ -244,28 +239,9 @@ struct HumidityDailyItem: View {
     }
 }
 
-struct ChartableMeasurement: Identifiable {
-    var date: Date
-    var moisturePercentage: Float
-    var temperatureCelcius: Float
-    var id = UUID()
-}
-
-enum ChartType {
-    case moisture
-    case temperature
-}
-
-private let itemFormatter: DateFormatter = {
-    let formatter = DateFormatter()
-    formatter.dateStyle = .none
-    formatter.timeStyle = .short
-    return formatter
-}()
-
-struct HumidityItemDaily_Previews: PreviewProvider {
+struct MeasurementChart_Previews: PreviewProvider {
     static var previews: some View {
-        HumidityDailyItem(chartType: .moisture)
+        MesurementChart(chartModel: ChartModel(chartType: .moisture))
             .environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
     }
 }

@@ -13,7 +13,7 @@ struct TemperatureDetails: View {
     var body: some View {
         List {
             Section {
-                TemperatureItem()
+                MesurementChart(chartModel: ChartModel(chartType: .temperature))
                     .environment(\.managedObjectContext, viewContext)
                     .frame(idealHeight: 400)
             }

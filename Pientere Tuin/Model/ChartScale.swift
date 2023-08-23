@@ -14,3 +14,8 @@ enum ChartScale: String, CaseIterable, Identifiable, Equatable {
     case all
     var id: Self { self }
 }
+
+enum ChartType {
+    case moisture
+    case temperature
+}

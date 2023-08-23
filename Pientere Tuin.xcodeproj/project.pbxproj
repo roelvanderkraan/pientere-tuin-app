@@ -10,7 +10,7 @@
 		8A138FD92A8B945C003247BA /* GardenNew.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A138FD82A8B945C003247BA /* GardenNew.swift */; };
 		8A138FDC2A8B9A88003247BA /* Garden+validate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A138FDB2A8B9A88003247BA /* Garden+validate.swift */; };
 		8A138FDF2A8B9D0B003247BA /* ApiErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A138FDE2A8B9D0B003247BA /* ApiErrors.swift */; };
-		8A163D4B2A8FA78A00AB3C95 /* HumidityDailyItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A163D4A2A8FA78A00AB3C95 /* HumidityDailyItem.swift */; };
+		8A163D4B2A8FA78A00AB3C95 /* MesurementChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A163D4A2A8FA78A00AB3C95 /* MesurementChart.swift */; };
 		8A163D502A8FA8F700AB3C95 /* MeasurementProjection+section.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A163D4F2A8FA8F700AB3C95 /* MeasurementProjection+section.swift */; };
 		8A163D552A8FA9A200AB3C95 /* Date+onlydate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A163D542A8FA9A200AB3C95 /* Date+onlydate.swift */; };
 		8A3D136D2A87D12B00DF4EF1 /* GardenEdit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A3D136C2A87D12B00DF4EF1 /* GardenEdit.swift */; };
@@ -104,7 +104,7 @@
 		8A138FD82A8B945C003247BA /* GardenNew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GardenNew.swift; sourceTree = "<group>"; };
 		8A138FDB2A8B9A88003247BA /* Garden+validate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Garden+validate.swift"; sourceTree = "<group>"; };
 		8A138FDE2A8B9D0B003247BA /* ApiErrors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiErrors.swift; sourceTree = "<group>"; };
-		8A163D4A2A8FA78A00AB3C95 /* HumidityDailyItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HumidityDailyItem.swift; sourceTree = "<group>"; };
+		8A163D4A2A8FA78A00AB3C95 /* MesurementChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MesurementChart.swift; sourceTree = "<group>"; };
 		8A163D4D2A8FA8C500AB3C95 /* Pientere_Tuin 4.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Pientere_Tuin 4.xcdatamodel"; sourceTree = "<group>"; };
 		8A163D4F2A8FA8F700AB3C95 /* MeasurementProjection+section.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MeasurementProjection+section.swift"; sourceTree = "<group>"; };
 		8A163D542A8FA9A200AB3C95 /* Date+onlydate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+onlydate.swift"; sourceTree = "<group>"; };
@@ -265,6 +265,8 @@
 		8AF06D862A8AAA8900D30A83 /* Measurement */ = {
 			isa = PBXGroup;
 			children = (
+				8A163D4A2A8FA78A00AB3C95 /* MesurementChart.swift */,
+				8AC5F6E52A93C05A00677531 /* ChartModel.swift */,
 				8A6842CE2A8CECA600B4B9A7 /* TemperatureCard.swift */,
 				8A6842D82A8CEF3000B4B9A7 /* HumidityCard.swift */,
 				8A6D65502A8D5E9B00B9E2CB /* HumidityState.swift */,
@@ -309,8 +311,6 @@
 				8A6842D52A8CEDB800B4B9A7 /* Formatters.swift */,
 				8A3D136F2A87D23100DF4EF1 /* Garden */,
 				8A649DD62A87A51200CC38DE /* HumidityHourlyItem.swift */,
-				8A163D4A2A8FA78A00AB3C95 /* HumidityDailyItem.swift */,
-				8AC5F6E52A93C05A00677531 /* ChartModel.swift */,
 				8A687C112A93AF3B00AD1285 /* MeasurementAnnotation.swift */,
 				8A649DDC2A87AAA100CC38DE /* TemperatureItem.swift */,
 				8AF06D862A8AAA8900D30A83 /* Measurement */,
@@ -541,7 +541,7 @@
 				8A6842D62A8CEDB800B4B9A7 /* Formatters.swift in Sources */,
 				8A138FD92A8B945C003247BA /* GardenNew.swift in Sources */,
 				8A649DD72A87A51200CC38DE /* HumidityHourlyItem.swift in Sources */,
-				8A163D4B2A8FA78A00AB3C95 /* HumidityDailyItem.swift in Sources */,
+				8A163D4B2A8FA78A00AB3C95 /* MesurementChart.swift in Sources */,
 				8A9F139B2A8D0844003529B7 /* GardenCard.swift in Sources */,
 				8AF06D812A8A8E6900D30A83 /* ChartScale.swift in Sources */,
 				8A687C122A93AF3B00AD1285 /* MeasurementAnnotation.swift in Sources */,

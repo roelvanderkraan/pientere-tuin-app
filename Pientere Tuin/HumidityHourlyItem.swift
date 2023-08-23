@@ -34,11 +34,11 @@ struct HumidityHourlyItem: View {
                 Spacer()
             }
             HStack(alignment: .firstTextBaseline) {
-                Text("\(MeasurementStore.getAverage(measurements: measurements).moisturePercentage * 100, specifier: "%.1f")")
-                    .font(.system(.largeTitle, design: .rounded, weight: .bold))
-                Text("%")
-                    .font(.system(.body, design: .rounded))
-                    .foregroundColor(.secondary)
+//                Text("\(MeasurementStore.getAverage(measurements: measurements).averageValue, specifier: "%.1f")")
+//                    .font(.system(.largeTitle, design: .rounded, weight: .bold))
+//                Text("%")
+//                    .font(.system(.body, design: .rounded))
+//                    .foregroundColor(.secondary)
             }
             Chart(measurements) { measurement in
                     LineMark(

@@ -33,13 +33,13 @@ struct TemperatureItem: View {
                     .foregroundColor(.green)
                 Spacer()
             }
-            HStack(alignment: .firstTextBaseline) {
-                Text("\(MeasurementStore.getAverage(measurements: measurements).soilTemperature, specifier: "%.1f")")
-                    .font(.system(.largeTitle, design: .rounded, weight: .bold))
-                Text("°C")
-                    .font(.system(.body, design: .rounded))
-                    .foregroundColor(.secondary)
-            }
+//            HStack(alignment: .firstTextBaseline) {
+//                Text("\(MeasurementStore.getAverage(measurements: measurements).soilTemperature, specifier: "%.1f")")
+//                    .font(.system(.largeTitle, design: .rounded, weight: .bold))
+//                Text("°C")
+//                    .font(.system(.body, design: .rounded))
+//                    .foregroundColor(.secondary)
+ //           }
             Chart {
                 ForEach (measurements) { measurement in
                     if measurement.temperatureCelcius != 0.0 {

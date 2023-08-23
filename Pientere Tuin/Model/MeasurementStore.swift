@@ -20,35 +20,40 @@ struct MeasurementStore {
         return measurement
     }
     
-    static func getAverage(measurements: any Collection<MeasurementProjection>) -> MeasurementAverage {
-        let sumMoisture = measurements.reduce(0) {
-            $0 + $1.moisturePercentage
+    static func getAverage(measurements: any Collection<MeasurementProjection>, type: ChartType) -> MeasurementAverage {
+        switch type {
+        case .moisture:
+            let sum = measurements.reduce(0) {
+                $0 + $1.moisturePercentage*100
+            }
+           
+            let max = measurements.reduce(0, { partialResult, measurement in
+                Float.maximum(partialResult, measurement.moisturePercentage*100)
+            })
+            let min = measurements.reduce(100, { partialResult, measurement in
+                Float.minimum(partialResult, measurement.moisturePercentage*100)
+            })
+            let count = Float(measurements.count)
+            return MeasurementAverage(averageValue: sum/count, minValue: min, maxValue: max)
+        case .temperature:
+            let sum = measurements.reduce(0) {
+                $0 + $1.temperatureCelcius
+            }
+           
+            let max = measurements.reduce(0, { partialResult, measurement in
+                Float.maximum(partialResult, measurement.temperatureCelcius)
+            })
+            let min = measurements.reduce(100, { partialResult, measurement in
+                Float.minimum(partialResult, measurement.temperatureCelcius)
+            })
+            let count = Float(measurements.count)
+            return MeasurementAverage(averageValue: sum/count, minValue: min, maxValue: max)
         }
-        let sumTemperature = measurements.reduce(0) { partialResult, measurement in
-            partialResult + measurement.temperatureCelcius
-        }
-        let maxMoisture = measurements.reduce(0, { partialResult, measurement in
-            Float.maximum(partialResult, measurement.moisturePercentage)
-        })
-        let minMoisture = measurements.reduce(100, { partialResult, measurement in
-            Float.minimum(partialResult, measurement.moisturePercentage)
-        })
-        let maxTemperature = measurements.reduce(-30, { partialResult, measurement in
-            Float.maximum(partialResult, measurement.temperatureCelcius)
-        })
-        let minTemperature = measurements.reduce(50, { partialResult, measurement in
-            Float.minimum(partialResult, measurement.temperatureCelcius)
-        })
-        let count = Float(measurements.count)
-        return MeasurementAverage(moisturePercentage: sumMoisture/count, soilTemperature: sumTemperature/count, minMoisture: minMoisture, minTemperature: minTemperature, maxMoisture: maxMoisture, maxTemperature: maxTemperature)
     }
 }
 
 struct MeasurementAverage {
-    var moisturePercentage: Float
-    var soilTemperature: Float
-    var minMoisture: Float
-    var minTemperature: Float
-    var maxMoisture: Float
-    var maxTemperature: Float
+    var averageValue: Float
+    var minValue: Float
+    var maxValue: Float
 }
