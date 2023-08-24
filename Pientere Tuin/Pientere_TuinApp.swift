@@ -14,6 +14,13 @@ struct Pientere_TuinApp: App {
     @Environment(\.scenePhase) private var phase
     let persistenceController = PersistenceController.shared
     @State private var apiTimer = ApiTimer()
+    
+//    init() {
+//        // MARK: Registering Launch Handlers for Tasks
+//        BGTaskScheduler.shared.register(forTaskWithIdentifier: "studio.skipper.Pientere-Tuin.refresh", using: nil) { task in
+//            self.handleAppRefresh(task: task as! BGAppRefreshTask)
+//        }
+//    }
 
     var body: some Scene {
         WindowGroup {
@@ -25,7 +32,7 @@ struct Pientere_TuinApp: App {
         }
         .onChange(of: phase) { newPhase in
             switch newPhase {
-            //case .background: scheduleAppRefresh()
+            case .background: scheduleAppRefresh()
             case .active:
                 if apiTimer.isParseAllowed() {
                     Task {
@@ -34,6 +41,9 @@ struct Pientere_TuinApp: App {
                 }
             default: break
             }
+        }
+        .backgroundTask(.appRefresh("studio.skipper.Pientere-Tuin.refresh")) {
+            await handleAppRefresh()
         }
         
     }
@@ -51,9 +61,16 @@ struct Pientere_TuinApp: App {
     }
     
     /// Schedules background refresh of data, every 15 minutes
-    func scheduleAppRefresh() {
+    private func scheduleAppRefresh() {
         let request = BGAppRefreshTaskRequest(identifier: "studio.skipper.Pientere-Tuin.refresh")
-        request.earliestBeginDate = Date(timeIntervalSinceNow: 15 * 60)
+        request.earliestBeginDate = Date(timeIntervalSinceNow: 30*60)
         try? BGTaskScheduler.shared.submit(request)
+        debugPrint("Task submitted")
+        // testcode: e -l objc -- (void)[[BGTaskScheduler sharedScheduler] _simulateLaunchForTaskWithIdentifier:@"studio.skipper.Pientere-Tuin.refresh"]
+    }
+    
+    private func handleAppRefresh() async {
+        scheduleAppRefresh()
+        await refreshData()
     }
 }

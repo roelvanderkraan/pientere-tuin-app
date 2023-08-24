@@ -84,16 +84,16 @@ struct ContentView: View {
                     .environment(\.managedObjectContext, viewContext)
                     .interactiveDismissDisabled()
             }
+            .refreshable {
+                if apiTimer.isParseAllowed() {
+                    apiTimer.lastParseDate = Date()
+                    try? await ApiHandler.shared.updateTuinData(context: viewContext, garden: garden)
+                }
+            }
 
         } detail: {
             HumidityDetails()
                 .environment(\.managedObjectContext, viewContext)
-        }
-        .refreshable {
-            if apiTimer.isParseAllowed() {
-                apiTimer.lastParseDate = Date()
-                try? await ApiHandler.shared.updateTuinData(context: viewContext, garden: garden)
-            }
         }
         .onAppear {
             if garden.apiKey == nil {

@@ -9,6 +9,7 @@ import Foundation
 import CoreData
 import OpenAPIRuntime
 import OpenAPIURLSession
+import WidgetKit
 
 struct ApiHandler {
     let client: Client
@@ -59,6 +60,8 @@ struct ApiHandler {
                         try await updateTuinData(context: context, page: page+1, loadAll: true, garden: garden)
                     }
                 }
+                // Only when new data?
+                resetWidgets()
             }
         case .undocumented(statusCode: let statusCode, _):
             debugPrint("Error getting data from server, status: \(statusCode)")
@@ -119,6 +122,10 @@ struct ApiHandler {
                 }
             }
         }
+    }
+    
+    private func resetWidgets() {
+        WidgetCenter.shared.reloadTimelines(ofKind: "studio.skipper.Pientere-Tuin.widget")
     }
 }
 
