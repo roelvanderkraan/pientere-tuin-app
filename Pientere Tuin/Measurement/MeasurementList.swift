@@ -20,8 +20,10 @@ struct MeasurementList: View {
                     HStack {
                         Text("\(Image(systemName: "humidity")) \(measurement.moisturePercentage * 100.0, specifier: "%.1f")%")
                             .font(.system(size: 20.0, weight: .regular, design: .rounded))
-                        Text("\(Image(systemName: "thermometer.medium")) \(measurement.temperatureCelcius, specifier: "%.1f")°")
-                            .font(.system(size: 20.0, weight: .regular, design: .rounded))
+                        if let temperature = measurement.temperatureCelcius {
+                            Text("\(Image(systemName: "thermometer.medium")) \(temperature.floatValue, specifier: "%.1f")°")
+                                .font(.system(size: 20.0, weight: .regular, design: .rounded))
+                        }
                         Spacer()
                         Text("\(measurement.measuredAt ?? Date(), formatter: itemFormatter)")
                             .font(.caption)

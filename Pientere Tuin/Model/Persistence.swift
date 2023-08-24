@@ -22,7 +22,7 @@ struct PersistenceController {
             let newMeasurement = MeasurementProjection(context: viewContext)
             newMeasurement.measuredAt = calendar.date(byAdding: DateComponents(hour: -5*count), to: date)
             newMeasurement.moisturePercentage = Float(count) * 0.05
-            newMeasurement.temperatureCelcius = Float(count) * 5.0
+            newMeasurement.temperatureCelcius = NSNumber(value: Float(count) * 5.0)
             newMeasurement.apiUUID = UUID().uuidString
             newMeasurement.soilTypeObject = .gardenSoil
         }

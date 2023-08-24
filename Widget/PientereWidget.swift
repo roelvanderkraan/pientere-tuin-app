@@ -33,7 +33,7 @@ struct Provider: TimelineProvider {
                 let entry = MeasurementEntry(
                     date: latestMeasurement.measuredAt ?? Date(),
                     lastHumidity: latestMeasurement.moisturePercentage,
-                    lastTemperature: latestMeasurement.temperatureCelcius,
+                    lastTemperature: latestMeasurement.temperatureCelcius?.floatValue,
                     humidityState: latestMeasurement.humidityState
                 )
                 entries.append(entry)
@@ -50,7 +50,7 @@ struct Provider: TimelineProvider {
 struct MeasurementEntry: TimelineEntry {
     let date: Date
     var lastHumidity: Float
-    var lastTemperature: Float
+    var lastTemperature: Float?
     var humidityState: HumidityState
 }
 
@@ -64,10 +64,11 @@ struct WidgetEntryView : View {
                     .minimumScaleFactor(0.25)
                     .foregroundColor(.secondary)
                 Spacer()
-                Text("\(entry.lastTemperature, specifier: "%.0f")°C")
-                    .minimumScaleFactor(0.25)
-                    .font(.system(.body, design: .rounded, weight: .bold))
-                
+                if let temperature = entry.lastTemperature {
+                    Text("\(temperature, specifier: "%.0f")°C")
+                        .minimumScaleFactor(0.25)
+                        .font(.system(.body, design: .rounded, weight: .bold))
+                }
                 Label("\(entry.lastHumidity * 100, specifier: "%.1f")%", systemImage: "drop.fill")
                 //Text("\(entry.lastHumidity * 100, specifier: "%.1f")%")
                     .minimumScaleFactor(0.25)

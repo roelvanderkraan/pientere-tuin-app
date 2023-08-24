@@ -75,19 +75,24 @@ class ChartModel: ObservableObject {
 
         for section in measurements {
             for measurement in section {
-                hourlyMeasurements.append(ChartableMeasurement(date: measurement.measuredAt ?? Date(), value: getValue(item: measurement, chartType: chartType)))
+                if let value = getValue(item: measurement, chartType: chartType) {
+                    hourlyMeasurements.append(ChartableMeasurement(date: measurement.measuredAt ?? Date(), value: value))
+                }
             }
         }
         return hourlyMeasurements
     }
     
-    private func getValue(item: MeasurementProjection, chartType: ChartType) -> Float {
+    private func getValue(item: MeasurementProjection, chartType: ChartType) -> Float? {
         switch chartType {
         case .moisture:
             return item.moisturePercentage*100
         case .temperature:
-            return item.temperatureCelcius
+            if let temperature = item.temperatureCelcius?.floatValue {
+                return temperature
+            }
         }
+        return nil
     }
     
     private func getDailyAverages(measurements: SectionedFetchResults<Date, MeasurementProjection>) -> [ChartableMeasurement] {

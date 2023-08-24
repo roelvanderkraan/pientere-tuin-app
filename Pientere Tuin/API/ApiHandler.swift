@@ -94,7 +94,7 @@ struct ApiHandler {
                     dataItem.moisturePercentage = moisture
                 }
                 if let temperature = item.temperatureCelsius {
-                    dataItem.temperatureCelcius = Float(temperature)
+                    dataItem.temperatureCelcius = NSNumber(value: temperature)
                 }
                 if let latitude = item.latitude {
                     dataItem.latitude = latitude

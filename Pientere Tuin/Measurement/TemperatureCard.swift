@@ -19,12 +19,14 @@ struct TemperatureCard: View {
                 Text("\(latestMeasurement.measuredAt ?? Date(), formatter: Formatters.itemFormatter)")
                     .foregroundColor(.secondary)
             }
-            HStack(alignment: .firstTextBaseline) {
-                Text("\(latestMeasurement.temperatureCelcius, specifier: "%.0f")")
-                    .font(.system(.largeTitle, design: .rounded, weight: .bold))
-                Text("°C")
-                    .font(.system(.body, design: .rounded))
-                    .foregroundColor(.secondary)
+            if let temperature = latestMeasurement.temperatureCelcius {
+                HStack(alignment: .firstTextBaseline) {
+                    Text("\(temperature.floatValue, specifier: "%.0f")")
+                        .font(.system(.largeTitle, design: .rounded, weight: .bold))
+                    Text("°C")
+                        .font(.system(.body, design: .rounded))
+                        .foregroundColor(.secondary)
+                }
             }
         }
     }

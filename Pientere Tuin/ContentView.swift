@@ -117,7 +117,7 @@ struct ContentView: View {
             do {
                 try await ApiHandler.shared.updateTuinData(context: viewContext, garden: garden)
             } catch APIError.notAuthorized {
-                errorMessage = "Geen toegang"
+                errorMessage = "Geen toegang"   
                 isError = true
             } catch {
                 return

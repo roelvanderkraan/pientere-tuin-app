@@ -19,7 +19,7 @@
         <attribute name="measuredAtDay" optional="YES" transient="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="moisturePercentage" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="soilType" optional="YES" attributeType="String"/>
-        <attribute name="temperatureCelcius" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="temperatureCelcius" optional="YES" attributeType="Float" usesScalarValueType="NO"/>
         <relationship name="inGarden" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Garden" inverseName="measurements" inverseEntity="Garden"/>
         <uniquenessConstraints>
             <uniquenessConstraint>

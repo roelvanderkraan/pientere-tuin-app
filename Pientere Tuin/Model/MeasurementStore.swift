@@ -36,18 +36,31 @@ struct MeasurementStore {
             let count = Float(measurements.count)
             return MeasurementAverage(averageValue: sum/count, minValue: min, maxValue: max)
         case .temperature:
-            let sum = measurements.reduce(0) {
-                $0 + $1.temperatureCelcius
+            var count = 0
+            
+            let sum = measurements.reduce(0.0) {
+                if let temperature = $1.temperatureCelcius {
+                    count += 1
+                    return $0 + temperature.doubleValue
+                }
+                return $0
             }
            
-            let max = measurements.reduce(0, { partialResult, measurement in
-                Float.maximum(partialResult, measurement.temperatureCelcius)
+            let max = measurements.reduce(0.0, { partialResult, measurement in
+                if let temperature = measurement.temperatureCelcius {
+                    return Double.maximum(partialResult, temperature.doubleValue)
+                }
+                return partialResult
             })
-            let min = measurements.reduce(100, { partialResult, measurement in
-                Float.minimum(partialResult, measurement.temperatureCelcius)
+            
+            let min = measurements.reduce(100.0, { partialResult, measurement in
+                if let temperature = measurement.temperatureCelcius {
+                    return Double.minimum(partialResult, temperature.doubleValue)
+                }
+                return partialResult
             })
-            let count = Float(measurements.count)
-            return MeasurementAverage(averageValue: sum/count, minValue: min, maxValue: max)
+
+            return MeasurementAverage(averageValue: Float(sum)/Float(count), minValue: Float(min), maxValue: Float(max))
         }
     }
 }
