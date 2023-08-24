@@ -65,22 +65,22 @@ struct ApiHandler {
             }
         case .undocumented(statusCode: let statusCode, _):
             debugPrint("Error getting data from server, status: \(statusCode)")
-            throw GenericError()
+            throw APIError.generic(statuscode: statusCode)
         case .badRequest(_):
             debugPrint("Bad request")
-            throw BadRequestError()
+            throw APIError.badRequest
         case .unauthorized(_):
             debugPrint("Unauthorized, check API key")
-            throw NotAuthorizedError()
+            throw APIError.notAuthorized
         case .notFound(_):
             debugPrint("API not found")
-            throw NotFoundError()
+            throw APIError.notFound
         case .serverError(statusCode: let statusCode, _):
             debugPrint("Server error, status: \(statusCode)")
-            throw GenericError()
+            throw APIError.generic(statuscode: statusCode)
         case .tooManyRequests(_):
             debugPrint("Too many requests, 1 request per 10 seconds allowed.")
-            throw TooManyRequestsError()
+            throw APIError.tooManyRequests
          }
     }
     

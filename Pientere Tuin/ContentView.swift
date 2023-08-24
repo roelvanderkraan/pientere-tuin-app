@@ -23,6 +23,8 @@ struct ContentView: View {
     @State var chartScale: ChartScale = .month
     @State var isEditingGarden: Bool = false
     @State var isAddingGarden: Bool = false
+    @State var isError: Bool = false
+    @State var errorMessage: String?
     @ObservedObject var garden: Garden
     var apiTimer: ApiTimer
     
@@ -84,11 +86,13 @@ struct ContentView: View {
                     .environment(\.managedObjectContext, viewContext)
                     .interactiveDismissDisabled()
             }
-            .refreshable {
-                if apiTimer.isParseAllowed() {
-                    apiTimer.lastParseDate = Date()
-                    try? await ApiHandler.shared.updateTuinData(context: viewContext, garden: garden)
+            .alert(errorMessage ?? "Error retrieving data, try again later", isPresented: $isError) {
+                Button("OK") {
+                    isError = false
                 }
+            }
+            .refreshable {
+                await refreshData()
             }
 
         } detail: {
@@ -105,6 +109,20 @@ struct ContentView: View {
     init(garden: Garden, apiTimer: ApiTimer) {
         self.apiTimer = apiTimer
         self.garden = garden
+    }
+    
+    private func refreshData() async {
+        if apiTimer.isParseAllowed() {
+            apiTimer.lastParseDate = Date()
+            do {
+                try await ApiHandler.shared.updateTuinData(context: viewContext, garden: garden)
+            } catch APIError.notAuthorized {
+                errorMessage = "Geen toegang"
+                isError = true
+            } catch {
+                return
+            }
+        }
     }
 }
 

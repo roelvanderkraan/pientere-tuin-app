@@ -22,6 +22,14 @@ case .tooManyRequests(_):
     debugPrint("Too many requests, 1 request per 10 seconds allowed.")
  */
 
+enum APIError: Error {
+    case badRequest
+    case notAuthorized
+    case notFound
+    case generic(statuscode: Int)
+    case tooManyRequests
+}
+
 class BadRequestError: Error {
     
 }

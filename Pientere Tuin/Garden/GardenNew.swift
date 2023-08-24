@@ -102,7 +102,7 @@ struct GardenNew: View {
             do {
                 try await ApiHandler.shared.updateTuinData(context: viewContext, loadAll: true, garden: garden)
                 dismiss()
-            } catch is NotAuthorizedError {
+            } catch APIError.notAuthorized {
                 isError = true
                 withAnimation {
                     errorMessage = "This API key has no access to the Pientere Tuinen API. Check if you have entered the correct key."
