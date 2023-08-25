@@ -22,6 +22,7 @@ struct GardenEdit: View {
                     TextField(text: Binding($garden.apiKey, replacingNilWith: "")) {
                         Text("API key")
                     }
+                    .minimumScaleFactor(0.25)
                     .textFieldStyle(.roundedBorder)
                     .disableAutocorrection(true)
                     .autocapitalization(.none)
@@ -35,9 +36,9 @@ struct GardenEdit: View {
                 } footer: {
                     Text("Vul hier de API key in uit je Pientere Tuin account.")
                 }
-                Section("Garden") {
+                Section("Tuin") {
                     Link(destination: URL(string: "https://service-portal.platform.wecity.nl/pientere-tuinen")!) {
-                        Label("Edit garden information", systemImage: "safari")
+                        Label("Bewerk tuininformatie", systemImage: "safari")
                     }
                 }
                 Section {
@@ -50,7 +51,7 @@ struct GardenEdit: View {
                 } header: {
                     Text("Information")
                 } footer: {
-                    Text("Please let me know how I can make this app more useful for you.")
+                    Text("Ik ben benieuwd hoe ik de app kan verbeteren.")
                 }
                 Section {
                     Button {
@@ -59,12 +60,12 @@ struct GardenEdit: View {
                         }
                         isPresented.toggle()
                     } label: {
-                        Label("Reload measurements", systemImage: "arrow.counterclockwise")
+                        Label("Metingen opnieuw inladen", systemImage: "arrow.counterclockwise")
                     }
                     Button(role: .destructive) {
                         isDeletingAll.toggle()
                     } label: {
-                        Label("Delete all measurements", systemImage: "trash")
+                        Label("Verwijder alle metingen", systemImage: "trash")
                             .foregroundColor(.red)
                         
                     }
@@ -76,23 +77,23 @@ struct GardenEdit: View {
             .listSectionSeparator(.hidden)
             .toolbar {
                 ToolbarItem {
-                    Button("Done") {
+                    Button("Klaar") {
                         isPresented.toggle()
                     }
                 }
             }
-            .navigationTitle("Settings")
-            .alert("Delete all measurements", isPresented: $isDeletingAll) {
-                Button("Delete", role: .destructive) {
+            .navigationTitle("Instellingen")
+            .alert("Verwijder alle metingen", isPresented: $isDeletingAll) {
+                Button("Verwijder", role: .destructive) {
                     GardenStore.deleteAllMeasurements(garden: garden, from: viewContext)
                     isPresented.toggle()
                 }
                 .keyboardShortcut(.defaultAction)
-                Button("Cancel", role: .cancel) {
+                Button("Annuleer", role: .cancel) {
                     
                 }
             } message: {
-                Text("Are you sure you want to delete all measurements? This cannot be undone.")
+                Text("Weet je het zeker dat je alle metingen wilt verwijderen?")
             }
         }
     }

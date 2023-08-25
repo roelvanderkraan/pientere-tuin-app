@@ -34,7 +34,7 @@ struct MeasurementList: View {
                 }
             }
         }
-        .navigationTitle("Measurements")
+        .navigationTitle("Alle metingen")
     }
 }
 

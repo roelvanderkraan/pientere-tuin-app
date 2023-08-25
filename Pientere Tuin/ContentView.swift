@@ -29,7 +29,7 @@ struct ContentView: View {
     var apiTimer: ApiTimer
     
     var body: some View {
-        NavigationSplitView {
+        NavigationView {
             List {
                 Section {
                     if let lastMeasurement = measurements.first {
@@ -57,7 +57,7 @@ struct ContentView: View {
                         NavigationLink {
                             GardenDetails(latestMeasurement: lastMeasurement)
                         } label: {
-                            Text("Garden details")
+                            Text("Tuindetails")
                         }
                     }
                 }
@@ -68,7 +68,7 @@ struct ContentView: View {
                     Button {
                         isEditingGarden.toggle()
                     } label: {
-                        Label("Edit garden", systemImage: "gear")
+                        Label("Instellingen", systemImage: "gear")
                     }
 
                 }
@@ -86,7 +86,7 @@ struct ContentView: View {
                     .environment(\.managedObjectContext, viewContext)
                     .interactiveDismissDisabled()
             }
-            .alert(errorMessage ?? "Error retrieving data, try again later", isPresented: $isError) {
+            .alert(errorMessage ?? "Fout bij het ophalen van de data, probeer het later nog eens.", isPresented: $isError) {
                 Button("OK") {
                     isError = false
                 }
@@ -95,9 +95,6 @@ struct ContentView: View {
                 await refreshData()
             }
 
-        } detail: {
-            HumidityDetails()
-                .environment(\.managedObjectContext, viewContext)
         }
         .onAppear {
             if garden.apiKey == nil {

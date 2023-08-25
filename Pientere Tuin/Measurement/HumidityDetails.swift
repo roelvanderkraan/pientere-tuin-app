@@ -18,7 +18,7 @@ struct HumidityDetails: View {
                 .frame(idealHeight: 400)
             }
 
-            Section("Over Humidity") {
+            Section("Over bodemvochtigheid") {
                 Text("Water is van levensbelang voor planten. Zo'n 80 to 95% van het gewicht van een gezonde plant bestaat uit water. Bij te weinig water verwelken planten. En bij te veel water verdrinken ze. Te veel of te weinig water geeft planten stress. Daarom is het voor een optimale plantengroei van cruciaal belang dat de plant over de juiste hoeveelheid water beschikt. De juiste hoeveelheid vocht verschilt per grondsoort.")
             }
             Section {
@@ -26,11 +26,11 @@ struct HumidityDetails: View {
                     MeasurementList()
                         .environment(\.managedObjectContext, viewContext)
                 } label: {
-                    Text("All measurements")
+                    Text("Alle metingen")
                 }
             }
         }
-        .navigationTitle("Soil humidity")
+        .navigationTitle("Vochtigheid bodem")
         .navigationBarTitleDisplayMode(.inline)
         .listStyle(.grouped)
         .headerProminence(.increased)

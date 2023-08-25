@@ -30,17 +30,17 @@ struct MesurementChart: View {
         let dryValue = chartModel.getDryValue()
         VStack(alignment: .leading) {
             Picker("Chart scale", selection: $preferences.chartScale) {
-                Text("D").tag(ChartScale.day)
-                Text("W").tag(ChartScale.week)
-                Text("M").tag(ChartScale.month)
-                Text("All").tag(ChartScale.all)
+                Text("Dag").tag(ChartScale.day)
+                Text("Week").tag(ChartScale.week)
+                Text("Maand").tag(ChartScale.month)
+                Text("Alles").tag(ChartScale.all)
             }
             .pickerStyle(.segmented)
             if selectedDate == nil {
                 if let average = chartModel.chartAverage {
                     VStack(alignment: .leading) {
                         HStack(alignment: .firstTextBaseline) {
-                            Text("\(chartModel.typeIcon) Average \(chartModel.typeText)")
+                            Text("\(chartModel.typeIcon) Gemiddelde \(chartModel.typeText)")
                                 .font(.system(.body, design: .default, weight: .medium))
                                 .foregroundColor(chartModel.typeColor)
                             Spacer()
@@ -59,7 +59,7 @@ struct MesurementChart: View {
             Chart {
                 if chartModel.chartType == .moisture, let dryValue = dryValue {
                     RuleMark(
-                        y: .value("Dry", dryValue*100)
+                        y: .value("Droog", dryValue*100)
                     )
                     .foregroundStyle(Color.orange.opacity(0.3))
                     .annotation(
@@ -67,7 +67,7 @@ struct MesurementChart: View {
                         alignment: .trailing,
                         spacing: 0
                     ) {
-                        Text("Dry")
+                        Text("Droog")
                             .foregroundStyle(.orange)
                             .font(.footnote)
 

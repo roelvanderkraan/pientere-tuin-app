@@ -20,17 +20,18 @@ struct GardenNew: View {
             List {
                 Section {
                     VStack(alignment: .leading) {
-                        Text("To see your sensor data in this app, get your API key from the Pientere Tuinen website.")
+                        Text("Deze app toont de metingen van je Pientere Tuinen sensor.")
+                        Text("Om je Pientere Tuinen data te zien heb je een API key nodig. Deze kan je vinden op de Pientere Tuinen website.")
                     }
                     
                     Link(destination: URL(string: "https://service-portal.platform.wecity.nl/api-subscriptions")!) {
-                        Label("Open the website", systemImage: "link")
+                        Label("Mijn Pientere Tuin", systemImage: "link")
                     }
                     .buttonStyle(.bordered)
                     .listRowSeparator(.hidden)
                     .padding(EdgeInsets(top: 0, leading: 0, bottom: 8, trailing: 0))
                     
-                    Text("Paste the API key in this textfield:")
+                    Text("Plak je API key in dit veld:")
                         .listRowSeparator(.hidden)
                     
                     TextField("API key", text: Binding($garden.apiKey, replacingNilWith: ""))
@@ -38,6 +39,7 @@ struct GardenNew: View {
                         .disableAutocorrection(true)
                         .autocapitalization(.none)
                         .fontDesign(.monospaced)
+                        .minimumScaleFactor(0.25)
                         .bold()
                         .onSubmit {
                             validateApiKey()
@@ -58,7 +60,7 @@ struct GardenNew: View {
                     Button {
                         validateApiKey()
                     } label: {
-                        Text("Done")
+                        Text("Klaar")
                             .frame(maxWidth: .infinity)
                     }
                     .scaledToFill()
@@ -78,12 +80,12 @@ struct GardenNew: View {
             }
             .toolbar {
                 ToolbarItem {
-                    Button("Done") {
+                    Button("Klaar") {
                         validateApiKey()
                     }
                 }
             }
-            .navigationTitle("Get started")
+            .navigationTitle("Welkom")
             .headerProminence(.increased)
         }
         
@@ -94,7 +96,7 @@ struct GardenNew: View {
         guard garden.validateApiKey() else {
             withAnimation {
                 isError = true
-                errorMessage = "Please enter an API key"
+                errorMessage = "Vul een API key in"
             }
             return
         }
@@ -105,12 +107,12 @@ struct GardenNew: View {
             } catch APIError.notAuthorized {
                 isError = true
                 withAnimation {
-                    errorMessage = "This API key has no access to the Pientere Tuinen API. Check if you have entered the correct key."
+                    errorMessage = "Deze API key heeft geen toegang tot de Pientere Tuinen API. Controleer of je de juiste key hebt ingevuld."
                 }
             } catch {
                 isError = true
                 withAnimation {
-                    errorMessage = "Error while validating your API key with the Pientere Tuinen server. Please check if you entered the correct key and try again later."
+                    errorMessage = "Fout tijdens het valideren van de API key met de Pientere Tuinen server. Controleer of je de juiste key hebt ingevuld en probeer het later nog eens."
                 }
             }
         }

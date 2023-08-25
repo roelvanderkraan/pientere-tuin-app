@@ -22,11 +22,11 @@ struct TemperatureDetails: View {
                     MeasurementList()
                         .environment(\.managedObjectContext, viewContext)
                 } label: {
-                    Text("All measurements")
+                    Text("Alle metingen")
                 }
             }
         }
-        .navigationTitle("Soil temperature")
+        .navigationTitle("Temperatuur bodem")
         .navigationBarTitleDisplayMode(.inline)
         .listStyle(.grouped)
     }

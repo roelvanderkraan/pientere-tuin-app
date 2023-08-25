@@ -14,14 +14,14 @@ struct GardenDetails: View {
     
     var body: some View {
         List {
-            Section("Location") {
+            Section("Locatie") {
                 Map(coordinateRegion: $region)
                     .frame(idealHeight: 100)
             }
             Section {
                 if let gardenSize = latestMeasurement.gardenSizeString {
                     HStack {
-                        Text("Size")
+                        Text("Oppervlakte")
                         Spacer()
                         Text("\(gardenSize)")
                             .foregroundColor(.secondary)
@@ -29,7 +29,7 @@ struct GardenDetails: View {
                 }
                 if let orientation = latestMeasurement.gardenOrientationString {
                     HStack {
-                        Text("Orientation")
+                        Text("Oriëntatie")
                         Spacer()
                         Text("\(orientation)")
                             .foregroundColor(.secondary)
@@ -37,7 +37,7 @@ struct GardenDetails: View {
                 }
                 if latestMeasurement.gardenHardeningPercentage > 0.0 {
                     HStack {
-                        Text("Hardening percentage")
+                        Text("Percentage verharding")
                         Spacer()
                         Text("\(latestMeasurement.gardenHardeningPercentage * 100, specifier: "%.0f")%")
                             .foregroundColor(.secondary)
@@ -45,7 +45,7 @@ struct GardenDetails: View {
                 }
                 if let soilType = latestMeasurement.soilTypeString {
                     HStack {
-                        Text("Soil type")
+                        Text("Grondsoort")
                         Spacer()
                         Text("\(soilType)")
                             .foregroundColor(.secondary)
@@ -54,11 +54,11 @@ struct GardenDetails: View {
             }
             Section {
                 Link(destination: URL(string: "https://service-portal.platform.wecity.nl/pientere-tuinen")!) {
-                    Label("Edit garden information", systemImage: "safari")
+                    Label("Bewerk tuin", systemImage: "safari")
                 }
             }
         }
-        .navigationTitle("Garden details")
+        .navigationTitle("Tuin details")
     }
     
     static private func getMapRect(measurement: MeasurementProjection) -> MKCoordinateRegion {

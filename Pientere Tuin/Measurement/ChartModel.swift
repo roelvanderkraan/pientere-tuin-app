@@ -45,9 +45,9 @@ class ChartModel: ObservableObject {
     var typeText: String {
         switch chartType {
         case .moisture:
-            return "soil humidity"
+            return "vochtigheid bodem"
         case .temperature:
-            return "soil temperature"
+            return "temperatuur bodem"
         }
     }
     

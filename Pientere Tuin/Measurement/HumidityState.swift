@@ -12,20 +12,20 @@ struct HumidityStateText: View {
     var body: some View {
         switch humidityState {
         case .healthy:
-            Text("\(Image(systemName: "checkmark.circle.fill")) Healthy humidity")
+            Text("\(Image(systemName: "checkmark.circle.fill")) Goede vochtigheid")
                 .foregroundColor(.secondary)
         case .saturated:
-            Text("\(Image(systemName: "water.waves")) Saturated")
+            Text("\(Image(systemName: "water.waves")) Verzadigd")
                 .foregroundColor(.blue)
         case .tooWet:
-            Text("\(Image(systemName: "drop.fill")) Too wet")
+            Text("\(Image(systemName: "drop.fill")) Te nat")
                 .foregroundColor(.blue)
         case .stress:
-            Text("\(Image(systemName: "water.waves.and.arrow.down")) Stressed plants")
+            Text("\(Image(systemName: "water.waves.and.arrow.down")) Te droog")
                 .foregroundColor(.orange)
                 .bold()
         case .tooDry:
-            Text("\(Image(systemName: "drop.triangle.fill")) Too dry")
+            Text("\(Image(systemName: "drop.triangle.fill")) Te droog")
                 .foregroundColor(.orange)
                 .bold()
         default:
