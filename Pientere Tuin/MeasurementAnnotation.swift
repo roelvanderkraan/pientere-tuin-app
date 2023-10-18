@@ -26,9 +26,11 @@ struct MeasurementAnnotation: View {
                 .foregroundColor(.secondary)
 
         }
-        .padding(EdgeInsets(top: 4, leading: 8, bottom: 4, trailing: 8))
-        .background(.background)
-        .cornerRadius(8)
+        .padding(6)
+        .background {
+            RoundedRectangle(cornerRadius: 4)
+                .foregroundStyle(Color.gray.opacity(0.12))
+        }
     }
 }
 

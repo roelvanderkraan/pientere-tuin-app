@@ -83,7 +83,7 @@ struct MesurementChart: View {
                     .foregroundStyle(chartModel.typeColor)
                     .accessibilityHidden(true)
                     .lineStyle(StrokeStyle(lineWidth: 2))
-                    if preferences.chartScale != .week {
+                    if preferences.chartScale != .week && preferences.chartScale != .all {
                         PointMark(
                             x: .value("Day", dayAverage.date, unit: .hour),
                             y: .value(chartModel.typeText, dayAverage.value)
@@ -93,25 +93,51 @@ struct MesurementChart: View {
                     }
                     
                     if selectedDate == dayAverage.date {
-                        RuleMark(
-                            x: .value("Selected", dayAverage.date, unit: .hour)
-                        )
-                        .foregroundStyle(Color.gray.opacity(0.3))
-                        .annotation(
-                            position: annotationPosition,
-                            alignment: .center,
-                            spacing: 0
-                        ) {
-                            if selectedDate == dayAverage.date {
-                                switch preferences.chartScale {
-                                case .day, .week:
-                                    MeasurementAnnotation(caption: Formatters.itemFormatter.string(from: dayAverage.date), value: dayAverage.value, unit: chartModel.valueUnit, specifier: chartModel.valueSpecifier)
-                                        .frame(height: annotationHeight-8)
-                                default:
-                                    MeasurementAnnotation(caption: Formatters.dateFormatter.string(from: dayAverage.date), value: dayAverage.value, unit: chartModel.valueUnit, specifier: "%.1f")
-                                        .frame(height: annotationHeight-8)
+                        if #available(iOS 17.0, *) {
+                            RuleMark(
+                                x: .value("Selected", dayAverage.date, unit: .hour)
+                            )
+                            .foregroundStyle(Color.gray.opacity(0.3))
+                            .zIndex(-1)
+                            .annotation(
+                                position: .top,
+                                spacing: 0,
+                                overflowResolution: .init (
+                                    x: .fit(to: .chart),
+                                    y: .disabled
+                                )
+                            ) {
+                                if selectedDate == dayAverage.date {
+                                    switch preferences.chartScale {
+                                    case .day, .week:
+                                        MeasurementAnnotation(caption: Formatters.itemFormatter.string(from: dayAverage.date), value: dayAverage.value, unit: chartModel.valueUnit, specifier: chartModel.valueSpecifier)
+                                    default:
+                                        MeasurementAnnotation(caption: Formatters.dateFormatter.string(from: dayAverage.date), value: dayAverage.value, unit: chartModel.valueUnit, specifier: "%.1f")
+                                    }
+    
                                 }
-                                
+                            }
+                        } else {
+                            RuleMark(
+                                x: .value("Selected", dayAverage.date, unit: .hour)
+                            )
+                            .foregroundStyle(Color.gray.opacity(0.3))
+                            .annotation(
+                                position: annotationPosition,
+                                alignment: .center,
+                                spacing: 0
+                            ) {
+                                if selectedDate == dayAverage.date {
+                                    switch preferences.chartScale {
+                                    case .day, .week:
+                                        MeasurementAnnotation(caption: Formatters.itemFormatter.string(from: dayAverage.date), value: dayAverage.value, unit: chartModel.valueUnit, specifier: chartModel.valueSpecifier)
+                                            .frame(height: annotationHeight-8)
+                                    default:
+                                        MeasurementAnnotation(caption: Formatters.dateFormatter.string(from: dayAverage.date), value: dayAverage.value, unit: chartModel.valueUnit, specifier: "%.1f")
+                                            .frame(height: annotationHeight-8)
+                                    }
+                                    
+                                }
                             }
                         }
                     }
