@@ -214,7 +214,7 @@ struct MesurementChart: View {
             y: at.y - origin.y
         )
         let (date, humidity) = proxy.value(at: location, as: (Date, Float).self)!
-        debugPrint("Selected date: \(date ?? Date()), humidity: \(humidity)")
+        debugPrint("Selected date: \(date), humidity: \(humidity)")
         selectedDate = hourDate(of: date, data: data)
         debugPrint("\(selectedDate)")
 

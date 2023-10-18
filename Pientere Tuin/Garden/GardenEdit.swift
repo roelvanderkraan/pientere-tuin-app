@@ -49,7 +49,7 @@ struct GardenEdit: View {
                         Label("App feedback", systemImage: "paperplane")
                     }
                 } header: {
-                    Text("Information")
+                    Text("Informatie")
                 } footer: {
                     Text("Ik ben benieuwd hoe ik de app kan verbeteren.")
                 }
@@ -70,7 +70,7 @@ struct GardenEdit: View {
                         
                     }
                 } header: {
-                    Text("Data management")
+                    Text("Databeheer")
                 }
             }
             .textFieldStyle(.roundedBorder)

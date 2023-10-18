@@ -10,7 +10,6 @@ import SwiftUI
 struct HumidityCard: View {
     @ObservedObject var latestMeasurement: MeasurementProjection
     var body: some View {
-        let humidityState = latestMeasurement.humidityState
         VStack(alignment: .leading) {
             HStack(alignment: .firstTextBaseline) {
                 Text("\(Image(systemName: "drop.fill")) Vochtigheid bodem")

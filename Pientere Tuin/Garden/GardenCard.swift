@@ -15,8 +15,18 @@ struct GardenDetails: View {
     var body: some View {
         List {
             Section("Locatie") {
-                Map(coordinateRegion: $region)
-                    .frame(idealHeight: 100)
+                if #available(iOS 17.0, *) {
+                    Map(bounds: MapCameraBounds(centerCoordinateBounds: region, minimumDistance: 100)) {
+                        Marker("Tuin", coordinate: region.center)
+                            .tint(.green)
+                    }
+                    .frame(idealHeight: 200)
+                    .clipShape(RoundedRectangle(cornerSize: CGSize(width: 8, height: 8)))
+                    .padding(EdgeInsets(top: 10, leading: 0, bottom: 10, trailing: 0))
+                } else {
+                    Map(coordinateRegion: $region)
+                        .frame(idealHeight: 200)
+                }
             }
             Section {
                 if let gardenSize = latestMeasurement.gardenSizeString {
@@ -54,11 +64,11 @@ struct GardenDetails: View {
             }
             Section {
                 Link(destination: URL(string: "https://service-portal.platform.wecity.nl/pientere-tuinen")!) {
-                    Label("Bewerk tuin", systemImage: "safari")
+                    Label("Bewerk tuin via Mijn Pientere Tuin", systemImage: "safari")
                 }
             }
         }
-        .navigationTitle("Tuin details")
+        .navigationTitle("Tuindetails")
     }
     
     static private func getMapRect(measurement: MeasurementProjection) -> MKCoordinateRegion {

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workspace
+   version = "1.0">
+   <FileRef
+      location = "group:../PientereTuinenAPI">
+   </FileRef>
+   <FileRef
+      location = "group:Pientere Tuin.xcodeproj">
+   </FileRef>
+</Workspace>

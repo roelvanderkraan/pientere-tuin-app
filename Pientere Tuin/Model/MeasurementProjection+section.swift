@@ -23,7 +23,7 @@ extension MeasurementProjection {
     
     func updateSectionTitle() {
         if let dateToFormat = measuredAt {
-            measuredAtDay = measuredAt?.onlyDate
+            measuredAtDay = dateToFormat.onlyDate
         } else {
             measuredAtDay = nil
         }
