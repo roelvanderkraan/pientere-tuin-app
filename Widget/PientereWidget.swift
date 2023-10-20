@@ -58,31 +58,50 @@ struct WidgetEntryView : View {
     var entry: Provider.Entry
 
     var body: some View {
+        if #available(iOS 17.0, *) {
+            ios17Widget
+        } else {
+            ios16Widget
+        }
+    }
+    
+    var ios16Widget: some View {
         HStack {
-            VStack(alignment: .leading) {
-                Text(entry.date, style: .time)
-                    .minimumScaleFactor(0.25)
-                    .foregroundColor(.secondary)
-                Spacer()
-                if let temperature = entry.lastTemperature {
-                    Text("\(temperature, specifier: "%.0f")°C")
-                        .minimumScaleFactor(0.25)
-                        .font(.system(.body, design: .rounded, weight: .bold))
-                }
-                Label("\(entry.lastHumidity * 100, specifier: "%.1f")%", systemImage: "drop.fill")
-                //Text("\(entry.lastHumidity * 100, specifier: "%.1f")%")
-                    .minimumScaleFactor(0.25)
-                    .font(.system(.title, design: .rounded, weight: .bold))
-                    .foregroundColor(.blue)
-                    .bold()
-                    .lineLimit(1)
-                //            Label("\(entry.lastTemperature, specifier: "%.0f")°C", systemImage: "thermometer.medium")
-                //                .font(.system(.body, design: .rounded, weight: .bold))
-            }
+            baseWidget
             .padding()
             Spacer()
         }
-        
+    }
+    
+    @available(iOSApplicationExtension 17.0, *)
+    var ios17Widget: some View {
+        HStack {
+            baseWidget
+            Spacer()
+        }
+        .containerBackground(for: .widget) {
+            Color.white
+        }
+    }
+    
+    var baseWidget: some View {
+        VStack(alignment: .leading) {
+            Text(entry.date, style: .time)
+                .minimumScaleFactor(0.25)
+                .foregroundColor(.secondary)
+            Spacer()
+            if let temperature = entry.lastTemperature {
+                Text("\(temperature, specifier: "%.0f")°C")
+                    .minimumScaleFactor(0.25)
+                    .font(.system(.body, design: .rounded, weight: .bold))
+            }
+            Label("\(entry.lastHumidity * 100, specifier: "%.1f")%", systemImage: "drop.fill")
+                .minimumScaleFactor(0.25)
+                .font(.system(.title, design: .rounded, weight: .bold))
+                .foregroundColor(.blue)
+                .bold()
+                .lineLimit(1)
+        }
     }
 }
 

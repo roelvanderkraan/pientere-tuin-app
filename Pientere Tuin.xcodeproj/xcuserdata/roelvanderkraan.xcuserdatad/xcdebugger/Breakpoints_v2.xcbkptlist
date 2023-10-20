@@ -351,6 +351,21 @@
                   endingLineNumber = "47"
                   offsetFromSymbolStart = "84">
                </Location>
+               <Location
+                  uuid = "BC5312E8-DAFF-4A35-AD4D-7F0450EC6DA7 - dc80ff95c873d66e"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(1) await resume partial function for closure #3 @Sendable () async -&gt; () in Pientere_Tuin.Pientere_TuinApp.body.getter : some"
+                  moduleName = "Pientere Tuin"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/roelvanderkraan/Library/Mobile%20Documents/com~apple~CloudDocs/xCode/Pientere%20Tuin/Pientere%20Tuin/Pientere_TuinApp.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "47"
+                  endingLineNumber = "47"
+                  offsetFromSymbolStart = "84">
+               </Location>
             </Locations>
          </BreakpointContent>
       </BreakpointProxy>

@@ -74,7 +74,7 @@ struct ContentView: View {
                 }
             }
             .sheet(isPresented: $isEditingGarden) {
-                GardenEdit(garden: garden, isPresented: $isEditingGarden)
+                Settings(garden: garden, isPresented: $isEditingGarden)
                     .environment(\.managedObjectContext, viewContext)
             }
             .sheet(isPresented: $isAddingGarden) {
@@ -82,7 +82,7 @@ struct ContentView: View {
                     try? await ApiHandler.shared.updateTuinData(context: viewContext, loadAll: true, garden: garden)
                 }
             } content: {
-                GardenNew(garden: garden, isPresented: $isAddingGarden)
+                LaunchView(garden: garden, isPresented: $isAddingGarden)
                     .environment(\.managedObjectContext, viewContext)
                     .interactiveDismissDisabled()
             }

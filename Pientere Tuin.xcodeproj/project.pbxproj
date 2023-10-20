@@ -7,13 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		8A138FD92A8B945C003247BA /* GardenNew.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A138FD82A8B945C003247BA /* GardenNew.swift */; };
+		8A138FD92A8B945C003247BA /* LaunchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A138FD82A8B945C003247BA /* LaunchView.swift */; };
 		8A138FDC2A8B9A88003247BA /* Garden+validate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A138FDB2A8B9A88003247BA /* Garden+validate.swift */; };
 		8A138FDF2A8B9D0B003247BA /* ApiErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A138FDE2A8B9D0B003247BA /* ApiErrors.swift */; };
 		8A163D4B2A8FA78A00AB3C95 /* MesurementChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A163D4A2A8FA78A00AB3C95 /* MesurementChart.swift */; };
 		8A163D502A8FA8F700AB3C95 /* MeasurementProjection+section.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A163D4F2A8FA8F700AB3C95 /* MeasurementProjection+section.swift */; };
 		8A163D552A8FA9A200AB3C95 /* Date+onlydate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A163D542A8FA9A200AB3C95 /* Date+onlydate.swift */; };
-		8A3D136D2A87D12B00DF4EF1 /* GardenEdit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A3D136C2A87D12B00DF4EF1 /* GardenEdit.swift */; };
+		8A3D136D2A87D12B00DF4EF1 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A3D136C2A87D12B00DF4EF1 /* Settings.swift */; };
 		8A3D13722A87D30D00DF4EF1 /* Binding+inits.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A3D13712A87D30D00DF4EF1 /* Binding+inits.swift */; };
 		8A3D13772A87DACC00DF4EF1 /* GardenStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A3D13762A87DACC00DF4EF1 /* GardenStore.swift */; };
 		8A3D13792A87DCE500DF4EF1 /* openapi.yaml in Resources */ = {isa = PBXBuildFile; fileRef = 8A3D13782A87DCE500DF4EF1 /* openapi.yaml */; };
@@ -33,7 +33,7 @@
 		8A82BA502A8E654E0039B1B7 /* ChartScale.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AF06D802A8A8E6900D30A83 /* ChartScale.swift */; };
 		8A82BA512A8E65520039B1B7 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AFCA4332A83FA4B00D4B6C8 /* Persistence.swift */; };
 		8A82BA522A8E658B0039B1B7 /* MeasurementProjection+types.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AA1F1E52A8D481800721F6F /* MeasurementProjection+types.swift */; };
-		8A9F139B2A8D0844003529B7 /* GardenCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A9F139A2A8D0844003529B7 /* GardenCard.swift */; };
+		8A9F139B2A8D0844003529B7 /* GardenDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A9F139A2A8D0844003529B7 /* GardenDetails.swift */; };
 		8AA1F1E62A8D481800721F6F /* MeasurementProjection+types.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AA1F1E52A8D481800721F6F /* MeasurementProjection+types.swift */; };
 		8AACAC282A8578260032CC1C /* MeasurementList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AACAC272A8578260032CC1C /* MeasurementList.swift */; };
 		8AACAC2B2A857B9D0032CC1C /* ApiHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AACAC2A2A857B9D0032CC1C /* ApiHandler.swift */; };
@@ -100,14 +100,14 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		8A138FD82A8B945C003247BA /* GardenNew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GardenNew.swift; sourceTree = "<group>"; };
+		8A138FD82A8B945C003247BA /* LaunchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchView.swift; sourceTree = "<group>"; };
 		8A138FDB2A8B9A88003247BA /* Garden+validate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Garden+validate.swift"; sourceTree = "<group>"; };
 		8A138FDE2A8B9D0B003247BA /* ApiErrors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiErrors.swift; sourceTree = "<group>"; };
 		8A163D4A2A8FA78A00AB3C95 /* MesurementChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MesurementChart.swift; sourceTree = "<group>"; };
 		8A163D4D2A8FA8C500AB3C95 /* Pientere_Tuin 4.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Pientere_Tuin 4.xcdatamodel"; sourceTree = "<group>"; };
 		8A163D4F2A8FA8F700AB3C95 /* MeasurementProjection+section.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MeasurementProjection+section.swift"; sourceTree = "<group>"; };
 		8A163D542A8FA9A200AB3C95 /* Date+onlydate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+onlydate.swift"; sourceTree = "<group>"; };
-		8A3D136C2A87D12B00DF4EF1 /* GardenEdit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GardenEdit.swift; sourceTree = "<group>"; };
+		8A3D136C2A87D12B00DF4EF1 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		8A3D13712A87D30D00DF4EF1 /* Binding+inits.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Binding+inits.swift"; sourceTree = "<group>"; };
 		8A3D13762A87DACC00DF4EF1 /* GardenStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GardenStore.swift; sourceTree = "<group>"; };
 		8A3D13782A87DCE500DF4EF1 /* openapi.yaml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = openapi.yaml; sourceTree = "<group>"; };
@@ -124,7 +124,7 @@
 		8A6D65502A8D5E9B00B9E2CB /* HumidityState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HumidityState.swift; sourceTree = "<group>"; };
 		8A821ED82A8E27A1009A4656 /* Preferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Preferences.swift; sourceTree = "<group>"; };
 		8A82BA562A8E6DB00039B1B7 /* WidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = WidgetExtension.entitlements; sourceTree = "<group>"; };
-		8A9F139A2A8D0844003529B7 /* GardenCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GardenCard.swift; sourceTree = "<group>"; };
+		8A9F139A2A8D0844003529B7 /* GardenDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GardenDetails.swift; sourceTree = "<group>"; };
 		8AA1F1E52A8D481800721F6F /* MeasurementProjection+types.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MeasurementProjection+types.swift"; sourceTree = "<group>"; };
 		8AACAC272A8578260032CC1C /* MeasurementList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeasurementList.swift; sourceTree = "<group>"; };
 		8AACAC2A2A857B9D0032CC1C /* ApiHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiHandler.swift; sourceTree = "<group>"; };
@@ -195,10 +195,9 @@
 		8A3D136F2A87D23100DF4EF1 /* Garden */ = {
 			isa = PBXGroup;
 			children = (
-				8A9F139A2A8D0844003529B7 /* GardenCard.swift */,
-				8A138FD82A8B945C003247BA /* GardenNew.swift */,
+				8A9F139A2A8D0844003529B7 /* GardenDetails.swift */,
+				8A138FD82A8B945C003247BA /* LaunchView.swift */,
 				8A138FDB2A8B9A88003247BA /* Garden+validate.swift */,
-				8A3D136C2A87D12B00DF4EF1 /* GardenEdit.swift */,
 			);
 			path = Garden;
 			sourceTree = "<group>";
@@ -272,6 +271,7 @@
 			isa = PBXGroup;
 			children = (
 				8A163D4A2A8FA78A00AB3C95 /* MesurementChart.swift */,
+				8A687C112A93AF3B00AD1285 /* MeasurementAnnotation.swift */,
 				8AC5F6E52A93C05A00677531 /* ChartModel.swift */,
 				8A6842CE2A8CECA600B4B9A7 /* TemperatureCard.swift */,
 				8A6842D82A8CEF3000B4B9A7 /* HumidityCard.swift */,
@@ -315,9 +315,9 @@
 				8A3D13742A87D8D800DF4EF1 /* Extensions */,
 				8AFCA4312A83FA4B00D4B6C8 /* Pientere_TuinApp.swift */,
 				8AFCA4382A83FA4B00D4B6C8 /* ContentView.swift */,
+				8A3D136C2A87D12B00DF4EF1 /* Settings.swift */,
 				8A6842D52A8CEDB800B4B9A7 /* Formatters.swift */,
 				8A3D136F2A87D23100DF4EF1 /* Garden */,
-				8A687C112A93AF3B00AD1285 /* MeasurementAnnotation.swift */,
 				8AF06D862A8AAA8900D30A83 /* Measurement */,
 				8AACAC4F2A8580640032CC1C /* Model */,
 				8AACAC4D2A8580480032CC1C /* API */,
@@ -544,14 +544,14 @@
 			files = (
 				8AFCA4322A83FA4B00D4B6C8 /* Pientere_TuinApp.swift in Sources */,
 				8A6842D62A8CEDB800B4B9A7 /* Formatters.swift in Sources */,
-				8A138FD92A8B945C003247BA /* GardenNew.swift in Sources */,
+				8A138FD92A8B945C003247BA /* LaunchView.swift in Sources */,
 				8A163D4B2A8FA78A00AB3C95 /* MesurementChart.swift in Sources */,
-				8A9F139B2A8D0844003529B7 /* GardenCard.swift in Sources */,
+				8A9F139B2A8D0844003529B7 /* GardenDetails.swift in Sources */,
 				8AF06D812A8A8E6900D30A83 /* ChartScale.swift in Sources */,
 				8A687C122A93AF3B00AD1285 /* MeasurementAnnotation.swift in Sources */,
 				8A6D65512A8D5E9B00B9E2CB /* HumidityState.swift in Sources */,
 				8AACAC2B2A857B9D0032CC1C /* ApiHandler.swift in Sources */,
-				8A3D136D2A87D12B00DF4EF1 /* GardenEdit.swift in Sources */,
+				8A3D136D2A87D12B00DF4EF1 /* Settings.swift in Sources */,
 				8A6842D32A8CED0300B4B9A7 /* MeasurementStore.swift in Sources */,
 				8AF06D842A8AA4C400D30A83 /* ApiTimer.swift in Sources */,
 				8AC5F6E62A93C05A00677531 /* ChartModel.swift in Sources */,

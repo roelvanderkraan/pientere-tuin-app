@@ -64,7 +64,7 @@ struct GardenDetails: View {
             }
             Section {
                 Link(destination: URL(string: "https://service-portal.platform.wecity.nl/pientere-tuinen")!) {
-                    Label("Bewerk tuin via Mijn Pientere Tuin", systemImage: "safari")
+                    Label("Bewerk via Mijn Pientere Tuin", systemImage: "pencil")
                 }
             }
         }

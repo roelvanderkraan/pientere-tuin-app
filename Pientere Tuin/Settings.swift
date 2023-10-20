@@ -8,7 +8,7 @@
 import SwiftUI
 import CoreData
 
-struct GardenEdit: View {
+struct Settings: View {
     @ObservedObject var garden: Garden
     @Binding var isPresented: Bool
     @State var isDeletingAll: Bool = false
@@ -43,7 +43,7 @@ struct GardenEdit: View {
                 }
                 Section {
                     Link(destination: URL(string: "https://help.wecity.nl/pientere-tuinen")!) {
-                        Label("Knowledgebase", systemImage: "graduationcap")
+                        Label("Knowledgebase Pientere Tuinen", systemImage: "graduationcap")
                     }
                     Link(destination: URL(string: "mailto:roel@goeieplantjes.nl")!)  {
                         Label("App feedback", systemImage: "paperplane")
@@ -51,7 +51,7 @@ struct GardenEdit: View {
                 } header: {
                     Text("Informatie")
                 } footer: {
-                    Text("Ik ben benieuwd hoe ik de app kan verbeteren.")
+                    Text("Ik ben benieuwd hoe ik de app voor je kan verbeteren.")
                 }
                 Section {
                     Button {
@@ -72,6 +72,15 @@ struct GardenEdit: View {
                 } header: {
                     Text("Databeheer")
                 }
+                Link(destination: URL(string: "https://www.roelvanderkraan.nl/?ref=pienteretuinapp")!) {
+                    Text("Gemaakt met 💚 door Roel")
+                }
+                .foregroundStyle(.secondary)
+                .listRowBackground(Color.clear)
+                Link(destination: URL(string: "https://www.roelvanderkraan.nl/pienteretuin/privacy-policy?ref=pienteretuinapp")!) {
+                    Text("\(Image(systemName: "lock.shield")) Privacy")
+                }
+                .listRowBackground(Color.clear)
             }
             .textFieldStyle(.roundedBorder)
             .listSectionSeparator(.hidden)
@@ -103,7 +112,7 @@ struct GardenEdit_Previews: PreviewProvider {
     static var previews: some View {
         let context =  PersistenceController.preview.container.viewContext
         
-        GardenEdit(garden: GardenStore.testGarden(in: context), isPresented: .constant(true))
+        Settings(garden: GardenStore.testGarden(in: context), isPresented: .constant(true))
             .environment(\.managedObjectContext, context)
     }
 }

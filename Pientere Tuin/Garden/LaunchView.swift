@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct GardenNew: View {
+struct LaunchView: View {
     @ObservedObject var garden: Garden
     @Binding var isPresented: Bool
     @State var isError: Bool = false
@@ -67,17 +67,22 @@ struct GardenNew: View {
                     .buttonStyle(.borderedProminent)
                     .padding(EdgeInsets(top: 8, leading: 0, bottom: 8, trailing: 0))
                     .font(.headline)
-                    //...listRowSeparator(.hidden)
                 }
-                Section("Nog geen Pientere Tuinen sensor?") {
+                Section {
+                    Text("Nog geen Pientere Tuinen sensor?")
                     VStack(alignment: .leading) {
                         Link(destination: URL(string: "https://pienteretuinen.nl/")!) {
                             Text("Vraag een sensor aan")
                         }
-                        .padding(EdgeInsets(top: 4, leading: 0, bottom: 8, trailing: 0))
                     }
+                    .listRowSeparator(.hidden)
                 }
-                Link(destination: URL(string: "https://www.roelvanderkraan.nl/pienteretuin/privacy-policy")!) {
+                Link(destination: URL(string: "https://www.roelvanderkraan.nl/?ref=pienteretuinapp")!) {
+                    Text("Gemaakt met 💚 door Roel")
+                }
+                .foregroundStyle(.secondary)
+                .listRowBackground(Color.clear)
+                Link(destination: URL(string: "https://www.roelvanderkraan.nl/pienteretuin/privacy-policy?ref=pienteretuinapp")!) {
                     Text("\(Image(systemName: "lock.shield")) Privacy")
                 }
                 .listRowBackground(Color.clear)
@@ -133,7 +138,7 @@ struct GardenNew_Previews: PreviewProvider {
     static var previews: some View {
         let context =  PersistenceController.preview.container.viewContext
 
-        GardenNew(garden: GardenStore.testNewGarden(in: context), isPresented: .constant(true))
+        LaunchView(garden: GardenStore.testNewGarden(in: context), isPresented: .constant(true))
             .environment(\.managedObjectContext, context)
     }
 }
