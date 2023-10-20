@@ -157,6 +157,7 @@ struct PientereWidget: Widget {
         }
         .configurationDisplayName("Laatste meting")
         .description("Toont de laatste meting van de Pientere Tuinen sensor.")
+        .supportedFamilies([.accessoryCircular, .accessoryRectangular, .accessoryInline, .systemSmall, .systemMedium])
     }
 }
 
