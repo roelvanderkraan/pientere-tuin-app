@@ -43,6 +43,8 @@
 		8AACAC3D2A857D710032CC1C /* PientereWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AACAC3C2A857D710032CC1C /* PientereWidget.swift */; };
 		8AACAC402A857D720032CC1C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8AACAC3F2A857D720032CC1C /* Assets.xcassets */; };
 		8AACAC462A857D720032CC1C /* WidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 8AACAC312A857D710032CC1C /* WidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		8AB06AE42AE2C24900585ECE /* testAPIKey.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8AB06AE22AE2C09000585ECE /* testAPIKey.plist */; };
+		8AB06AE52AE2C24B00585ECE /* testAPIKey.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8AB06AE22AE2C09000585ECE /* testAPIKey.plist */; };
 		8AC04AED2A97689D005B61A9 /* MeasurementRefreshOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AC04AEC2A97689D005B61A9 /* MeasurementRefreshOperation.swift */; };
 		8AC5F6E62A93C05A00677531 /* ChartModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AC5F6E52A93C05A00677531 /* ChartModel.swift */; };
 		8AF06D812A8A8E6900D30A83 /* ChartScale.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AF06D802A8A8E6900D30A83 /* ChartScale.swift */; };
@@ -138,6 +140,7 @@
 		8AACAC3F2A857D720032CC1C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8AACAC412A857D720032CC1C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8AAF6B552A85064400EDC1E0 /* Pientere_Tuin 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Pientere_Tuin 2.xcdatamodel"; sourceTree = "<group>"; };
+		8AB06AE22AE2C09000585ECE /* testAPIKey.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = testAPIKey.plist; sourceTree = "<group>"; };
 		8AC04AEC2A97689D005B61A9 /* MeasurementRefreshOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeasurementRefreshOperation.swift; sourceTree = "<group>"; };
 		8AC5F6E52A93C05A00677531 /* ChartModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartModel.swift; sourceTree = "<group>"; };
 		8AF06D802A8A8E6900D30A83 /* ChartScale.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartScale.swift; sourceTree = "<group>"; };
@@ -296,6 +299,7 @@
 		8AFCA4252A83FA4B00D4B6C8 = {
 			isa = PBXGroup;
 			children = (
+				8AB06AE22AE2C09000585ECE /* testAPIKey.plist */,
 				8A30F79B2AE2A4C6007CF71D /* ci_scripts */,
 				8A30F7982AE2A301007CF71D /* .gitignore */,
 				8A82BA562A8E6DB00039B1B7 /* WidgetExtension.entitlements */,
@@ -504,6 +508,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8AACAC402A857D720032CC1C /* Assets.xcassets in Resources */,
+				8AB06AE52AE2C24B00585ECE /* testAPIKey.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -511,6 +516,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8AB06AE42AE2C24900585ECE /* testAPIKey.plist in Resources */,
 				8AFCA43F2A83FA4C00D4B6C8 /* Preview Assets.xcassets in Resources */,
 				8A3D13792A87DCE500DF4EF1 /* openapi.yaml in Resources */,
 				8AFCA43B2A83FA4C00D4B6C8 /* Assets.xcassets in Resources */,
@@ -725,6 +731,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1.1;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -749,6 +756,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
 		};
@@ -786,6 +794,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1.1;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
@@ -803,6 +812,7 @@
 				MTL_FAST_MATH = YES;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;
 		};

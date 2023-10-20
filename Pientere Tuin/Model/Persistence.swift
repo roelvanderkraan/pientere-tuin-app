@@ -13,10 +13,8 @@ struct PersistenceController {
     static var preview: PersistenceController = {
         let result = PersistenceController(inMemory: true)
         let viewContext = result.container.viewContext
-        let newGarden = Garden(context: viewContext)
+        let newGarden = GardenStore.testGarden(in: viewContext)
         let calendar = Calendar.current
-        newGarden.apiKey = "ee3f7468-11fb-43b6-b870-49f9435524c1"
-        newGarden.name = "Jonge Jan tuin"
         let date = Date()
         for count in 0..<50 {
             let newMeasurement = MeasurementProjection(context: viewContext)
