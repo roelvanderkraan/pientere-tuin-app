@@ -45,7 +45,7 @@ struct Settings: View {
                     Link(destination: URL(string: "https://help.wecity.nl/pientere-tuinen")!) {
                         Label("Knowledgebase Pientere Tuinen", systemImage: "graduationcap")
                     }
-                    Link(destination: URL(string: "mailto:roel@goeieplantjes.nl")!)  {
+                    Link(destination: URL(string: "mailto:contact-project+roelie-pientere-tuin-48445756-issue-@incoming.gitlab.com?subject=Pientere Tuin app feedback")!)  {
                         Label("App feedback", systemImage: "paperplane")
                     }
                 } header: {
