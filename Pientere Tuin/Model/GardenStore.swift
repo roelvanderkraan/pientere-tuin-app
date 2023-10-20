@@ -63,21 +63,6 @@ struct GardenStore {
     }
     
     static private var testAPIKey: String {
-        get {
-            // 1
-            guard let filePath = Bundle.main.path(forResource: "testAPIKey", ofType: "plist") else {
-                fatalError("Couldn't find file 'testAPIKey.plist'.")
-            }
-            // 2
-            let plist = NSDictionary(contentsOfFile: filePath)
-            guard let value = plist?.object(forKey: "PIENTERE_TUIN_API") as? String else {
-                fatalError("Couldn't find key 'PIENTERE_TUIN_API' in 'testAPIKey.plist'.")
-            }
-            // 3
-            if (value.starts(with: "_")) {
-                fatalError("Get an API key from Mijn Pientere Tuinen and add it to testAPIKey.plist as PIENTERE_TUIN_API")
-            }
-            return value
-        }
+        return "testAPIKey"
     }
 }
