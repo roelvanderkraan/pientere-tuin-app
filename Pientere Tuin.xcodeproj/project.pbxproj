@@ -107,6 +107,7 @@
 		8A163D4D2A8FA8C500AB3C95 /* Pientere_Tuin 4.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Pientere_Tuin 4.xcdatamodel"; sourceTree = "<group>"; };
 		8A163D4F2A8FA8F700AB3C95 /* MeasurementProjection+section.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MeasurementProjection+section.swift"; sourceTree = "<group>"; };
 		8A163D542A8FA9A200AB3C95 /* Date+onlydate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+onlydate.swift"; sourceTree = "<group>"; };
+		8A30F7982AE2A301007CF71D /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		8A3D136C2A87D12B00DF4EF1 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		8A3D13712A87D30D00DF4EF1 /* Binding+inits.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Binding+inits.swift"; sourceTree = "<group>"; };
 		8A3D13762A87DACC00DF4EF1 /* GardenStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GardenStore.swift; sourceTree = "<group>"; };
@@ -286,6 +287,7 @@
 		8AFCA4252A83FA4B00D4B6C8 = {
 			isa = PBXGroup;
 			children = (
+				8A30F7982AE2A301007CF71D /* .gitignore */,
 				8A82BA562A8E6DB00039B1B7 /* WidgetExtension.entitlements */,
 				8AFCA4302A83FA4B00D4B6C8 /* Pientere Tuin */,
 				8AFCA4472A83FA4C00D4B6C8 /* Pientere TuinTests */,
