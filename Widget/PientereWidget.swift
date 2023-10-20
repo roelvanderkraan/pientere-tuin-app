@@ -56,10 +56,21 @@ struct MeasurementEntry: TimelineEntry {
 
 struct WidgetEntryView : View {
     var entry: Provider.Entry
+    
+    @Environment(\.widgetFamily) var family
 
     var body: some View {
         if #available(iOS 17.0, *) {
-            ios17Widget
+            switch family {
+            case .accessoryCircular:
+                accessoryWidget
+            case .accessoryInline:
+                inlineWidget
+            case .accessoryRectangular:
+                accessoryRectangularWidget
+            default:
+                ios17Widget
+            }
         } else {
             ios16Widget
         }
@@ -80,7 +91,7 @@ struct WidgetEntryView : View {
             Spacer()
         }
         .containerBackground(for: .widget) {
-            Color.white
+            
         }
     }
     
@@ -101,6 +112,38 @@ struct WidgetEntryView : View {
                 .foregroundColor(.blue)
                 .bold()
                 .lineLimit(1)
+        }
+    }
+    
+    @available(iOSApplicationExtension 17.0, *)
+    var accessoryWidget: some View {
+        Gauge(value: entry.lastHumidity, in: 0...1) {
+            Image(systemName: "drop.fill")
+        } currentValueLabel: {
+                Text("\(entry.lastHumidity * 100, specifier: "%.0f")%")
+        }
+        .gaugeStyle(.accessoryCircular)
+        .containerBackground(for: .widget) {
+            
+        }
+    }
+    
+    @available(iOSApplicationExtension 17.0, *)
+    var inlineWidget: some View {
+        Label("\(entry.lastHumidity * 100, specifier: "%.1f")%", systemImage: "drop.fill")
+        .containerBackground(for: .widget) {
+        }
+    }
+    
+    @available(iOSApplicationExtension 17.0, *)
+    var accessoryRectangularWidget: some View {
+        Gauge(value: entry.lastHumidity, in: 0...1) {
+            Image(systemName: "drop.fill")
+        } currentValueLabel: {
+            Label("\(entry.lastHumidity * 100, specifier: "%.0f")%", systemImage: "drop.fill")
+        }
+        .gaugeStyle(.accessoryLinear)
+        .containerBackground(for: .widget) {
         }
     }
 }

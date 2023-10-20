@@ -12,6 +12,5 @@ import SwiftUI
 struct PientereWidgetBundle: WidgetBundle {
     var body: some Widget {
         PientereWidget()
-        //WidgetLiveActivity()
     }
 }
