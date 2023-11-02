@@ -7,6 +7,7 @@
 
 import SwiftUI
 import CoreData
+import SwiftSimpleAnalytics
 
 struct Settings: View {
     @ObservedObject var garden: Garden
@@ -104,6 +105,9 @@ struct Settings: View {
             } message: {
                 Text("Weet je het zeker dat je alle metingen wilt verwijderen?")
             }
+        }
+        .onAppear {
+            SimpleAnalytics.shared.track(path: ["settings"])
         }
     }
 }

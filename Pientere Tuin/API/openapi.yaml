@@ -26,7 +26,7 @@ paths:
         schema:
           type: integer
           format: int32
-      - name: wecity-api-key
+      - name: "wecity-api-key"
         in: header
         schema:
           type: string
@@ -52,7 +52,7 @@ components:
     WecityApiKey:
       type: apiKey
       in: header
-      name: wecity-api-key
+      name: "wecity-api-key"
   schemas:
     Links:
       type: object

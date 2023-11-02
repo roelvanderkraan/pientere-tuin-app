@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SwiftSimpleAnalytics
 
 struct LaunchView: View {
     @ObservedObject var garden: Garden
@@ -97,6 +98,9 @@ struct LaunchView: View {
             .navigationTitle("Welkom")
             .headerProminence(.increased)
         }
+        .onAppear {
+            SimpleAnalytics.shared.track(path: ["launchView"])
+        }
         
     }
     
@@ -107,6 +111,7 @@ struct LaunchView: View {
                 isError = true
                 errorMessage = "Vul een API key in"
             }
+            SimpleAnalytics.shared.track(event: "error-api-keyempty", path: ["launchView"])
             return
         }
         Task {
@@ -118,7 +123,9 @@ struct LaunchView: View {
                 withAnimation {
                     errorMessage = "Deze API key heeft geen toegang tot de Pientere Tuinen API. Controleer of je de juiste key hebt ingevuld."
                 }
+                SimpleAnalytics.shared.track(event: "error-api-noaccess", path: ["launchView"])
             } catch {
+                SimpleAnalytics.shared.track(event: "error-api-validation", path: ["launchView"])
                 isError = true
                 withAnimation {
                     errorMessage = "Fout tijdens het valideren van de API key met de Pientere Tuinen server. Controleer of je de juiste key hebt ingevuld en probeer het later nog eens."
@@ -130,6 +137,7 @@ struct LaunchView: View {
     func dismiss() {
         if !isError {
             isPresented = false
+            SimpleAnalytics.shared.track(event: "dissmiss", path: ["launchView"])
         }
     }
 }

@@ -1,12 +1,30 @@
 {
   "pins" : [
     {
+      "identity" : "alamofire",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/Alamofire/Alamofire.git",
+      "state" : {
+        "revision" : "3dc6a42c7727c49bf26508e29b0a0b35f9c7e1ad",
+        "version" : "5.8.1"
+      }
+    },
+    {
       "identity" : "openapikit",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/mattpolzin/OpenAPIKit.git",
       "state" : {
-        "revision" : "c598406749b49d8b12413194069b3cf94e0eef63",
-        "version" : "3.0.0-beta.2"
+        "revision" : "b069168ebd9bac3704beab3aadff07b589aadeb2",
+        "version" : "3.0.0-rc.2"
+      }
+    },
+    {
+      "identity" : "simpleanalytics-swift",
+      "kind" : "remoteSourceControl",
+      "location" : "https://gitlab.com/roelie/simpleanalytics-swift",
+      "state" : {
+        "revision" : "090c3904176187871d1a39277e4a5e684ea6ff53",
+        "version" : "0.2.0"
       }
     },
     {
@@ -28,12 +46,12 @@
       }
     },
     {
-      "identity" : "swift-format",
+      "identity" : "swift-http-types",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/apple/swift-format.git",
+      "location" : "https://github.com/apple/swift-http-types",
       "state" : {
-        "revision" : "fbfe1869527923dd9f9b2edac148baccfce0dce7",
-        "version" : "508.0.1"
+        "revision" : "99d066e29effa8845e4761dd3f2f831edfdf8925",
+        "version" : "1.0.0"
       }
     },
     {
@@ -50,8 +68,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apple/swift-openapi-generator",
       "state" : {
-        "revision" : "7ddef95a852300d82bfce9a1befb1e9feac7d156",
-        "version" : "0.1.13"
+        "revision" : "9e62a21c5cd08f7d2485f4d5c8c7337dee17546c",
+        "version" : "0.3.3"
       }
     },
     {
@@ -59,8 +77,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apple/swift-openapi-runtime",
       "state" : {
-        "revision" : "9d76a1d5b4975821b2c1bb045e6a09ee4023c27d",
-        "version" : "0.1.11"
+        "revision" : "a51b3bd6f2151e9a6f792ca6937a7242c4758768",
+        "version" : "0.3.6"
       }
     },
     {
@@ -68,35 +86,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apple/swift-openapi-urlsession",
       "state" : {
-        "revision" : "c3bce517f9a07af6958e47b29af3bd358dbf06f3",
-        "version" : "0.1.3"
-      }
-    },
-    {
-      "identity" : "swift-syntax",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/apple/swift-syntax.git",
-      "state" : {
-        "revision" : "2c49d66d34dfd6f8130afdba889de77504b58ec0",
-        "version" : "508.0.1"
-      }
-    },
-    {
-      "identity" : "swift-system",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/apple/swift-system.git",
-      "state" : {
-        "revision" : "025bcb1165deab2e20d4eaba79967ce73013f496",
-        "version" : "1.2.1"
-      }
-    },
-    {
-      "identity" : "swift-tools-support-core",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/apple/swift-tools-support-core.git",
-      "state" : {
-        "revision" : "3b13e439a341bbbfe0f710c7d1be37221745ef1a",
-        "version" : "0.6.1"
+        "revision" : "2a676df437aeb50ddf8ecb0ad327d14f078d6cb6",
+        "version" : "0.3.0"
       }
     },
     {

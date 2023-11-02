@@ -7,10 +7,9 @@
 
 import SwiftUI
 import CoreData
-import OpenAPIRuntime
-import OpenAPIURLSession
 import Charts
 import MapKit
+import SwiftSimpleAnalytics
 
 struct ContentView: View {
     @Environment(\.managedObjectContext) private var viewContext
@@ -100,6 +99,7 @@ struct ContentView: View {
             if garden.apiKey == nil {
                 isAddingGarden = true
             }
+            SimpleAnalytics.shared.track(path: ["contentView"])
         }
     }
     

@@ -38,7 +38,7 @@ struct ApiHandler {
         let response = try await client.mijnPientereTuin(
             .init(
                 query: Operations.mijnPientereTuin.Input.Query(page: Int32(page)),
-                headers: Operations.mijnPientereTuin.Input.Headers(wecity_api_key: garden.apiKey)
+                headers: Operations.mijnPientereTuin.Input.Headers(wecity_hyphen_api_hyphen_key: garden.apiKey)
             )
         )
         

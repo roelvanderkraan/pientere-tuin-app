@@ -7,6 +7,7 @@
 
 import SwiftUI
 import MapKit
+import SwiftSimpleAnalytics
 
 struct GardenDetails: View {
     var latestMeasurement: MeasurementProjection
@@ -69,6 +70,9 @@ struct GardenDetails: View {
             }
         }
         .navigationTitle("Tuindetails")
+        .onAppear {
+            SimpleAnalytics.shared.track(path: ["gardenDetails"])
+        }
     }
     
     static private func getMapRect(measurement: MeasurementProjection) -> MKCoordinateRegion {
