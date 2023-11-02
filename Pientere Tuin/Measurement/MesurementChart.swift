@@ -7,6 +7,7 @@
 
 import SwiftUI
 import Charts
+import SwiftSimpleAnalytics
 
 struct MesurementChart: View {
     @SectionedFetchRequest<Date, MeasurementProjection>(
@@ -217,6 +218,7 @@ struct MesurementChart: View {
             sectionedMeasurements.nsPredicate = .filter(key: "measuredAt", date: Date(), scale: newValue)
             chartModel.reloadData(measurements: sectionedMeasurements)
             selectedDate = nil
+            SimpleAnalytics.shared.track(event: "chartscale-\(newValue)")
         }
         .onAppear {
             sectionedMeasurements.nsPredicate = .filter(key: "measuredAt", date: Date(), scale: preferences.chartScale)

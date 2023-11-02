@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SwiftSimpleAnalytics
 
 struct HumidityDetails: View {
     @Environment(\.managedObjectContext) private var viewContext
@@ -34,6 +35,9 @@ struct HumidityDetails: View {
         .navigationBarTitleDisplayMode(.inline)
         .listStyle(.grouped)
         .headerProminence(.increased)
+        .onAppear {
+            SimpleAnalytics.shared.track(path: ["humidityDetails"])
+        }
     }
 }
 

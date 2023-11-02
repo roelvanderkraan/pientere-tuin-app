@@ -60,11 +60,13 @@ struct Settings: View {
                             try? await ApiHandler.shared.updateTuinData(context: viewContext, loadAll: true, garden: garden)
                         }
                         isPresented.toggle()
+                        SimpleAnalytics.shared.track(event: "update-data", path: ["settings"])
                     } label: {
                         Label("Metingen opnieuw inladen", systemImage: "arrow.counterclockwise")
                     }
                     Button(role: .destructive) {
                         isDeletingAll.toggle()
+                        SimpleAnalytics.shared.track(event: "delete-data", path: ["settings"])
                     } label: {
                         Label("Verwijder alle metingen", systemImage: "trash")
                             .foregroundColor(.red)
@@ -88,6 +90,7 @@ struct Settings: View {
             .toolbar {
                 ToolbarItem {
                     Button("Klaar") {
+                        SimpleAnalytics.shared.track(event: "dismiss", path: ["settings"])
                         isPresented.toggle()
                     }
                 }
@@ -97,10 +100,11 @@ struct Settings: View {
                 Button("Verwijder", role: .destructive) {
                     GardenStore.deleteAllMeasurements(garden: garden, from: viewContext)
                     isPresented.toggle()
+                    SimpleAnalytics.shared.track(event: "delete-data-confirmed", path: ["settings"])
                 }
                 .keyboardShortcut(.defaultAction)
                 Button("Annuleer", role: .cancel) {
-                    
+                    SimpleAnalytics.shared.track(event: "delete-data-cancel", path: ["settings"])
                 }
             } message: {
                 Text("Weet je het zeker dat je alle metingen wilt verwijderen?")

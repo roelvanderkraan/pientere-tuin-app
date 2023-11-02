@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SwiftSimpleAnalytics
 
 struct TemperatureDetails: View {
     @Environment(\.managedObjectContext) private var viewContext    
@@ -29,6 +30,9 @@ struct TemperatureDetails: View {
         .navigationTitle("Temperatuur bodem")
         .navigationBarTitleDisplayMode(.inline)
         .listStyle(.grouped)
+        .onAppear {
+            SimpleAnalytics.shared.track(path: ["temperatureDetails"])
+        }
     }
 }
 

@@ -8,6 +8,6 @@
 import SwiftSimpleAnalytics
 
 extension SimpleAnalytics {
-    static let shared: SimpleAnalytics = SimpleAnalytics(hostname: "mobileapp.yourdomain.com")
+    static let shared: SimpleAnalytics = SimpleAnalytics(hostname: "pienteretuin.skipper.studio")
 }
 

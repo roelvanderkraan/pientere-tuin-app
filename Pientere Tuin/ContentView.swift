@@ -92,6 +92,7 @@ struct ContentView: View {
             }
             .refreshable {
                 await refreshData()
+                SimpleAnalytics.shared.track(event: "refresh", path: ["contentView"])
             }
 
         }

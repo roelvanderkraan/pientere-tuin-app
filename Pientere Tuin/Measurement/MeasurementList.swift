@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SwiftSimpleAnalytics
 
 struct MeasurementList: View {
     @FetchRequest(
@@ -35,6 +36,9 @@ struct MeasurementList: View {
             }
         }
         .navigationTitle("Alle metingen")
+        .onAppear {
+            SimpleAnalytics.shared.track(path: ["measurementList"])
+        }
     }
 }
 
