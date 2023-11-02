@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		8A0F7B692AF4102800A4C32D /* OpenAPIURLSession in Frameworks */ = {isa = PBXBuildFile; productRef = 8A0F7B682AF4102800A4C32D /* OpenAPIURLSession */; };
-		8A0F7B6B2AF4105700A4C32D /* SwiftSimpleAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 8A0F7B6A2AF4105700A4C32D /* SwiftSimpleAnalytics */; };
+		8A0F7B702AF41A6B00A4C32D /* SimpleAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 8A0F7B6F2AF41A6B00A4C32D /* SimpleAnalytics */; };
 		8A138FD92A8B945C003247BA /* LaunchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A138FD82A8B945C003247BA /* LaunchView.swift */; };
 		8A138FDC2A8B9A88003247BA /* Garden+validate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A138FDB2A8B9A88003247BA /* Garden+validate.swift */; };
 		8A138FDF2A8B9D0B003247BA /* ApiErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A138FDE2A8B9D0B003247BA /* ApiErrors.swift */; };
@@ -175,9 +175,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8A0F7B702AF41A6B00A4C32D /* SimpleAnalytics in Frameworks */,
 				8A0F7B692AF4102800A4C32D /* OpenAPIURLSession in Frameworks */,
 				8AFCA4682A83FDF200D4B6C8 /* OpenAPIRuntime in Frameworks */,
-				8A0F7B6B2AF4105700A4C32D /* SwiftSimpleAnalytics in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -409,7 +409,7 @@
 			packageProductDependencies = (
 				8AFCA4672A83FDF200D4B6C8 /* OpenAPIRuntime */,
 				8A0F7B682AF4102800A4C32D /* OpenAPIURLSession */,
-				8A0F7B6A2AF4105700A4C32D /* SwiftSimpleAnalytics */,
+				8A0F7B6F2AF41A6B00A4C32D /* SimpleAnalytics */,
 			);
 			productName = "Pientere Tuin";
 			productReference = 8AFCA42E2A83FA4B00D4B6C8 /* Pientere Tuin.app */;
@@ -490,8 +490,8 @@
 			packageReferences = (
 				8AFCA4612A83FDD500D4B6C8 /* XCRemoteSwiftPackageReference "swift-openapi-generator" */,
 				8AFCA4662A83FDF200D4B6C8 /* XCRemoteSwiftPackageReference "swift-openapi-runtime" */,
-				8ADDF6682AF2DE4C004A0066 /* XCRemoteSwiftPackageReference "simpleanalytics-swift" */,
 				8A0F7B672AF4102800A4C32D /* XCRemoteSwiftPackageReference "swift-openapi-urlsession" */,
+				8A0F7B6E2AF41A6B00A4C32D /* XCRemoteSwiftPackageReference "simpleanalytics-swift" */,
 			);
 			productRefGroup = 8AFCA42F2A83FA4B00D4B6C8 /* Products */;
 			projectDirPath = "";
@@ -1047,12 +1047,12 @@
 				minimumVersion = 0.3.0;
 			};
 		};
-		8ADDF6682AF2DE4C004A0066 /* XCRemoteSwiftPackageReference "simpleanalytics-swift" */ = {
+		8A0F7B6E2AF41A6B00A4C32D /* XCRemoteSwiftPackageReference "simpleanalytics-swift" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://gitlab.com/roelie/simpleanalytics-swift";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 0.1.0;
+				minimumVersion = 0.3.0;
 			};
 		};
 		8AFCA4612A83FDD500D4B6C8 /* XCRemoteSwiftPackageReference "swift-openapi-generator" */ = {
@@ -1079,10 +1079,10 @@
 			package = 8A0F7B672AF4102800A4C32D /* XCRemoteSwiftPackageReference "swift-openapi-urlsession" */;
 			productName = OpenAPIURLSession;
 		};
-		8A0F7B6A2AF4105700A4C32D /* SwiftSimpleAnalytics */ = {
+		8A0F7B6F2AF41A6B00A4C32D /* SimpleAnalytics */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 8ADDF6682AF2DE4C004A0066 /* XCRemoteSwiftPackageReference "simpleanalytics-swift" */;
-			productName = SwiftSimpleAnalytics;
+			package = 8A0F7B6E2AF41A6B00A4C32D /* XCRemoteSwiftPackageReference "simpleanalytics-swift" */;
+			productName = SimpleAnalytics;
 		};
 		8AFCA4672A83FDF200D4B6C8 /* OpenAPIRuntime */ = {
 			isa = XCSwiftPackageProductDependency;

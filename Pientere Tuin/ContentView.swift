@@ -9,7 +9,7 @@ import SwiftUI
 import CoreData
 import Charts
 import MapKit
-import SwiftSimpleAnalytics
+import SimpleAnalytics
 
 struct ContentView: View {
     @Environment(\.managedObjectContext) private var viewContext

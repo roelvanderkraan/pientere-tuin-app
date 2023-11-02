@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-import SwiftSimpleAnalytics
+import SimpleAnalytics
 
 struct LaunchView: View {
     @ObservedObject var garden: Garden

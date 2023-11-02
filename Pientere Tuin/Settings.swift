@@ -7,7 +7,7 @@
 
 import SwiftUI
 import CoreData
-import SwiftSimpleAnalytics
+import SimpleAnalytics
 
 struct Settings: View {
     @ObservedObject var garden: Garden

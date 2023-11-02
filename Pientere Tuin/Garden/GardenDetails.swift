@@ -7,7 +7,7 @@
 
 import SwiftUI
 import MapKit
-import SwiftSimpleAnalytics
+import SimpleAnalytics
 
 struct GardenDetails: View {
     var latestMeasurement: MeasurementProjection

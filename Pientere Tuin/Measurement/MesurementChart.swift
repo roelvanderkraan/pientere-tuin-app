@@ -7,7 +7,7 @@
 
 import SwiftUI
 import Charts
-import SwiftSimpleAnalytics
+import SimpleAnalytics
 
 struct MesurementChart: View {
     @SectionedFetchRequest<Date, MeasurementProjection>(

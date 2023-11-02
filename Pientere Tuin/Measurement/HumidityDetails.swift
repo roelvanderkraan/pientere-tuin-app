@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-import SwiftSimpleAnalytics
+import SimpleAnalytics
 
 struct HumidityDetails: View {
     @Environment(\.managedObjectContext) private var viewContext

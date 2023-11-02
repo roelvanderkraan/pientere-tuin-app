@@ -23,8 +23,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://gitlab.com/roelie/simpleanalytics-swift",
       "state" : {
-        "revision" : "090c3904176187871d1a39277e4a5e684ea6ff53",
-        "version" : "0.2.0"
+        "revision" : "8a449ce8c0977391eae1b0b8f4d213c1e248e799",
+        "version" : "0.3.0"
       }
     },
     {
