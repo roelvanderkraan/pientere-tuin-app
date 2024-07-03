@@ -33,6 +33,16 @@ paths:
       responses:
         '200':
           description: OK
+          headers:
+            Access-Control-Allow-Headers:
+              schema:
+                type: string
+            Access-Control-Allow-Methods:
+              schema:
+                type: string
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
           content:
             application/json:
               schema:
