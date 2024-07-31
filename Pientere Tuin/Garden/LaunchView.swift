@@ -7,6 +7,7 @@
 
 import SwiftUI
 import SimpleAnalytics
+import OpenAPIRuntime
 
 struct LaunchView: View {
     @ObservedObject var garden: Garden
@@ -142,13 +143,27 @@ struct LaunchView: View {
                     errorMessage = "Deze API key heeft geen toegang tot de Pientere Tuinen API. Controleer of je de juiste key hebt ingevuld."
                 }
                 SimpleAnalytics.shared.track(event: "error-api-noaccess", path: ["launchView"])
-            } catch {
-                SimpleAnalytics.shared.track(event: "error-api-validation", path: ["launchView"])
+            } catch is APIError {
+                SimpleAnalytics.shared.track(event: "error-api-apierror", path: ["launchView"])
                 isError = true
                 isValidating = false
                 withAnimation {
                     errorMessage = "Fout tijdens het valideren van de API key met de Pientere Tuinen server. Controleer of je de juiste key hebt ingevuld en probeer het later nog eens."
                 }
+            } catch (let error) {
+                
+                if let clientError = error as? ClientError {
+                    debugPrint("Client error: \(error)")
+                    SimpleAnalytics.shared.track(event: "error-api-clienterror", path: ["launchView"])
+                } else {
+                    debugPrint("Unknown error: \(error)")
+                    SimpleAnalytics.shared.track(event: "error-api-unkown", path: ["launchView"])
+                }
+                isError = true
+                withAnimation {
+                    errorMessage = "Fout tijdens het valideren van de API key met de Pientere Tuinen server. Controleer of je de juiste key hebt ingevuld en probeer het later nog eens."
+                }
+                isPresented = false
             }
         }
     }

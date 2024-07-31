@@ -18,10 +18,19 @@ struct ApiHandler {
     static let shared = ApiHandler()
     
     init() {
-        self.client = Client(
-            serverURL: try! Servers.server1(),
-            transport: URLSessionTransport()
-        )
+        let transport: ClientTransport = URLSessionTransport()
+        do {
+            self.client = Client(
+                serverURL: try Servers.server1(),
+                transport: transport
+            )
+        } catch {
+            debugPrint("Error with initializing client")
+            self.client = Client(
+                serverURL: try! Servers.server1(),
+                transport: transport
+            )
+        }
     }
     
     /// Loads measurements from Pientere Tuinen API
@@ -41,7 +50,7 @@ struct ApiHandler {
                 headers: Operations.mijnPientereTuin.Input.Headers(wecity_hyphen_api_hyphen_key: garden.apiKey)
             )
         )
-        
+
         switch response {
         case let .ok(okResponse):
             debugPrint("OK response")

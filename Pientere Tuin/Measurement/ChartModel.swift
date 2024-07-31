@@ -118,7 +118,11 @@ class ChartModel: ObservableObject {
             Float.minimum(partialResult, measurement.value)
         })
         let count = Float(measurements.count)
-        return MeasurementAverage(averageValue: sum/count, minValue: min, maxValue: max)
+        if count > 0 {
+            return MeasurementAverage(averageValue: sum/count, minValue: min, maxValue: max)
+        } else {
+            return MeasurementAverage(averageValue: 0, minValue: 0, maxValue: 0)
+        }
     }
     
     private func getChartData(measurements: SectionedFetchResults<Date, MeasurementProjection>) -> [ChartableMeasurement] {

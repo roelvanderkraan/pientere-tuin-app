@@ -241,10 +241,11 @@ struct MesurementChart: View {
             x: at.x - origin.x,
             y: at.y - origin.y
         )
-        let (date, humidity) = proxy.value(at: location, as: (Date, Float).self)!
-        debugPrint("Selected date: \(date), humidity: \(humidity)")
-        selectedDate = hourDate(of: date, data: data)
-        debugPrint("\(selectedDate)")
+        if let (date, humidity) = proxy.value(at: location, as: (Date, Float).self) {
+            debugPrint("Selected date: \(date), humidity: \(humidity)")
+            selectedDate = hourDate(of: date, data: data)
+            debugPrint("\(selectedDate)")
+        }
 
         if location.x < annotationWidth {
             annotationPosition = .topTrailing
@@ -269,7 +270,7 @@ struct MesurementChart: View {
 
 struct MeasurementChart_Previews: PreviewProvider {
     static var previews: some View {
-        MesurementChart(chartModel: ChartModel(chartType: .moisture))
+        MesurementChart(chartModel: ChartModel(chartType: .temperature))
             .environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
     }
 }
