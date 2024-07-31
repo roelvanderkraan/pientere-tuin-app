@@ -16,6 +16,7 @@ class WeatherData: ObservableObject {
     static let shared = WeatherData()
     
     @Published var dailyForecastData: Forecast<DayWeather>?
+    @Published var attribution: WeatherAttribution?
     
     private let service = WeatherService.shared
     
@@ -28,6 +29,11 @@ class WeatherData: ObservableObject {
                 including: .daily)
             return forcast
         }.value
+        let attribution = await Task.detached(priority: .userInitiated) {
+            let attribution = try? await self.service.attribution
+            return attribution
+        }.value
+        self.attribution = attribution
         dailyForecastData = dayWeather
         return dayWeather
     }

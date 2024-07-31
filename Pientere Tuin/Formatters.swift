@@ -67,7 +67,7 @@ class RelativeDateFormatter {
         // If to date is in current week, return day name
         
         if calendar.isDateInTomorrow(to) {
-            return "morgen"
+            return "Morgen"
         }
         
         let dateComponents = calendar.dateComponents([.weekOfMonth], from: from, to: to)

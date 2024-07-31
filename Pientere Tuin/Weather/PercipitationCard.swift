@@ -14,12 +14,23 @@ struct PercipitationCard: View {
 
     var body: some View {
         VStack(alignment: .leading) {
-            HStack(alignment: .firstTextBaseline) {
-                Text("\(Image(systemName: "cloud.rain")) Neerslag")
-                    .font(.system(.body, design: .default, weight: .medium))
-                    .foregroundColor(.purple)
+            HStack(alignment: .center) {
+                weatherIcon
+                Text("Neerslag")
+                Spacer()
+                if let attribution = weatherData.attribution {
+                    AsyncImage(url: attribution.combinedMarkLightURL) { image in
+                        image.resizable().scaledToFill()
+                    } placeholder: {
+                        ProgressView()
+                    }
+                    .frame(width: 40, height: 8)
+                }
             }
+            .font(.system(.body, design: .default, weight: .medium))
+            .foregroundColor(.purple)
             .padding([.bottom], 1)
+            
             HStack(alignment: .firstTextBaseline) {
                 if let rainToday = todayPercipitation {
                     Text(formatMeasurement(measurement: rainToday))
@@ -30,11 +41,6 @@ struct PercipitationCard: View {
                 }
             }
             Text(futurePercipitation)
-        }
-        .task {
-            Task.detached { @MainActor in
-                await weatherData.dailyForecast(for: latestMeasurement)
-            }
         }
     }
     
@@ -51,20 +57,31 @@ struct PercipitationCard: View {
                 day.precipitationAmount.value > 0
             }
             if let rainyDay = firstDayWithRain {
-                return "\(rainyDay.precipitationAmount.formatted()) \(rainyDay.precipitation.description) verwacht op \(relativeDateString(date: rainyDay.date))"
+                return "\(relativeDateString(date: rainyDay.date)) \(formatMeasurement(measurement: rainyDay.precipitationAmount)) \(rainyDay.precipitation.description) verwacht"
             }
         }
-        return "Geen neerslag verwacht"
+        return "De komende dagen geen neerslag verwacht"
+    }
+    
+    var weatherIcon: some View {
+        if let dailyForecast = weatherData.dailyForecastData, let systemName = dailyForecast.first?.symbolName {
+            Text(Image(systemName: systemName))
+        } else {
+            Text("\(Image(systemName: "cloud.rain"))")
+        }
     }
     
     func formatMeasurement(measurement: Measurement<UnitLength>) -> String {
         let millimeters = measurement.converted(to: .millimeters)
-        return millimeters.formatted()
+        let roundedStyle = FloatingPointFormatStyle<Double>(locale: .autoupdatingCurrent)
+            .rounded(rule: .up, increment: 0.5)
+        return millimeters.formatted(.measurement(width: .abbreviated, usage: .asProvided, numberFormatStyle: roundedStyle))
     }
     
     func relativeDateString(date: Date) -> String {
         return RelativeDateFormatter.relativeDateText(from: Date(), to: date) ?? ""
     }
+    
 }
 
 
