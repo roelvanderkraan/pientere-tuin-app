@@ -18,6 +18,8 @@
 		8A3D13722A87D30D00DF4EF1 /* Binding+inits.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A3D13712A87D30D00DF4EF1 /* Binding+inits.swift */; };
 		8A3D13772A87DACC00DF4EF1 /* GardenStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A3D13762A87DACC00DF4EF1 /* GardenStore.swift */; };
 		8A3D13792A87DCE500DF4EF1 /* openapi.yaml in Resources */ = {isa = PBXBuildFile; fileRef = 8A3D13782A87DCE500DF4EF1 /* openapi.yaml */; };
+		8A52C0C52C5A597E00E1D70D /* Measurement+location.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A52C0C42C5A597E00E1D70D /* Measurement+location.swift */; };
+		8A52C0CD2C5A779C00E1D70D /* PercipitationCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A52C0CC2C5A779C00E1D70D /* PercipitationCard.swift */; };
 		8A649DDA2A87A76700CC38DE /* NSPredicate+date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A649DD92A87A76700CC38DE /* NSPredicate+date.swift */; };
 		8A6842CD2A8CEB3F00B4B9A7 /* TemperatureDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A6842CC2A8CEB3F00B4B9A7 /* TemperatureDetails.swift */; };
 		8A6842CF2A8CECA600B4B9A7 /* TemperatureCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A6842CE2A8CECA600B4B9A7 /* TemperatureCard.swift */; };
@@ -48,6 +50,7 @@
 		8AC04AED2A97689D005B61A9 /* MeasurementRefreshOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AC04AEC2A97689D005B61A9 /* MeasurementRefreshOperation.swift */; };
 		8AC5F6E62A93C05A00677531 /* ChartModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AC5F6E52A93C05A00677531 /* ChartModel.swift */; };
 		8ADDF66A2AF2DEF8004A0066 /* SimpleAnalytics+shared.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ADDF6692AF2DEF8004A0066 /* SimpleAnalytics+shared.swift */; };
+		8AEFBFAF2C5A504800FA64E1 /* WeatherData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AEFBFAE2C5A504800FA64E1 /* WeatherData.swift */; };
 		8AF06D812A8A8E6900D30A83 /* ChartScale.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AF06D802A8A8E6900D30A83 /* ChartScale.swift */; };
 		8AF06D842A8AA4C400D30A83 /* ApiTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AF06D832A8AA4C400D30A83 /* ApiTimer.swift */; };
 		8AFCA4322A83FA4B00D4B6C8 /* Pientere_TuinApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AFCA4312A83FA4B00D4B6C8 /* Pientere_TuinApp.swift */; };
@@ -116,6 +119,8 @@
 		8A3D13762A87DACC00DF4EF1 /* GardenStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GardenStore.swift; sourceTree = "<group>"; };
 		8A3D13782A87DCE500DF4EF1 /* openapi.yaml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = openapi.yaml; sourceTree = "<group>"; };
 		8A48C0A92A88E31400C4F2EA /* Pientere-Tuin-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "Pientere-Tuin-Info.plist"; sourceTree = SOURCE_ROOT; };
+		8A52C0C42C5A597E00E1D70D /* Measurement+location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Measurement+location.swift"; sourceTree = "<group>"; };
+		8A52C0CC2C5A779C00E1D70D /* PercipitationCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PercipitationCard.swift; sourceTree = "<group>"; };
 		8A649DD92A87A76700CC38DE /* NSPredicate+date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSPredicate+date.swift"; sourceTree = "<group>"; };
 		8A6842CC2A8CEB3F00B4B9A7 /* TemperatureDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemperatureDetails.swift; sourceTree = "<group>"; };
 		8A6842CE2A8CECA600B4B9A7 /* TemperatureCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemperatureCard.swift; sourceTree = "<group>"; };
@@ -143,6 +148,7 @@
 		8AC04AEC2A97689D005B61A9 /* MeasurementRefreshOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeasurementRefreshOperation.swift; sourceTree = "<group>"; };
 		8AC5F6E52A93C05A00677531 /* ChartModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartModel.swift; sourceTree = "<group>"; };
 		8ADDF6692AF2DEF8004A0066 /* SimpleAnalytics+shared.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SimpleAnalytics+shared.swift"; sourceTree = "<group>"; };
+		8AEFBFAE2C5A504800FA64E1 /* WeatherData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherData.swift; sourceTree = "<group>"; };
 		8AF06D802A8A8E6900D30A83 /* ChartScale.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartScale.swift; sourceTree = "<group>"; };
 		8AF06D832A8AA4C400D30A83 /* ApiTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiTimer.swift; sourceTree = "<group>"; };
 		8AFCA42E2A83FA4B00D4B6C8 /* Pientere Tuin.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Pientere Tuin.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -222,8 +228,17 @@
 				8A3D13712A87D30D00DF4EF1 /* Binding+inits.swift */,
 				8A649DD92A87A76700CC38DE /* NSPredicate+date.swift */,
 				8ADDF6692AF2DEF8004A0066 /* SimpleAnalytics+shared.swift */,
+				8A52C0C42C5A597E00E1D70D /* Measurement+location.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		8A52C0C72C5A777800E1D70D /* Weather */ = {
+			isa = PBXGroup;
+			children = (
+				8A52C0CC2C5A779C00E1D70D /* PercipitationCard.swift */,
+			);
+			path = Weather;
 			sourceTree = "<group>";
 		};
 		8AACAC322A857D710032CC1C /* Frameworks */ = {
@@ -271,6 +286,7 @@
 				8A163D4F2A8FA8F700AB3C95 /* MeasurementProjection+section.swift */,
 				8A163D542A8FA9A200AB3C95 /* Date+onlydate.swift */,
 				8A821ED82A8E27A1009A4656 /* Preferences.swift */,
+				8AEFBFAE2C5A504800FA64E1 /* WeatherData.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -334,6 +350,7 @@
 				8AFCA4382A83FA4B00D4B6C8 /* ContentView.swift */,
 				8A3D136C2A87D12B00DF4EF1 /* Settings.swift */,
 				8A6842D52A8CEDB800B4B9A7 /* Formatters.swift */,
+				8A52C0C72C5A777800E1D70D /* Weather */,
 				8A3D136F2A87D23100DF4EF1 /* Garden */,
 				8AF06D862A8AAA8900D30A83 /* Measurement */,
 				8AACAC4F2A8580640032CC1C /* Model */,
@@ -566,6 +583,7 @@
 				8A138FD92A8B945C003247BA /* LaunchView.swift in Sources */,
 				8A163D4B2A8FA78A00AB3C95 /* MesurementChart.swift in Sources */,
 				8A9F139B2A8D0844003529B7 /* GardenDetails.swift in Sources */,
+				8A52C0C52C5A597E00E1D70D /* Measurement+location.swift in Sources */,
 				8AF06D812A8A8E6900D30A83 /* ChartScale.swift in Sources */,
 				8A687C122A93AF3B00AD1285 /* MeasurementAnnotation.swift in Sources */,
 				8A6D65512A8D5E9B00B9E2CB /* HumidityState.swift in Sources */,
@@ -577,6 +595,8 @@
 				8AC5F6E62A93C05A00677531 /* ChartModel.swift in Sources */,
 				8A6842DC2A8CEFAB00B4B9A7 /* HumidityDetails.swift in Sources */,
 				8AFCA4372A83FA4B00D4B6C8 /* Pientere_Tuin.xcdatamodeld in Sources */,
+				8AEFBFAF2C5A504800FA64E1 /* WeatherData.swift in Sources */,
+				8A52C0CD2C5A779C00E1D70D /* PercipitationCard.swift in Sources */,
 				8A3D13722A87D30D00DF4EF1 /* Binding+inits.swift in Sources */,
 				8A138FDF2A8B9D0B003247BA /* ApiErrors.swift in Sources */,
 				8A6842D92A8CEF3000B4B9A7 /* HumidityCard.swift in Sources */,
@@ -821,6 +841,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "Pientere Tuin/Pientere_Tuin.entitlements";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = "$(CURRENT_PROJECT_VERSION)";
 				DEAD_CODE_STRIPPING = YES;
@@ -848,6 +869,7 @@
 				MARKETING_VERSION = "$(CURRENT_PROJECT_VERSION)";
 				PRODUCT_BUNDLE_IDENTIFIER = "studio.skipper.Pientere-Tuin";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = auto;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -865,6 +887,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "Pientere Tuin/Pientere_Tuin.entitlements";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = "$(CURRENT_PROJECT_VERSION)";
 				DEAD_CODE_STRIPPING = YES;
@@ -892,6 +915,7 @@
 				MARKETING_VERSION = "$(CURRENT_PROJECT_VERSION)";
 				PRODUCT_BUNDLE_IDENTIFIER = "studio.skipper.Pientere-Tuin";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = auto;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;

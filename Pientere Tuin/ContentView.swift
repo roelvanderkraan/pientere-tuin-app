@@ -24,41 +24,43 @@ struct ContentView: View {
     @State var isAddingGarden: Bool = false
     @State var isError: Bool = false
     @State var errorMessage: String?
+    @StateObject private var weatherData = WeatherData.shared
     @ObservedObject var garden: Garden
     var apiTimer: ApiTimer
     
     var body: some View {
         NavigationView {
             List {
-                Section {
-                    if let lastMeasurement = measurements.first {
-                        NavigationLink {
-                            HumidityDetails()
-                                .environment(\.managedObjectContext, viewContext)
-                        } label: {
-                            HumidityCard(latestMeasurement: lastMeasurement)
-                        }
+                if let lastMeasurement = measurements.first {
+                    Section {
+                            NavigationLink {
+                                HumidityDetails()
+                                    .environment(\.managedObjectContext, viewContext)
+                            } label: {
+                                HumidityCard(latestMeasurement: lastMeasurement)
+                            }
                     }
-                }
-                Section {
-                    if let lastMeasurement = measurements.first {
-                        NavigationLink {
-                            TemperatureDetails()
-                                .environment(\.managedObjectContext, viewContext)
-                        } label: {
-                            TemperatureCard(latestMeasurement: lastMeasurement)
-                        }
-                        
+                    Section {
+                            NavigationLink {
+                                TemperatureDetails()
+                                    .environment(\.managedObjectContext, viewContext)
+                            } label: {
+                                TemperatureCard(latestMeasurement: lastMeasurement)
+                            }
                     }
-                }
-                Section {
-                    if let lastMeasurement = measurements.first {
-                        NavigationLink {
-                            GardenDetails(latestMeasurement: lastMeasurement)
-                        } label: {
-                            Text("Tuindetails")
-                        }
+                    Section {
+                        PercipitationCard(latestMeasurement: lastMeasurement)
+                            .environmentObject(weatherData)
                     }
+                    Section {
+                            NavigationLink {
+                                GardenDetails(latestMeasurement: lastMeasurement)
+                            } label: {
+                                Text("Tuindetails")
+                            }
+                    }
+                } else {
+                    Text("Geen metingen gevonden")
                 }
             }
             .navigationTitle("Pientere Tuin")
@@ -101,6 +103,13 @@ struct ContentView: View {
                 isAddingGarden = true
             }
             SimpleAnalytics.shared.track(path: ["contentView"])
+        }
+        .task {
+            Task.detached { @MainActor in
+                if let lastMeasurement = measurements.first {
+                    await weatherData.dailyForecast(for: lastMeasurement)
+                }
+            }
         }
     }
     

@@ -186,7 +186,7 @@ struct MesurementChart: View {
                     }
                 case .week:
                     AxisMarks(values: .stride(by: .day, count: 1)) { value in
-                        if let date = value.as(Date.self) {
+                        if value.as(Date.self) != nil {
                             AxisValueLabel(format: .dateTime.weekday())
                         }
                         
@@ -195,7 +195,7 @@ struct MesurementChart: View {
                     }
                 case .month:
                     AxisMarks(values: .stride(by: .day, count: 5)) { value in
-                        if let date = value.as(Date.self) {
+                        if value.as(Date.self) != nil {
                             AxisValueLabel(format: .dateTime.day())
                         }
                         
@@ -204,7 +204,7 @@ struct MesurementChart: View {
                     }
                 case .all:
                     AxisMarks(values: .stride(by: .month, count: 1)) { value in
-                        if let date = value.as(Date.self) {
+                        if value.as(Date.self) != nil {
                             AxisValueLabel(format: .dateTime.month())
                         }
                         
@@ -244,7 +244,7 @@ struct MesurementChart: View {
         if let (date, humidity) = proxy.value(at: location, as: (Date, Float).self) {
             debugPrint("Selected date: \(date), humidity: \(humidity)")
             selectedDate = hourDate(of: date, data: data)
-            debugPrint("\(selectedDate)")
+            debugPrint("\(String(describing: selectedDate))")
         }
 
         if location.x < annotationWidth {

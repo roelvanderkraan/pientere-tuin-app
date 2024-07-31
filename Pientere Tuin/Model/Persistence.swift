@@ -14,16 +14,16 @@ struct PersistenceController {
         let result = PersistenceController(inMemory: true)
         let viewContext = result.container.viewContext
         let newGarden = GardenStore.testGarden(in: viewContext)
-//        let calendar = Calendar.current
-//        let date = Date()
-//        for count in 0..<50 {
-//            let newMeasurement = MeasurementProjection(context: viewContext)
-//            newMeasurement.measuredAt = calendar.date(byAdding: DateComponents(hour: -5*count), to: date)
-//            newMeasurement.moisturePercentage = Float(count) * 0.05
-//            newMeasurement.temperatureCelcius = NSNumber(value: Float(count) * 5.0)
-//            newMeasurement.apiUUID = UUID().uuidString
-//            newMeasurement.soilTypeObject = .gardenSoil
-//        }
+        let calendar = Calendar.current
+        let date = Date()
+        for count in 0..<50 {
+            let newMeasurement = MeasurementProjection(context: viewContext)
+            newMeasurement.measuredAt = calendar.date(byAdding: DateComponents(hour: -5*count), to: date)
+            newMeasurement.moisturePercentage = Float(count) * 0.05
+            newMeasurement.temperatureCelcius = NSNumber(value: Float(count) * 5.0)
+            newMeasurement.apiUUID = UUID().uuidString
+            newMeasurement.soilTypeObject = .gardenSoil
+        }
         do {
             try viewContext.save()
         } catch {

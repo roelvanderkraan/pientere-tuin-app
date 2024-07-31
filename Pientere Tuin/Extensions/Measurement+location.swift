@@ -6,3 +6,10 @@
 //
 
 import Foundation
+import CoreLocation
+
+extension MeasurementProjection {
+    func location() -> CLLocation {
+        return CLLocation(latitude: CLLocationDegrees(self.latitude), longitude: CLLocationDegrees(self.longitude))
+    }
+}

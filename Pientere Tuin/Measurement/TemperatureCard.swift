@@ -19,6 +19,7 @@ struct TemperatureCard: View {
                 Text("\(latestMeasurement.measuredAt ?? Date(), formatter: Formatters.itemFormatter)")
                     .foregroundColor(.secondary)
             }
+            .padding([.bottom], 1)
             if let temperature = latestMeasurement.temperatureCelcius {
                 HStack(alignment: .firstTextBaseline) {
                     Text("\(temperature.floatValue, specifier: "%.0f")")

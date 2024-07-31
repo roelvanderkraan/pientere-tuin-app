@@ -153,7 +153,7 @@ struct LaunchView: View {
             } catch (let error) {
                 
                 if let clientError = error as? ClientError {
-                    debugPrint("Client error: \(error)")
+                    debugPrint("Client error: \(clientError)")
                     SimpleAnalytics.shared.track(event: "error-api-clienterror", path: ["launchView"])
                 } else {
                     debugPrint("Unknown error: \(error)")
