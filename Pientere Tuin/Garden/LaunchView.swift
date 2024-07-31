@@ -13,6 +13,7 @@ struct LaunchView: View {
     @Binding var isPresented: Bool
     @State var isError: Bool = false
     @State var errorMessage: String?
+    @State var isValidating = false
     
     @Environment(\.managedObjectContext) private var viewContext
     
@@ -51,12 +52,22 @@ struct LaunchView: View {
                             .foregroundColor(.orange)
                             .listRowSeparator(.hidden)
                     }
+                    if (isValidating) {
+                        HStack {
+                            ProgressView()
+                            Text(" API key aan het controleren")
+                        }
+                        .listRowSeparator(.hidden)
+                    }
+                    
+                    
                     PasteButton(payloadType: String.self) { strings in
                         guard let first = strings.first else { return }
                         garden.apiKey = first.trimmingCharacters(in: .whitespacesAndNewlines)
                         validateApiKey()
                     }
                     .listRowSeparator(.hidden)
+                    .disabled(isValidating)
                     
                     Button {
                         validateApiKey()
@@ -68,6 +79,9 @@ struct LaunchView: View {
                     .buttonStyle(.borderedProminent)
                     .padding(EdgeInsets(top: 8, leading: 0, bottom: 8, trailing: 0))
                     .font(.headline)
+                    .disabled(isValidating)
+                    
+                    
                 }
                 Section {
                     Text("Nog geen Pientere Tuinen sensor?")
@@ -106,9 +120,11 @@ struct LaunchView: View {
     
     func validateApiKey() {
         isError = false
+        isValidating = true
         guard garden.validateApiKey() else {
             withAnimation {
                 isError = true
+                isValidating = false
                 errorMessage = "Vul een API key in"
             }
             SimpleAnalytics.shared.track(event: "error-api-keyempty", path: ["launchView"])
@@ -117,9 +133,11 @@ struct LaunchView: View {
         Task {
             do {
                 try await ApiHandler.shared.updateTuinData(context: viewContext, loadAll: true, garden: garden)
+                isValidating = false
                 dismiss()
             } catch APIError.notAuthorized {
                 isError = true
+                isValidating = false
                 withAnimation {
                     errorMessage = "Deze API key heeft geen toegang tot de Pientere Tuinen API. Controleer of je de juiste key hebt ingevuld."
                 }
@@ -127,6 +145,7 @@ struct LaunchView: View {
             } catch {
                 SimpleAnalytics.shared.track(event: "error-api-validation", path: ["launchView"])
                 isError = true
+                isValidating = false
                 withAnimation {
                     errorMessage = "Fout tijdens het valideren van de API key met de Pientere Tuinen server. Controleer of je de juiste key hebt ingevuld en probeer het later nog eens."
                 }
