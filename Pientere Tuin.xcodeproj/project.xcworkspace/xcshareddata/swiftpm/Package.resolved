@@ -1,5 +1,5 @@
 {
-  "originHash" : "37dfdc49b7a6d82789006ceeac63f4cc92be3077702f6712f3c56fb148a1a324",
+  "originHash" : "e487c40fdc02007ab79595c68b08d7e20d2fba3bde8bd959224657fa6c1ebf2c",
   "pins" : [
     {
       "identity" : "alamofire",
@@ -17,15 +17,6 @@
       "state" : {
         "revision" : "4991b7e39a19cd1d0d11fe24fc64a601b4820144",
         "version" : "3.2.0"
-      }
-    },
-    {
-      "identity" : "simpleanalytics-swift",
-      "kind" : "remoteSourceControl",
-      "location" : "https://gitlab.com/roelie/simpleanalytics-swift",
-      "state" : {
-        "revision" : "8a449ce8c0977391eae1b0b8f4d213c1e248e799",
-        "version" : "0.3.0"
       }
     },
     {
@@ -98,6 +89,15 @@
       "state" : {
         "revision" : "9229842c63e9fc3bbd32c661d8274b4d9d8715f1",
         "version" : "0.3.1"
+      }
+    },
+    {
+      "identity" : "swift-package",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/simpleanalytics/swift-package.git",
+      "state" : {
+        "revision" : "f0f3332bbecf73edf3bd9064e8be23568d96b298",
+        "version" : "0.3.2"
       }
     },
     {
