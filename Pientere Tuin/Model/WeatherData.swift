@@ -15,6 +15,8 @@ class WeatherData: ObservableObject {
     
     static let shared = WeatherData()
     
+    @Published var dailyForecastData: Forecast<DayWeather>?
+    
     private let service = WeatherService.shared
     
     
@@ -26,6 +28,7 @@ class WeatherData: ObservableObject {
                 including: .daily)
             return forcast
         }.value
+        dailyForecastData = dayWeather
         return dayWeather
     }
 }

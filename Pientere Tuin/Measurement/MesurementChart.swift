@@ -37,6 +37,7 @@ struct MesurementChart: View {
                 Text("Alles").tag(ChartScale.all)
             }
             .pickerStyle(.segmented)
+            .padding([.top, .bottom], 12)
             if selectedDate == nil {
                 if let average = chartModel.chartAverage {
                     VStack(alignment: .leading) {
@@ -164,7 +165,7 @@ struct MesurementChart: View {
                         }
                 }
             }
-            .padding(EdgeInsets(top: chartTopPadding, leading: 0, bottom: 0, trailing: 8))
+            .padding(EdgeInsets(top: chartTopPadding, leading: 0, bottom: 16, trailing: 8))
             .chartYAxisLabel(chartModel.valueUnit)
 //            .chartYScale(range: .plotDimension(startPadding:0, endPadding:30))
             .chartXAxis {

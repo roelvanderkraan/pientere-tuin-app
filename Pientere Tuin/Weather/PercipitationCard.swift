@@ -21,19 +21,49 @@ struct PercipitationCard: View {
             }
             .padding([.bottom], 1)
             HStack(alignment: .firstTextBaseline) {
-                Text("20")
-                    .font(.system(.largeTitle, design: .rounded, weight: .bold))
-                Text("mm vandaag")
-                    .font(.system(.body, design: .rounded))
-                    .foregroundColor(.secondary)
+                if let rainToday = todayPercipitation {
+                    Text(formatMeasurement(measurement: rainToday))
+                        .font(.system(.largeTitle, design: .rounded, weight: .bold))
+                    Text("VANDAAG")
+                        .font(.system(.body, design: .rounded))
+                        .foregroundColor(.secondary)
+                }
             }
-            Text("8 mm verwacht op donderdag")
+            Text(futurePercipitation)
         }
         .task {
             Task.detached { @MainActor in
                 await weatherData.dailyForecast(for: latestMeasurement)
             }
         }
+    }
+    
+    var todayPercipitation: Measurement<UnitLength>? {
+        if let dailyForecast = weatherData.dailyForecastData {
+            return dailyForecast.first?.precipitationAmount as? Measurement<UnitLength>
+        }
+        return nil
+    }
+    
+    var futurePercipitation: String {
+        if let dailyForecast = weatherData.dailyForecastData {
+            let firstDayWithRain = dailyForecast.first { day in
+                day.precipitationAmount.value > 0
+            }
+            if let rainyDay = firstDayWithRain {
+                return "\(rainyDay.precipitationAmount.formatted()) \(rainyDay.precipitation.description) verwacht op \(relativeDateString(date: rainyDay.date))"
+            }
+        }
+        return "Geen neerslag verwacht"
+    }
+    
+    func formatMeasurement(measurement: Measurement<UnitLength>) -> String {
+        let millimeters = measurement.converted(to: .millimeters)
+        return millimeters.formatted()
+    }
+    
+    func relativeDateString(date: Date) -> String {
+        return RelativeDateFormatter.relativeDateText(from: Date(), to: date) ?? ""
     }
 }
 

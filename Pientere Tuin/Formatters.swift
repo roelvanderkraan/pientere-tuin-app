@@ -20,4 +20,63 @@ struct Formatters {
         formatter.setLocalizedDateFormatFromTemplate("MMMd")
         return formatter
     }()
+    
+    static let dayFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.setLocalizedDateFormatFromTemplate("d")
+        return formatter
+    }()
 }
+
+//
+//  RelativeDateFormatter.swift
+//  Arya prototype
+//
+//  Created by Studio Skipper on 20/03/2019.
+//  Copyright © 2019 Studio Skipper. All rights reserved.
+//
+
+
+class RelativeDateFormatter {
+    static var componentFormatter: DateComponentsFormatter {
+        let formatter = DateComponentsFormatter()
+        formatter.allowedUnits = [.day, .month, .weekOfMonth]
+        formatter.maximumUnitCount = 1
+        formatter.unitsStyle = .full
+        formatter.zeroFormattingBehavior = .dropAll
+        return formatter
+    }
+    
+    static var dayFormatter: DateFormatter {
+        let formatter = DateFormatter()
+        formatter.setLocalizedDateFormatFromTemplate("EEEE")
+        return formatter
+    }
+    
+    static var calendar = Calendar.current
+    
+    static func relativeDateText(from: Date, to: Date) -> String? {
+        // If date is in the past ,return nil
+        if (calendar.compare(from, to: to, toGranularity: .day) == .orderedDescending) {
+            return nil
+        }
+        // If date is today, return nil
+        if calendar.isDate(from, inSameDayAs: to) {
+            return nil
+        }
+        // If to date is in current week, return day name
+        
+        if calendar.isDateInTomorrow(to) {
+            return "morgen"
+        }
+        
+        let dateComponents = calendar.dateComponents([.weekOfMonth], from: from, to: to)
+        // If within same week, return the name of the day
+        if dateComponents.weekOfMonth == 0 {
+            return dayFormatter.string(from: to)
+        }
+        
+        return componentFormatter.string(from: from, to: to)
+    }
+}
+
