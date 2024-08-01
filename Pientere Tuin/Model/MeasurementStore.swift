@@ -63,6 +63,19 @@ struct MeasurementStore {
             return MeasurementAverage(averageValue: Float(sum)/Float(count), minValue: Float(min), maxValue: Float(max))
         }
     }
+    
+    static func getLastMeasurement(in context: NSManagedObjectContext) -> MeasurementProjection? {
+        let fetchRequest = MeasurementProjection.fetchRequest()
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "measuredAt", ascending: false)]
+        fetchRequest.fetchLimit = 1
+        do {
+            let measurements = try fetchRequest.execute()
+            return measurements.first
+        } catch {
+            debugPrint("Error fetching first measurement")
+        }
+        return nil
+    }
 }
 
 struct MeasurementAverage {

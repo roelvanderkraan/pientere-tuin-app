@@ -53,14 +53,16 @@ struct PercipitationCard: View {
     
     var futurePercipitation: String {
         if let dailyForecast = weatherData.dailyForecastData {
-            let firstDayWithRain = dailyForecast.first { day in
+            // Remove today
+            let futureForecasts = dailyForecast.dropFirst()
+            let firstDayWithRain = futureForecasts.first { day in
                 day.precipitationAmount.value > 0
             }
             if let rainyDay = firstDayWithRain {
-                return "\(relativeDateString(date: rainyDay.date)) \(formatMeasurement(measurement: rainyDay.precipitationAmount)) \(rainyDay.precipitation.description) verwacht"
+                return "\(relativeDateString(date: rainyDay.date)) \(formatMeasurement(measurement: rainyDay.precipitationAmount)) \(rainyDay.precipitation.description) verwacht."
             }
         }
-        return "De komende dagen geen neerslag verwacht"
+        return "De komende dagen geen neerslag verwacht."
     }
     
     var weatherIcon: some View {
@@ -74,7 +76,7 @@ struct PercipitationCard: View {
     func formatMeasurement(measurement: Measurement<UnitLength>) -> String {
         let millimeters = measurement.converted(to: .millimeters)
         let roundedStyle = FloatingPointFormatStyle<Double>(locale: .autoupdatingCurrent)
-            .rounded(rule: .up, increment: 0.5)
+            .rounded(rule: .up, increment: 1)
         return millimeters.formatted(.measurement(width: .abbreviated, usage: .asProvided, numberFormatStyle: roundedStyle))
     }
     

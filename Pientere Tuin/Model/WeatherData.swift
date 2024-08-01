@@ -19,22 +19,32 @@ class WeatherData: ObservableObject {
     @Published var attribution: WeatherAttribution?
     
     private let service = WeatherService.shared
+    private var expirationDate: Date?
     
     
     @discardableResult
     func dailyForecast(for measurement: MeasurementProjection) async -> Forecast<DayWeather>? {
-        let dayWeather = await Task.detached(priority: .userInitiated) {
-            let forcast = try? await self.service.weather(
-                for: measurement.location(),
-                including: .daily)
-            return forcast
-        }.value
+        if let expirationDate = expirationDate, expirationDate > Date() {
+            debugPrint("Weather not expired yet")
+            return nil
+        }
+            let dayWeather = await Task.detached(priority: .userInitiated) {
+                let forcast = try? await self.service.weather(
+                    for: measurement.location(),
+                    including: .daily)
+                return forcast
+            }.value
+            dailyForecastData = dayWeather
+            expirationDate = dayWeather?.metadata.expirationDate
+            debugPrint("Weather loaded. Expiration date: \(String(describing: expirationDate?.formatted()))")
+            return dayWeather
+    }
+    
+    func weatherAttribution() async {
         let attribution = await Task.detached(priority: .userInitiated) {
             let attribution = try? await self.service.attribution
             return attribution
         }.value
         self.attribution = attribution
-        dailyForecastData = dayWeather
-        return dayWeather
     }
 }

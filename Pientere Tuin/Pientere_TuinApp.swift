@@ -14,6 +14,7 @@ struct Pientere_TuinApp: App {
     @Environment(\.scenePhase) private var phase
     let persistenceController = PersistenceController.shared
     @State private var apiTimer = ApiTimer()
+    @StateObject private var weatherData = WeatherData.shared
     
 //    init() {
 //        // MARK: Registering Launch Handlers for Tasks
@@ -38,6 +39,7 @@ struct Pientere_TuinApp: App {
                     Task {
                         await refreshData()
                     }
+                    refreshWeatherData()
                 }
             default: break
             }
@@ -67,6 +69,14 @@ struct Pientere_TuinApp: App {
         try? BGTaskScheduler.shared.submit(request)
         debugPrint("Task submitted")
         // testcode: e -l objc -- (void)[[BGTaskScheduler sharedScheduler] _simulateLaunchForTaskWithIdentifier:@"studio.skipper.Pientere-Tuin.refresh"]
+    }
+    
+    private func refreshWeatherData() {
+        Task.detached { @MainActor in
+            if let lastMeasurement = MeasurementStore.getLastMeasurement(in: persistenceController.container.newBackgroundContext()) {
+                await weatherData.dailyForecast(for: lastMeasurement)
+            }
+        }
     }
     
     private func handleAppRefresh() async {

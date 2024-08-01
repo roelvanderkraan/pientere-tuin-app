@@ -110,6 +110,9 @@ struct ContentView: View {
                     await weatherData.dailyForecast(for: lastMeasurement)
                 }
             }
+            Task.detached { @MainActor in
+                await weatherData.weatherAttribution()
+            }
         }
     }
     
@@ -128,6 +131,11 @@ struct ContentView: View {
                 isError = true
             } catch {
                 return
+            }
+        }
+        Task.detached { @MainActor in
+            if let lastMeasurement = measurements.first {
+                await weatherData.dailyForecast(for: lastMeasurement)
             }
         }
     }
