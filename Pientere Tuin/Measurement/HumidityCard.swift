@@ -18,11 +18,13 @@ struct HumidityCard: View {
                 Spacer()
                 Text("\(latestMeasurement.measuredAt ?? Date(), formatter: Formatters.itemFormatter)")
                     .foregroundColor(.secondary)
+                    .contentTransition(.numericText())
             }
             .padding([.bottom], 1)
             HStack(alignment: .firstTextBaseline) {
                 Text("\(latestMeasurement.moisturePercentage * 100, specifier: "%.1f")")
                     .font(.system(.largeTitle, design: .rounded, weight: .bold))
+                    .contentTransition(.numericText())
                 Text("%")
                     .font(.system(.body, design: .rounded))
                     .foregroundColor(.secondary)

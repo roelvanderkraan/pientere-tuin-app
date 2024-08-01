@@ -35,6 +35,7 @@ struct PercipitationCard: View {
                 if let rainToday = todayPercipitation {
                     Text(formatMeasurement(measurement: rainToday))
                         .font(.system(.largeTitle, design: .rounded, weight: .bold))
+                        .contentTransition(.numericText())
                     Text("VANDAAG")
                         .font(.system(.body, design: .rounded))
                         .foregroundColor(.secondary)
