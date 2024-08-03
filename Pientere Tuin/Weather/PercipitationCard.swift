@@ -15,8 +15,8 @@ struct PercipitationCard: View {
     var body: some View {
         VStack(alignment: .leading) {
             HStack(alignment: .center) {
-                weatherIcon
-                Text("Neerslag")
+                Text("\(Image(systemName: "umbrella"))")
+                Text("Neerslag in je tuin")
                 Spacer()
                 if let attribution = weatherData.attribution {
                     AsyncImage(url: attribution.combinedMarkLightURL) { image in
@@ -33,6 +33,7 @@ struct PercipitationCard: View {
             
             HStack(alignment: .firstTextBaseline) {
                 if let rainToday = todayPercipitation {
+                    weatherIcon
                     Text(formatMeasurement(measurement: rainToday))
                         .font(.system(.largeTitle, design: .rounded, weight: .bold))
                         .contentTransition(.numericText())
@@ -57,27 +58,29 @@ struct PercipitationCard: View {
             // Remove today
             let futureForecasts = dailyForecast.dropFirst()
             let firstDayWithRain = futureForecasts.first { day in
-                day.precipitationAmount.value > 0
+                day.precipitationAmount.value >= 1
             }
             if let rainyDay = firstDayWithRain {
                 return "\(relativeDateString(date: rainyDay.date)) \(formatMeasurement(measurement: rainyDay.precipitationAmount)) \(rainyDay.precipitation.description) verwacht."
             }
         }
-        return "De komende dagen geen neerslag verwacht."
+        return "De komende 10 dagen geen neerslag verwacht."
     }
     
     var weatherIcon: some View {
         if let dailyForecast = weatherData.dailyForecastData, let systemName = dailyForecast.first?.symbolName {
             Text(Image(systemName: systemName))
+                .font(.system(.largeTitle, design: .rounded, weight: .bold))
         } else {
             Text("\(Image(systemName: "cloud.rain"))")
+                .font(.system(.largeTitle, design: .rounded, weight: .bold))
         }
     }
     
     func formatMeasurement(measurement: Measurement<UnitLength>) -> String {
         let millimeters = measurement.converted(to: .millimeters)
         let roundedStyle = FloatingPointFormatStyle<Double>(locale: .autoupdatingCurrent)
-            .rounded(rule: .up, increment: 1)
+            .rounded(rule: .toNearestOrAwayFromZero, increment: 1)
         return millimeters.formatted(.measurement(width: .abbreviated, usage: .asProvided, numberFormatStyle: roundedStyle))
     }
     

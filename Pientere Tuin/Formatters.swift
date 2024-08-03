@@ -53,6 +53,12 @@ class RelativeDateFormatter {
         return formatter
     }
     
+    static var dateFormatter: DateFormatter {
+        let formatter = DateFormatter()
+        formatter.setLocalizedDateFormatFromTemplate("EEE d MMMM")
+        return formatter
+    }
+    
     static var calendar = Calendar.current
     
     static func relativeDateText(from: Date, to: Date) -> String? {
@@ -62,7 +68,7 @@ class RelativeDateFormatter {
         }
         // If date is today, return nil
         if calendar.isDate(from, inSameDayAs: to) {
-            return nil
+            return "Vandaag"
         }
         // If to date is in current week, return day name
         
@@ -76,7 +82,7 @@ class RelativeDateFormatter {
             return dayFormatter.string(from: to)
         }
         
-        return componentFormatter.string(from: from, to: to)
+        return dateFormatter.string(from: from)
     }
 }
 

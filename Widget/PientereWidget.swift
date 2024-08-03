@@ -91,7 +91,7 @@ struct WidgetEntryView : View {
             Spacer()
         }
         .containerBackground(for: .widget) {
-            
+            Color(uiColor: .systemBackground)
         }
     }
     
@@ -100,11 +100,13 @@ struct WidgetEntryView : View {
             Text(entry.date, style: .time)
                 .minimumScaleFactor(0.25)
                 .foregroundColor(.secondary)
+                .contentTransition(.numericText())
             Spacer()
             if let temperature = entry.lastTemperature {
                 Text("\(temperature, specifier: "%.0f")°C")
                     .minimumScaleFactor(0.25)
                     .font(.system(.body, design: .rounded, weight: .bold))
+                    .contentTransition(.numericText())
             }
             Label("\(entry.lastHumidity * 100, specifier: "%.1f")%", systemImage: "drop.fill")
                 .minimumScaleFactor(0.25)
@@ -112,6 +114,7 @@ struct WidgetEntryView : View {
                 .foregroundColor(.blue)
                 .bold()
                 .lineLimit(1)
+                .contentTransition(.numericText())
         }
     }
     
@@ -121,6 +124,7 @@ struct WidgetEntryView : View {
             Image(systemName: "drop.fill")
         } currentValueLabel: {
                 Text("\(entry.lastHumidity * 100, specifier: "%.0f")%")
+                    .contentTransition(.numericText())
         }
         .gaugeStyle(.accessoryCircular)
         .containerBackground(for: .widget) {
@@ -131,6 +135,7 @@ struct WidgetEntryView : View {
     @available(iOSApplicationExtension 17.0, *)
     var inlineWidget: some View {
         Label("\(entry.lastHumidity * 100, specifier: "%.1f")%", systemImage: "drop.fill")
+            .contentTransition(.numericText())
         .containerBackground(for: .widget) {
         }
     }
@@ -141,6 +146,7 @@ struct WidgetEntryView : View {
             Image(systemName: "drop.fill")
         } currentValueLabel: {
             Label("\(entry.lastHumidity * 100, specifier: "%.0f")%", systemImage: "drop.fill")
+                .contentTransition(.numericText())
         }
         .gaugeStyle(.accessoryLinear)
         .containerBackground(for: .widget) {
