@@ -82,7 +82,7 @@ class RelativeDateFormatter {
             return dayFormatter.string(from: to)
         }
         
-        return dateFormatter.string(from: from)
+        return dateFormatter.string(from: to)
     }
 }
 
