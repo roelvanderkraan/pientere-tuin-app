@@ -11,6 +11,7 @@ import WeatherKit
 struct PercipitationCard: View {
     @ObservedObject var latestMeasurement: MeasurementProjection
     @EnvironmentObject private var weatherData: WeatherData
+    @Environment(\.colorScheme) var colorScheme
 
     var body: some View {
         VStack(alignment: .leading) {
@@ -19,7 +20,8 @@ struct PercipitationCard: View {
                 Text("Neerslag in je tuin")
                 Spacer()
                 if let attribution = weatherData.attribution {
-                    AsyncImage(url: attribution.combinedMarkLightURL) { image in
+                    let imgURL = colorScheme == .dark ? attribution.combinedMarkDarkURL : attribution.combinedMarkLightURL
+                    AsyncImage(url: imgURL) { image in
                         image.resizable().scaledToFill()
                     } placeholder: {
                         ProgressView()
