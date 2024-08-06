@@ -9,10 +9,13 @@ import SwiftUI
 
 struct PrecipitationList: View {
     @EnvironmentObject private var weatherData: WeatherData
+    @Environment(\.colorScheme) var colorScheme
+
 
     var body: some View {
         List {
             if let forecasts = weatherData.dailyForecastData {
+                Section {
                     ForEach(forecasts, id: \.date) { forecast in
                         HStack {
                             Text(RelativeDateFormatter.relativeDateText(from: Date(), to: forecast.date) ?? "")
@@ -22,6 +25,17 @@ struct PrecipitationList: View {
                             Spacer()
                             Text("\(forecast.precipitationChance*100, specifier: "%.0f")%")
                         }
+                    }
+                } footer: {
+                    if let attribution = weatherData.attribution {
+                        let imgURL = colorScheme == .dark ? attribution.combinedMarkDarkURL : attribution.combinedMarkLightURL
+                        AsyncImage(url: imgURL) { image in
+                            image.resizable().scaledToFill()
+                        } placeholder: {
+                            ProgressView()
+                        }
+                        .frame(width: 40, height: 8)
+                    }
                 }
             }
         }

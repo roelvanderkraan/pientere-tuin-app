@@ -13,6 +13,8 @@ import SimpleAnalytics
 
 struct ContentView: View {
     @Environment(\.managedObjectContext) private var viewContext
+    @Environment(\.colorScheme) var colorScheme
+
     
     @FetchRequest(
         sortDescriptors: [SortDescriptor(\.measuredAt, order: .reverse)],
@@ -55,6 +57,16 @@ struct ContentView: View {
                         } label: {
                             PercipitationCard(latestMeasurement: lastMeasurement)
                                 .environmentObject(weatherData)
+                        }
+                    } footer: {
+                        if let attribution = weatherData.attribution {
+                            let imgURL = colorScheme == .dark ? attribution.combinedMarkDarkURL : attribution.combinedMarkLightURL
+                            AsyncImage(url: imgURL) { image in
+                                image.resizable().scaledToFill()
+                            } placeholder: {
+                                ProgressView()
+                            }
+                            .frame(width: 40, height: 8)
                         }
                     }
                     Section {
