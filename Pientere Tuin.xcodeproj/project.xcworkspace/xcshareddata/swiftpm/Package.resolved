@@ -96,8 +96,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/simpleanalytics/swift-package.git",
       "state" : {
-        "revision" : "f0f3332bbecf73edf3bd9064e8be23568d96b298",
-        "version" : "0.3.2"
+        "revision" : "a578954efb12d601df67f87858368d8b8e39b69f",
+        "version" : "0.3.3"
       }
     },
     {

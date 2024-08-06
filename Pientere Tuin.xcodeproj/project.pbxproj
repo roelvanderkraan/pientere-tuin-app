@@ -53,6 +53,7 @@
 		8AEFBFAF2C5A504800FA64E1 /* WeatherData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AEFBFAE2C5A504800FA64E1 /* WeatherData.swift */; };
 		8AF06D812A8A8E6900D30A83 /* ChartScale.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AF06D802A8A8E6900D30A83 /* ChartScale.swift */; };
 		8AF06D842A8AA4C400D30A83 /* ApiTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AF06D832A8AA4C400D30A83 /* ApiTimer.swift */; };
+		8AF71C532C62647100C5DFD8 /* PrecipitationList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AF71C522C62647100C5DFD8 /* PrecipitationList.swift */; };
 		8AFCA4322A83FA4B00D4B6C8 /* Pientere_TuinApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AFCA4312A83FA4B00D4B6C8 /* Pientere_TuinApp.swift */; };
 		8AFCA4342A83FA4B00D4B6C8 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AFCA4332A83FA4B00D4B6C8 /* Persistence.swift */; };
 		8AFCA4372A83FA4B00D4B6C8 /* Pientere_Tuin.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 8AFCA4352A83FA4B00D4B6C8 /* Pientere_Tuin.xcdatamodeld */; };
@@ -151,6 +152,7 @@
 		8AEFBFAE2C5A504800FA64E1 /* WeatherData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherData.swift; sourceTree = "<group>"; };
 		8AF06D802A8A8E6900D30A83 /* ChartScale.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartScale.swift; sourceTree = "<group>"; };
 		8AF06D832A8AA4C400D30A83 /* ApiTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiTimer.swift; sourceTree = "<group>"; };
+		8AF71C522C62647100C5DFD8 /* PrecipitationList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrecipitationList.swift; sourceTree = "<group>"; };
 		8AFCA42E2A83FA4B00D4B6C8 /* Pientere Tuin.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Pientere Tuin.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8AFCA4312A83FA4B00D4B6C8 /* Pientere_TuinApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pientere_TuinApp.swift; sourceTree = "<group>"; };
 		8AFCA4332A83FA4B00D4B6C8 /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
@@ -237,6 +239,7 @@
 			isa = PBXGroup;
 			children = (
 				8A52C0CC2C5A779C00E1D70D /* PercipitationCard.swift */,
+				8AF71C522C62647100C5DFD8 /* PrecipitationList.swift */,
 			);
 			path = Weather;
 			sourceTree = "<group>";
@@ -611,6 +614,7 @@
 				8A138FDC2A8B9A88003247BA /* Garden+validate.swift in Sources */,
 				8AFCA4392A83FA4B00D4B6C8 /* ContentView.swift in Sources */,
 				8AFCA4342A83FA4B00D4B6C8 /* Persistence.swift in Sources */,
+				8AF71C532C62647100C5DFD8 /* PrecipitationList.swift in Sources */,
 				8A649DDA2A87A76700CC38DE /* NSPredicate+date.swift in Sources */,
 				8A163D552A8FA9A200AB3C95 /* Date+onlydate.swift in Sources */,
 			);

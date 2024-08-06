@@ -84,5 +84,16 @@ class RelativeDateFormatter {
         
         return dateFormatter.string(from: to)
     }
+    
+    
+}
+
+struct MeasurementFormatter {
+    static func formatMeasurementToMM(measurement: Measurement<UnitLength>) -> String {
+        let millimeters = measurement.converted(to: .millimeters)
+        let roundedStyle = FloatingPointFormatStyle<Double>(locale: .autoupdatingCurrent)
+            .rounded(rule: .toNearestOrAwayFromZero, increment: 1)
+        return millimeters.formatted(.measurement(width: .abbreviated, usage: .asProvided, numberFormatStyle: roundedStyle))
+    }
 }
 

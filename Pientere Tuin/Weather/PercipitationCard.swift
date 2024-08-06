@@ -36,7 +36,7 @@ struct PercipitationCard: View {
             HStack(alignment: .firstTextBaseline) {
                 if let rainToday = todayPercipitation {
                     weatherIcon
-                    Text(formatMeasurement(measurement: rainToday))
+                    Text(MeasurementFormatter.formatMeasurementToMM(measurement: rainToday))
                         .font(.system(.largeTitle, design: .rounded, weight: .bold))
                         .contentTransition(.numericText())
                     Text("VANDAAG")
@@ -63,7 +63,7 @@ struct PercipitationCard: View {
                 day.precipitationAmount.value >= 1
             }
             if let rainyDay = firstDayWithRain {
-                return "\(relativeDateString(date: rainyDay.date)) \(formatMeasurement(measurement: rainyDay.precipitationAmount)) \(rainyDay.precipitation.description) verwacht."
+                return "\(relativeDateString(date: rainyDay.date)) \(MeasurementFormatter.formatMeasurementToMM(measurement: rainyDay.precipitationAmount)) \(rainyDay.precipitation.description) verwacht."
             }
         }
         return "De komende 10 dagen geen neerslag verwacht."
@@ -77,13 +77,6 @@ struct PercipitationCard: View {
             Text("\(Image(systemName: "cloud.rain"))")
                 .font(.system(.largeTitle, design: .rounded, weight: .bold))
         }
-    }
-    
-    func formatMeasurement(measurement: Measurement<UnitLength>) -> String {
-        let millimeters = measurement.converted(to: .millimeters)
-        let roundedStyle = FloatingPointFormatStyle<Double>(locale: .autoupdatingCurrent)
-            .rounded(rule: .toNearestOrAwayFromZero, increment: 1)
-        return millimeters.formatted(.measurement(width: .abbreviated, usage: .asProvided, numberFormatStyle: roundedStyle))
     }
     
     func relativeDateString(date: Date) -> String {

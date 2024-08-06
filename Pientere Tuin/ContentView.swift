@@ -49,8 +49,13 @@ struct ContentView: View {
                             }
                     }
                     Section {
-                        PercipitationCard(latestMeasurement: lastMeasurement)
-                            .environmentObject(weatherData)
+                        NavigationLink {
+                           PrecipitationList()
+                                .environmentObject(weatherData)
+                        } label: {
+                            PercipitationCard(latestMeasurement: lastMeasurement)
+                                .environmentObject(weatherData)
+                        }
                     }
                     Section {
                             NavigationLink {
