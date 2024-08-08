@@ -21,9 +21,12 @@ struct PrecipitationList: View {
                             Text(RelativeDateFormatter.relativeDateText(from: Date(), to: forecast.date) ?? "")
                                 .frame(width: 100, alignment: .leading)
                             Image(systemName: forecast.symbolName)
-                            Text("\(MeasurementFormatter.formatMeasurementToMM(measurement: forecast.precipitationAmount)) \(forecast.precipitation.description)")
-                            Spacer()
-                            Text("\(forecast.precipitationChance*100, specifier: "%.0f")%")
+                                .frame(width: 30, alignment: .leading)
+                            if forecast.precipitationAmount.value >= 1 {
+                                Text("\(MeasurementFormatter.formatMeasurementToMM(measurement: forecast.precipitationAmount)) \(forecast.precipitation.description)")
+                                Spacer()
+                                Text("\(getPrecipitationChangeString(chance: forecast.precipitationChance))")
+                            }
                         }
                     }
                 } footer: {
@@ -40,6 +43,11 @@ struct PrecipitationList: View {
             }
         }
         .navigationTitle("Neerslag in je tuin")
+    }
+    
+    func getPrecipitationChangeString(chance: Double) -> String {
+        let roundedChance = (round(chance / 0.05) * 0.05)
+        return roundedChance.formatted(.percent)
     }
 }
 

@@ -30,7 +30,8 @@ struct PersistenceController {
             // Replace this implementation with code to handle the error appropriately.
             // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
             let nsError = error as NSError
-            fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
+            //fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
+            debugPrint("Error saving viewcontext")
         }
         return result
     }()
@@ -59,7 +60,8 @@ struct PersistenceController {
                  * The store could not be migrated to the current model version.
                  Check the error message to determine what the actual problem was.
                  */
-                fatalError("Unresolved error \(error), \(error.userInfo)")
+                //fatalError("Unresolved error \(error), \(error.userInfo)")
+                debugPrint("Error initializing persistent stores \(error)")
             }
         })
         container.viewContext.automaticallyMergesChangesFromParent = true
