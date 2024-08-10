@@ -39,8 +39,8 @@ struct Pientere_TuinApp: App {
                     Task {
                         await refreshData()
                     }
-                    refreshWeatherData()
                 }
+                refreshWeatherData()
             default: break
             }
         }

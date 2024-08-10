@@ -26,6 +26,9 @@ struct PrecipitationList: View {
                                 Text("\(MeasurementFormatter.formatMeasurementToMM(measurement: forecast.precipitationAmount)) \(forecast.precipitation.description)")
                                 Spacer()
                                 Text("\(getPrecipitationChangeString(chance: forecast.precipitationChance))")
+                                    .foregroundStyle(.blue)
+                                    .fontDesign(.rounded)
+                                    .font(.caption)
                             }
                         }
                     }
