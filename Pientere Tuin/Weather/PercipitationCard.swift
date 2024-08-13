@@ -61,10 +61,10 @@ struct PercipitationCard: View {
     var weatherIcon: some View {
         if let dailyForecast = weatherData.dailyForecastData, let systemName = dailyForecast.first?.symbolName {
             Text(Image(systemName: systemName))
-                .font(.system(.largeTitle, design: .rounded, weight: .bold))
+                .font(.system(.title, design: .rounded, weight: .regular))
         } else {
             Text("\(Image(systemName: "cloud.rain"))")
-                .font(.system(.largeTitle, design: .rounded, weight: .bold))
+                .font(.system(.title, design: .rounded, weight: .regular))
         }
     }
     

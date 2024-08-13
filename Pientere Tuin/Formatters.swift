@@ -38,6 +38,10 @@ struct Formatters {
 
 
 class RelativeDateFormatter {
+    enum DayType {
+        case short
+        case long
+    }
     static var componentFormatter: DateComponentsFormatter {
         let formatter = DateComponentsFormatter()
         formatter.allowedUnits = [.day, .month, .weekOfMonth]
@@ -53,6 +57,12 @@ class RelativeDateFormatter {
         return formatter
     }
     
+    static var shortDayFormatter: DateFormatter {
+        let formatter = DateFormatter()
+        formatter.setLocalizedDateFormatFromTemplate("EEE")
+        return formatter
+    }
+    
     static var dateFormatter: DateFormatter {
         let formatter = DateFormatter()
         formatter.setLocalizedDateFormatFromTemplate("EEE d MMMM")
@@ -61,7 +71,7 @@ class RelativeDateFormatter {
     
     static var calendar = Calendar.current
     
-    static func relativeDateText(from: Date, to: Date) -> String? {
+    static func relativeDateText(from: Date, to: Date, dayType: DayType = .long) -> String? {
         // If date is in the past ,return nil
         if (calendar.compare(from, to: to, toGranularity: .day) == .orderedDescending) {
             return nil
@@ -76,13 +86,12 @@ class RelativeDateFormatter {
             return "Morgen"
         }
         
-        let dateComponents = calendar.dateComponents([.weekOfMonth], from: from, to: to)
-        // If within same week, return the name of the day
-        if dateComponents.weekOfMonth == 0 {
-            return dayFormatter.string(from: to)
+        switch dayType {
+        case .short:
+            return shortDayFormatter.string(from: to).capitalized
+        default:
+            return dayFormatter.string(from: to).capitalized
         }
-        
-        return dateFormatter.string(from: to)
     }
     
     
