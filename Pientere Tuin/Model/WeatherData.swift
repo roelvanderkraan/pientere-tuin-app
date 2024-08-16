@@ -7,6 +7,7 @@ The data provider that loads weather forecast data from the WeatherKit service.
 
 import Foundation
 import WeatherKit
+import MapKit
 import os
 
 @MainActor
@@ -23,14 +24,14 @@ class WeatherData: ObservableObject {
     
     
     @discardableResult
-    func dailyForecast(for measurement: MeasurementProjection) async -> Forecast<DayWeather>? {
+    func dailyForecast(for location: CLLocation) async -> Forecast<DayWeather>? {
         if let expirationDate = expirationDate, expirationDate > Date() {
             debugPrint("Weather not expired yet")
             return nil
         }
             let dayWeather = await Task.detached(priority: .userInitiated) {
                 let forcast = try? await self.service.weather(
-                    for: measurement.location(),
+                    for: location,
                     including: .daily)
                 return forcast
             }.value

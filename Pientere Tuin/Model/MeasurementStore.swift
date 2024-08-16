@@ -69,7 +69,7 @@ struct MeasurementStore {
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: "measuredAt", ascending: false)]
         fetchRequest.fetchLimit = 1
         do {
-            let measurements = try fetchRequest.execute()
+            let measurements = try context.fetch(fetchRequest)
             return measurements.first
         } catch {
             debugPrint("Error fetching first measurement")

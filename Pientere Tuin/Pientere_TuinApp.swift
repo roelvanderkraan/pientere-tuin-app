@@ -74,7 +74,7 @@ struct Pientere_TuinApp: App {
     private func refreshWeatherData() {
         Task.detached { @MainActor in
             if let lastMeasurement = MeasurementStore.getLastMeasurement(in: persistenceController.container.newBackgroundContext()) {
-                await weatherData.dailyForecast(for: lastMeasurement)
+                await weatherData.dailyForecast(for: lastMeasurement.location())
             }
         }
     }

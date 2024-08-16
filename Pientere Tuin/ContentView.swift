@@ -14,7 +14,7 @@ import SimpleAnalytics
 struct ContentView: View {
     @Environment(\.managedObjectContext) private var viewContext
     @Environment(\.colorScheme) var colorScheme
-
+    let persistenceController = PersistenceController.shared
     
     @FetchRequest(
         sortDescriptors: [SortDescriptor(\.measuredAt, order: .reverse)],
@@ -123,8 +123,8 @@ struct ContentView: View {
         }
         .task {
             Task.detached { @MainActor in
-                if let lastMeasurement = measurements.first {
-                    await weatherData.dailyForecast(for: lastMeasurement)
+                if let lastMeasurement = MeasurementStore.getLastMeasurement(in: persistenceController.container.newBackgroundContext()) {
+                    await weatherData.dailyForecast(for: lastMeasurement.location())
                 }
             }
             Task.detached { @MainActor in
@@ -151,8 +151,8 @@ struct ContentView: View {
             }
         }
         Task.detached { @MainActor in
-            if let lastMeasurement = measurements.first {
-                await weatherData.dailyForecast(for: lastMeasurement)
+            if let lastMeasurement = MeasurementStore.getLastMeasurement(in: persistenceController.container.newBackgroundContext()) {
+                await weatherData.dailyForecast(for: lastMeasurement.location())
             }
         }
     }

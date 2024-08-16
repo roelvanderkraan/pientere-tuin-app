@@ -23,7 +23,7 @@ struct PercipitationCard: View {
             .padding([.bottom], 1)
             
             HStack(alignment: .firstTextBaseline) {
-                if let rainToday = todayPercipitation {
+                if let rainToday = todayPercipitation(dailyForcast: weatherData.dailyForecastData) {
                     weatherIcon
                     Text(MeasurementFormatter.formatMeasurementToMM(measurement: rainToday))
                         .font(.system(.largeTitle, design: .rounded, weight: .bold))
@@ -33,19 +33,19 @@ struct PercipitationCard: View {
                         .foregroundColor(.secondary)
                 }
             }
-            Text(futurePercipitation)
+            Text(futurePercipitation(dailyForcast: weatherData.dailyForecastData))
         }
     }
     
-    var todayPercipitation: Measurement<UnitLength>? {
-        if let dailyForecast = weatherData.dailyForecastData {
+    func todayPercipitation(dailyForcast: Forecast<DayWeather>?) -> Measurement<UnitLength>? {
+        if let dailyForecast = dailyForcast {
             return dailyForecast.first?.precipitationAmount as? Measurement<UnitLength>
         }
         return nil
     }
     
-    var futurePercipitation: String {
-        if let dailyForecast = weatherData.dailyForecastData {
+    func futurePercipitation(dailyForcast: Forecast<DayWeather>?) -> String {
+        if let dailyForecast = dailyForcast {
             // Remove today
             let futureForecasts = dailyForecast.dropFirst()
             let firstDayWithRain = futureForecasts.first { day in
