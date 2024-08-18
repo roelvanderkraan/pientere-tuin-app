@@ -42,10 +42,12 @@ class WeatherData: ObservableObject {
     }
     
     func weatherAttribution() async {
-        let attribution = await Task.detached(priority: .userInitiated) {
-            let attribution = try? await self.service.attribution
-            return attribution
-        }.value
-        self.attribution = attribution
+        if attribution == nil {
+            let attribution = await Task.detached(priority: .userInitiated) {
+                let attribution = try? await self.service.attribution
+                return attribution
+            }.value
+            self.attribution = attribution
+        }
     }
 }

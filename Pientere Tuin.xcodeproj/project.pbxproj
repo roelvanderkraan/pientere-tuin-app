@@ -54,6 +54,8 @@
 		8AF06D812A8A8E6900D30A83 /* ChartScale.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AF06D802A8A8E6900D30A83 /* ChartScale.swift */; };
 		8AF06D842A8AA4C400D30A83 /* ApiTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AF06D832A8AA4C400D30A83 /* ApiTimer.swift */; };
 		8AF71C532C62647100C5DFD8 /* PrecipitationList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AF71C522C62647100C5DFD8 /* PrecipitationList.swift */; };
+		8AFAC2F22C725588007D4226 /* CachedAsyncImage in Frameworks */ = {isa = PBXBuildFile; productRef = 8AFAC2F12C725588007D4226 /* CachedAsyncImage */; };
+		8AFAC2F52C7256E3007D4226 /* WeatherAttributionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AFAC2F42C7256E3007D4226 /* WeatherAttributionView.swift */; };
 		8AFCA4322A83FA4B00D4B6C8 /* Pientere_TuinApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AFCA4312A83FA4B00D4B6C8 /* Pientere_TuinApp.swift */; };
 		8AFCA4342A83FA4B00D4B6C8 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AFCA4332A83FA4B00D4B6C8 /* Persistence.swift */; };
 		8AFCA4372A83FA4B00D4B6C8 /* Pientere_Tuin.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 8AFCA4352A83FA4B00D4B6C8 /* Pientere_Tuin.xcdatamodeld */; };
@@ -153,6 +155,7 @@
 		8AF06D802A8A8E6900D30A83 /* ChartScale.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartScale.swift; sourceTree = "<group>"; };
 		8AF06D832A8AA4C400D30A83 /* ApiTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiTimer.swift; sourceTree = "<group>"; };
 		8AF71C522C62647100C5DFD8 /* PrecipitationList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrecipitationList.swift; sourceTree = "<group>"; };
+		8AFAC2F42C7256E3007D4226 /* WeatherAttributionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherAttributionView.swift; sourceTree = "<group>"; };
 		8AFCA42E2A83FA4B00D4B6C8 /* Pientere Tuin.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Pientere Tuin.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8AFCA4312A83FA4B00D4B6C8 /* Pientere_TuinApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pientere_TuinApp.swift; sourceTree = "<group>"; };
 		8AFCA4332A83FA4B00D4B6C8 /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
@@ -184,6 +187,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8A7A410E2C35BD8300A5CF8E /* SimpleAnalytics in Frameworks */,
+				8AFAC2F22C725588007D4226 /* CachedAsyncImage in Frameworks */,
 				8A0F7B692AF4102800A4C32D /* OpenAPIURLSession in Frameworks */,
 				8AFCA4682A83FDF200D4B6C8 /* OpenAPIRuntime in Frameworks */,
 			);
@@ -240,6 +244,7 @@
 			children = (
 				8A52C0CC2C5A779C00E1D70D /* PercipitationCard.swift */,
 				8AF71C522C62647100C5DFD8 /* PrecipitationList.swift */,
+				8AFAC2F42C7256E3007D4226 /* WeatherAttributionView.swift */,
 			);
 			path = Weather;
 			sourceTree = "<group>";
@@ -430,6 +435,7 @@
 				8AFCA4672A83FDF200D4B6C8 /* OpenAPIRuntime */,
 				8A0F7B682AF4102800A4C32D /* OpenAPIURLSession */,
 				8A7A410D2C35BD8300A5CF8E /* SimpleAnalytics */,
+				8AFAC2F12C725588007D4226 /* CachedAsyncImage */,
 			);
 			productName = "Pientere Tuin";
 			productReference = 8AFCA42E2A83FA4B00D4B6C8 /* Pientere Tuin.app */;
@@ -512,6 +518,7 @@
 				8AFCA4662A83FDF200D4B6C8 /* XCRemoteSwiftPackageReference "swift-openapi-runtime" */,
 				8A0F7B672AF4102800A4C32D /* XCRemoteSwiftPackageReference "swift-openapi-urlsession" */,
 				8A7A410C2C35BD8300A5CF8E /* XCRemoteSwiftPackageReference "swift-package" */,
+				8AFAC2F02C725587007D4226 /* XCRemoteSwiftPackageReference "swiftui-cached-async-image" */,
 			);
 			productRefGroup = 8AFCA42F2A83FA4B00D4B6C8 /* Products */;
 			projectDirPath = "";
@@ -612,6 +619,7 @@
 				8AA1F1E62A8D481800721F6F /* MeasurementProjection+types.swift in Sources */,
 				8A163D502A8FA8F700AB3C95 /* MeasurementProjection+section.swift in Sources */,
 				8A138FDC2A8B9A88003247BA /* Garden+validate.swift in Sources */,
+				8AFAC2F52C7256E3007D4226 /* WeatherAttributionView.swift in Sources */,
 				8AFCA4392A83FA4B00D4B6C8 /* ContentView.swift in Sources */,
 				8AFCA4342A83FA4B00D4B6C8 /* Persistence.swift in Sources */,
 				8AF71C532C62647100C5DFD8 /* PrecipitationList.swift in Sources */,
@@ -1083,6 +1091,14 @@
 				minimumVersion = 0.3.2;
 			};
 		};
+		8AFAC2F02C725587007D4226 /* XCRemoteSwiftPackageReference "swiftui-cached-async-image" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/lorenzofiamingo/swiftui-cached-async-image";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.1.1;
+			};
+		};
 		8AFCA4612A83FDD500D4B6C8 /* XCRemoteSwiftPackageReference "swift-openapi-generator" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/apple/swift-openapi-generator";
@@ -1111,6 +1127,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 8A7A410C2C35BD8300A5CF8E /* XCRemoteSwiftPackageReference "swift-package" */;
 			productName = SimpleAnalytics;
+		};
+		8AFAC2F12C725588007D4226 /* CachedAsyncImage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8AFAC2F02C725587007D4226 /* XCRemoteSwiftPackageReference "swiftui-cached-async-image" */;
+			productName = CachedAsyncImage;
 		};
 		8AFCA4672A83FDF200D4B6C8 /* OpenAPIRuntime */ = {
 			isa = XCSwiftPackageProductDependency;

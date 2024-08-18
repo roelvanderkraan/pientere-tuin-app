@@ -10,6 +10,7 @@ import CoreData
 import Charts
 import MapKit
 import SimpleAnalytics
+import CachedAsyncImage
 
 struct ContentView: View {
     @Environment(\.managedObjectContext) private var viewContext
@@ -59,15 +60,8 @@ struct ContentView: View {
                                 .environmentObject(weatherData)
                         }
                     } footer: {
-                        if let attribution = weatherData.attribution {
-                            let imgURL = colorScheme == .dark ? attribution.combinedMarkDarkURL : attribution.combinedMarkLightURL
-                            AsyncImage(url: imgURL) { image in
-                                image.resizable().scaledToFill()
-                            } placeholder: {
-                                ProgressView()
-                            }
-                            .frame(width: 40, height: 8)
-                        }
+                        WeatherAttributionView()
+                            .environmentObject(weatherData)
                     }
                     Section {
                             NavigationLink {
