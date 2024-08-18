@@ -116,14 +116,14 @@ struct ContentView: View {
             SimpleAnalytics.shared.track(path: ["contentView"])
         }
         .task {
-            Task.detached { @MainActor in
-                if let lastMeasurement = MeasurementStore.getLastMeasurement(in: persistenceController.container.newBackgroundContext()) {
-                    await weatherData.dailyForecast(for: lastMeasurement.location())
-                }
-            }
-            Task.detached { @MainActor in
-                await weatherData.weatherAttribution()
-            }
+//            Task.detached { @MainActor in
+//                if let lastMeasurement = MeasurementStore.getLastMeasurement(in: persistenceController.container.newBackgroundContext()) {
+//                    await weatherData.dailyForecast(for: lastMeasurement.location())
+//                }
+//            }
+//            Task.detached { @MainActor in
+//                await weatherData.weatherAttribution()
+//            }
         }
     }
     

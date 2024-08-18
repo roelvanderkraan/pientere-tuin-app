@@ -16,14 +16,24 @@ struct WeatherAttributionView: View {
         if let attribution = weatherData.attribution {
             let imgURL = colorScheme == .dark ? attribution.combinedMarkDarkURL : attribution.combinedMarkLightURL
             Link(destination: attribution.legalPageURL, label: {
-                CachedAsyncImage(url: imgURL) { image in
-                    image.resizable().scaledToFill()
-                } placeholder: {
-                    ProgressView()
+                CachedAsyncImage(url: imgURL, scale: 0.5) { phase in
+                    switch phase {
+                    case .failure:
+                        Text("\(Image(systemName: "apple.logo")) Weer")
+                    case .success(let image):
+                        image
+                            .resizable()
+                            .scaledToFit()
+                    default:
+                        Text("\(Image(systemName: "apple.logo")) Weer")
+                    }
                 }
-                .frame(width: 40, height: 8)
-                .padding(.vertical)
             })
+            .foregroundStyle(.primary)
+            .bold()
+            .frame(height: 10)
+            .padding(.vertical)
+            .font(.caption)
             
         }
     }
