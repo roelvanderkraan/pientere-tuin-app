@@ -77,6 +77,9 @@ struct Pientere_TuinApp: App {
                 await weatherData.dailyForecast(for: lastMeasurement.location())
             }
         }
+        Task.detached { @MainActor in
+            await weatherData.weatherAttribution()
+        }
     }
     
     private func handleAppRefresh() async {
