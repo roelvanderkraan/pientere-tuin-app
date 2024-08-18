@@ -10,7 +10,6 @@ import CoreData
 import Charts
 import MapKit
 import SimpleAnalytics
-import CachedAsyncImage
 
 struct ContentView: View {
     @Environment(\.managedObjectContext) private var viewContext
