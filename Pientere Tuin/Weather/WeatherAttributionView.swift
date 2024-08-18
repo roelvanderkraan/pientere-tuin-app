@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import CachedAsyncImage
 
 struct WeatherAttributionView: View {
     @EnvironmentObject private var weatherData: WeatherData
@@ -16,7 +15,7 @@ struct WeatherAttributionView: View {
         if let attribution = weatherData.attribution {
             let imgURL = colorScheme == .dark ? attribution.combinedMarkDarkURL : attribution.combinedMarkLightURL
             Link(destination: attribution.legalPageURL, label: {
-                CachedAsyncImage(url: imgURL, scale: 0.5) { phase in
+                AsyncImage(url: imgURL, scale: 0.5) { phase in
                     switch phase {
                     case .failure:
                         Text("\(Image(systemName: "apple.logo")) Weer")
