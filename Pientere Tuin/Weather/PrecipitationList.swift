@@ -7,7 +7,6 @@
 
 import SwiftUI
 import SimpleAnalytics
-import CachedAsyncImage
 
 struct PrecipitationList: View {
     @EnvironmentObject private var weatherData: WeatherData
