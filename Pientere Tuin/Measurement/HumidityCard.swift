@@ -12,7 +12,10 @@ struct HumidityCard: View {
     var body: some View {
         VStack(alignment: .leading) {
             HStack(alignment: .firstTextBaseline) {
-                Text("\(Image(systemName: "drop.fill")) Vochtigheid bodem")
+                HStack(alignment: .center) {
+                    Text("\(Image(systemName: "drop.fill"))")
+                    Text("Vochtigheid bodem")
+                }
                     .font(.system(.body, design: .default, weight: .medium))
                     .foregroundColor(.blue)
                 Spacer()

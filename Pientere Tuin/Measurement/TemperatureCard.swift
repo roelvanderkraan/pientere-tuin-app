@@ -12,7 +12,10 @@ struct TemperatureCard: View {
     var body: some View {
         VStack(alignment: .leading) {
             HStack(alignment: .firstTextBaseline) {
-                Text("\(Image(systemName: "thermometer.medium")) Temperatuur bodem")
+                HStack(alignment: .center) {
+                    Text("\(Image(systemName: "thermometer.medium"))")
+                    Text("Temperatuur bodem")
+                }
                     .font(.system(.body, design: .default, weight: .medium))
                     .foregroundColor(.green)
                 Spacer()

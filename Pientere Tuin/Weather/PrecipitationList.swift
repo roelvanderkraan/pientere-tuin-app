@@ -60,9 +60,8 @@ struct PrecipitationList: View {
     }
 }
 
-//#Preview {
-////    var weatherData = WeatherData.shared
-////    PrecipitationList()
-////        .environmentObject(weatherData)
-//
-//}
+#Preview {
+    PrecipitationList()
+        .environmentObject(WeatherData.shared)
+
+}

@@ -31,7 +31,6 @@ struct WeatherAttributionView: View {
             .foregroundStyle(.primary)
             .bold()
             .frame(height: 10)
-            .padding(.vertical)
             .font(.caption)
             
         }
@@ -40,4 +39,5 @@ struct WeatherAttributionView: View {
 
 #Preview {
     WeatherAttributionView()
+        .environmentObject(WeatherData.shared)
 }
