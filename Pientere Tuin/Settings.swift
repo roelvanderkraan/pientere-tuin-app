@@ -29,7 +29,7 @@ struct Settings: View {
                     .autocapitalization(.none)
                     .fontDesign(.monospaced)
                     .bold()
-                    if let url = URL(string: "https://service-portal.platform.wecity.nl/api-subscriptions") {
+                    if let url = URL(string: "https://portal.goodcitysense.nl/api-subscriptions") {
                         Link("Vind je API key hier", destination: url)
                     }
                 } header: {
@@ -38,19 +38,27 @@ struct Settings: View {
                     Text("Vul hier de API key in uit je Pientere Tuin account.")
                 }
                 Section("Tuin") {
-                    Link(destination: URL(string: "https://service-portal.platform.wecity.nl/pientere-tuinen")!) {
+                    Link(destination: URL(string: "https://portal.goodcitysense.nl/pientere-tuinen")!) {
                         Label("Bewerk tuininformatie", systemImage: "safari")
                     }
                 }
                 Section {
-                    Link(destination: URL(string: "https://help.wecity.nl/pientere-tuinen")!) {
-                        Label("Knowledgebase Pientere Tuinen", systemImage: "graduationcap")
+                    Link(destination: URL(string: "https://goeieplantjes.nl")!) {
+                        Label("Goeieplantjes.nl", systemImage: "tree")
                     }
-                    Link(destination: URL(string: "mailto:contact-project+roelie-pientere-tuin-48445756-issue-@incoming.gitlab.com?subject=Pientere Tuin app feedback")!)  {
-                        Label("App feedback", systemImage: "paperplane")
+                    Link(destination: URL(string: "https://help.goodcitysense.nl/portal/nl/home")!) {
+                        Label("Knowledgebase Pientere Tuinen", systemImage: "graduationcap")
                     }
                 } header: {
                     Text("Informatie")
+                }
+                
+                Section {
+                    Link(destination: URL(string: "mailto:roel@goeieplantjes.nl?subject=Pientere Tuin app feedback")!)  {
+                        Label("Stuur feedback", systemImage: "paperplane")
+                    }
+                } header: {
+                    Text("Feedback")
                 } footer: {
                     Text("Ik ben benieuwd hoe ik de app voor je kan verbeteren.")
                 }

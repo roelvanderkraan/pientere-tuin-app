@@ -11,8 +11,8 @@ import OpenAPIRuntime
 import OpenAPIURLSession
 import WidgetKit
 
-struct ApiHandler {
-    let client: Client
+class ApiHandler {
+    var client: Client?
     let apiRequestInterval = 10
     
     static let shared = ApiHandler()
@@ -21,15 +21,11 @@ struct ApiHandler {
         let transport: ClientTransport = URLSessionTransport()
         do {
             self.client = Client(
-                serverURL: try Servers.server1(),
+                serverURL: try Servers.server2(),
                 transport: transport
             )
         } catch {
             debugPrint("Error with initializing client")
-            self.client = Client(
-                serverURL: try! Servers.server1(),
-                transport: transport
-            )
         }
     }
     
@@ -38,59 +34,81 @@ struct ApiHandler {
     ///   - context: Context to store the measurements in
     ///   - page: Page to start parsing
     ///   - loadAll: Should the parser load all or just the 1st page
-    func updateTuinData(context: NSManagedObjectContext, page: Int = 0, loadAll: Bool = false, garden: Garden) async throws {
+    func updateTuinData(context: NSManagedObjectContext, page: Int = 0, loadAll: Bool = false, garden: Garden, isRetry: Bool = false) async throws {
         debugPrint("Requesting page \(page)")
         guard garden.apiKey != nil else {
             debugPrint("Warning, API key empty")
             throw NotAuthorizedError()
         }
-        let response = try await client.mijnPientereTuin(
-            .init(
-                query: Operations.mijnPientereTuin.Input.Query(page: Int32(page)),
-                headers: Operations.mijnPientereTuin.Input.Headers(wecity_hyphen_api_hyphen_key: garden.apiKey)
+        if let client = client {
+            let response = try await client.mijnPientereTuin(
+                .init(
+                    query: Operations.mijnPientereTuin.Input.Query(page: Int32(page)),
+                    headers: Operations.mijnPientereTuin.Input.Headers(wecity_hyphen_api_hyphen_key: garden.apiKey, gcs_hyphen_api_hyphen_key: garden.apiKey)
+                )
             )
-        )
-
-        switch response {
-        case let .ok(okResponse):
-            debugPrint("OK response")
-            switch okResponse.body {
-            case .json(let json):
-                debugPrint(json.content)
-                debugPrint(json.totalPages)
-                writeToCoreData(apiData: json.content, context: context, garden: garden)
-                
-                // Check if there are more pages to parse. Continue until we hit the last page
-                if loadAll && json.content?.count ?? 0 > 0 && !(json.last ?? true) {
-                    Task {
-                        let interval = apiRequestInterval + 1 // API has 10 seconds rate limit
-                        debugPrint("Scheduling next parse for page \(page+1) in \(interval) seconds")
-                        try await Task.sleep(for: .seconds(interval)) // API has 10 seconds rate limit
-                        try await updateTuinData(context: context, page: page+1, loadAll: true, garden: garden)
+            switch response {
+            case let .ok(okResponse):
+                debugPrint("OK response")
+                switch okResponse.body {
+                case .json(let json):
+                    debugPrint(json.content)
+                    debugPrint(json.totalPages)
+                    writeToCoreData(apiData: json.content, context: context, garden: garden)
+                    
+                    // Check if there are more pages to parse. Continue until we hit the last page
+                    if loadAll && json.content?.count ?? 0 > 0 && !(json.last ?? true) {
+                        Task {
+                            let interval = apiRequestInterval + 1 // API has 10 seconds rate limit
+                            debugPrint("Scheduling next parse for page \(page+1) in \(interval) seconds")
+                            try await Task.sleep(for: .seconds(interval)) // API has 10 seconds rate limit
+                            try await updateTuinData(context: context, page: page+1, loadAll: true, garden: garden)
+                        }
                     }
+                    // Only when new data?
+                    resetWidgets()
                 }
-                // Only when new data?
-                resetWidgets()
-            }
-        case .undocumented(statusCode: let statusCode, _):
-            debugPrint("Error getting data from server, status: \(statusCode)")
-            throw APIError.generic(statuscode: statusCode)
-        case .badRequest(_):
-            debugPrint("Bad request")
-            throw APIError.badRequest
-        case .unauthorized(_):
-            debugPrint("Unauthorized, check API key")
-            throw APIError.notAuthorized
-        case .notFound(_):
-            debugPrint("API not found")
+            case .undocumented(statusCode: let statusCode, _):
+                debugPrint("Error getting data from server, status: \(statusCode)")
+                throw APIError.generic(statuscode: statusCode)
+            case .badRequest(_):
+                debugPrint("Bad request")
+                throw APIError.badRequest
+            case .unauthorized(_):
+                debugPrint("Unauthorized, check API key")
+                throw APIError.notAuthorized
+            case .notFound(_):
+                debugPrint("API not found")
+                // Try switching to old server and try again
+
+                if !isRetry {
+                    switchToOldServer()
+                    try await updateTuinData(context: context, garden: garden, isRetry: true)
+                }
+                throw APIError.notFound
+            case .serverError(statusCode: let statusCode, _):
+                debugPrint("Server error, status: \(statusCode)")
+                throw APIError.generic(statuscode: statusCode)
+            case .tooManyRequests(_):
+                debugPrint("Too many requests, 1 request per 10 seconds allowed.")
+                throw APIError.tooManyRequests
+             }
+        } else {
+            debugPrint("Warning, API client not set")
             throw APIError.notFound
-        case .serverError(statusCode: let statusCode, _):
-            debugPrint("Server error, status: \(statusCode)")
-            throw APIError.generic(statuscode: statusCode)
-        case .tooManyRequests(_):
-            debugPrint("Too many requests, 1 request per 10 seconds allowed.")
-            throw APIError.tooManyRequests
-         }
+        }
+    }
+    
+    private func switchToOldServer() {
+        let transport: ClientTransport = URLSessionTransport()
+        do {
+            self.client = Client(
+                serverURL: try Servers.server1(),
+                transport: transport
+            )
+        } catch {
+            debugPrint("Error with initializing client")
+        }
     }
     
     private func writeToCoreData(apiData: [Components.Schemas.MeasurementProjection]?, context: NSManagedObjectContext, garden: Garden) {

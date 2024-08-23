@@ -27,7 +27,7 @@ struct LaunchView: View {
                         Text("Om je Pientere Tuinen data te zien heb je een API key nodig. Deze kan je vinden op de Pientere Tuinen website.")
                     }
                     
-                    Link(destination: URL(string: "https://service-portal.platform.wecity.nl/api-subscriptions")!) {
+                    Link(destination: URL(string: "https://portal.goodcitysense.nl/api-subscriptions")!) {
                         Label("Mijn Pientere Tuin", systemImage: "link")
                     }
                     .buttonStyle(.bordered)

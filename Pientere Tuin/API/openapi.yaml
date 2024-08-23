@@ -11,8 +11,13 @@ info:
   version: 1.0.0
 servers:
 - url: https://services.platform.wecity.nl
+  description: Wecity server
+  
+- url: https://services.goodcitysense.nl/mijn-pientere-tuin/measurements
+  description: Good City Sense server
 security:
 - WecityApiKey: []
+- GCSApiKey: []
 paths:
   "/mijn-pientere-tuin/measurements":
     get:
@@ -27,6 +32,10 @@ paths:
           type: integer
           format: int32
       - name: "wecity-api-key"
+        in: header
+        schema:
+          type: string
+      - name: "gcs-api-key"
         in: header
         schema:
           type: string
@@ -63,6 +72,10 @@ components:
       type: apiKey
       in: header
       name: "wecity-api-key"
+    GCSApiKey:
+      type: apiKey
+      in: header
+      name: "gcs-api-key"
   schemas:
     Links:
       type: object
