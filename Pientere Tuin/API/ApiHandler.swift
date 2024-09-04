@@ -100,6 +100,7 @@ class ApiHandler {
     }
     
     private func switchToOldServer() {
+        debugPrint("Switching to old server")
         let transport: ClientTransport = URLSessionTransport()
         do {
             self.client = Client(
