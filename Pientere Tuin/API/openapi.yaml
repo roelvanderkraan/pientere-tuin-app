@@ -13,7 +13,7 @@ servers:
 - url: https://services.platform.wecity.nl
   description: Wecity server
   
-- url: https://services.goodcitysense.nl/mijn-pientere-tuin/measurements
+- url: https://services.goodcitysense.nl
   description: Good City Sense server
 security:
 - WecityApiKey: []
