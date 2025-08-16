@@ -2,15 +2,6 @@
   "originHash" : "e487c40fdc02007ab79595c68b08d7e20d2fba3bde8bd959224657fa6c1ebf2c",
   "pins" : [
     {
-      "identity" : "alamofire",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/Alamofire/Alamofire.git",
-      "state" : {
-        "revision" : "f455c2975872ccd2d9c81594c658af65716e9b9a",
-        "version" : "5.9.1"
-      }
-    },
-    {
       "identity" : "openapikit",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/mattpolzin/OpenAPIKit.git",
@@ -96,8 +87,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/simpleanalytics/swift-package.git",
       "state" : {
-        "revision" : "a578954efb12d601df67f87858368d8b8e39b69f",
-        "version" : "0.3.3"
+        "revision" : "df261f54f9813f0272f2d88effcf51d872504ca6",
+        "version" : "0.4.1"
       }
     },
     {

@@ -126,12 +126,16 @@ class ChartModel: ObservableObject {
     }
     
     private func getChartData(measurements: SectionedFetchResults<Date, MeasurementProjection>) -> [ChartableMeasurement] {
+        let data: [ChartableMeasurement]
         switch preferences.chartScale {
         case .day, .week:
-            return getHourlyMeasurements(measurements: measurements)
+            data = getHourlyMeasurements(measurements: measurements)
         case .month, .all:
-            return getDailyAverages(measurements: measurements)
+            data = getDailyAverages(measurements: measurements)
         }
+        
+        // Sort in reverse chronological order (most recent first) so chart opens showing latest data
+        return data.sorted { $0.date > $1.date }
     }
     
     func getYScale() -> ClosedRange<Float> {
@@ -157,6 +161,63 @@ class ChartModel: ObservableObject {
             return measurement.stressHumidity?.upperBound
         }
         return nil
+    }
+    
+    func scaleToVisibleDomain(chartScale: ChartScale) -> Int {
+        switch chartScale {
+        case .day:
+            return 3600 * 24
+        case .week:
+            return 3600 * 24 * 7
+        case .month:
+            return 3600 * 24 * 30
+        case .all:
+            return  3600 * 24 * 365
+        }
+    }
+    
+    func getXScale() -> ClosedRange<Date> {
+        guard !chartData.isEmpty else {
+            let now = Date()
+            return now...now
+        }
+        
+        let sortedData = chartData.sorted { $0.date < $1.date }
+        let startDate = sortedData.first!.date
+        let endDate = sortedData.last!.date
+        
+        return startDate...endDate
+    }
+    
+    func getVisibleDomain() -> ClosedRange<Date> {
+        guard !chartData.isEmpty else {
+            let now = Date()
+            return now...now
+        }
+        
+        let sortedData = chartData.sorted { $0.date < $1.date }
+        let endDate = sortedData.last!.date
+        
+        // Calculate the start date based on the chart scale to show the most recent period
+        let calendar = Calendar.current
+        let startDate: Date
+        
+        switch preferences.chartScale {
+        case .day:
+            // Show the last 24 hours ending at the most recent data
+            startDate = calendar.date(byAdding: .hour, value: -24, to: endDate) ?? endDate
+        case .week:
+            // Show the last 7 days ending at the most recent data
+            startDate = calendar.date(byAdding: .day, value: -7, to: endDate) ?? endDate
+        case .month:
+            // Show the last 30 days ending at the most recent data
+            startDate = calendar.date(byAdding: .day, value: -30, to: endDate) ?? endDate
+        case .all:
+            // For "all" view, show all data but position at the end
+            startDate = sortedData.first!.date
+        }
+        
+        return startDate...endDate
     }
 }
 

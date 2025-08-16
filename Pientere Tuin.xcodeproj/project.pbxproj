@@ -28,6 +28,10 @@
 		8A6842D92A8CEF3000B4B9A7 /* HumidityCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A6842D82A8CEF3000B4B9A7 /* HumidityCard.swift */; };
 		8A6842DC2A8CEFAB00B4B9A7 /* HumidityDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A6842DB2A8CEFAB00B4B9A7 /* HumidityDetails.swift */; };
 		8A687C122A93AF3B00AD1285 /* MeasurementAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A687C112A93AF3B00AD1285 /* MeasurementAnnotation.swift */; };
+		8A6919FF2E50EA5500B6B0A8 /* DayChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A6919FC2E50EA5500B6B0A8 /* DayChart.swift */; };
+		8A691A002E50EA5500B6B0A8 /* MonthChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A6919FD2E50EA5500B6B0A8 /* MonthChart.swift */; };
+		8A691A012E50EA5500B6B0A8 /* WeekChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A6919FE2E50EA5500B6B0A8 /* WeekChart.swift */; };
+		8A691A022E50EA5500B6B0A8 /* AllChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A6919FB2E50EA5500B6B0A8 /* AllChart.swift */; };
 		8A6D65512A8D5E9B00B9E2CB /* HumidityState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A6D65502A8D5E9B00B9E2CB /* HumidityState.swift */; };
 		8A7A410E2C35BD8300A5CF8E /* SimpleAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 8A7A410D2C35BD8300A5CF8E /* SimpleAnalytics */; };
 		8A821ED92A8E27A1009A4656 /* Preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A821ED82A8E27A1009A4656 /* Preferences.swift */; };
@@ -132,6 +136,10 @@
 		8A6842DB2A8CEFAB00B4B9A7 /* HumidityDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HumidityDetails.swift; sourceTree = "<group>"; };
 		8A687C112A93AF3B00AD1285 /* MeasurementAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeasurementAnnotation.swift; sourceTree = "<group>"; };
 		8A68FD272A8662E600DF6F56 /* Pientere_Tuin 3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Pientere_Tuin 3.xcdatamodel"; sourceTree = "<group>"; };
+		8A6919FB2E50EA5500B6B0A8 /* AllChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllChart.swift; sourceTree = "<group>"; };
+		8A6919FC2E50EA5500B6B0A8 /* DayChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayChart.swift; sourceTree = "<group>"; };
+		8A6919FD2E50EA5500B6B0A8 /* MonthChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthChart.swift; sourceTree = "<group>"; };
+		8A6919FE2E50EA5500B6B0A8 /* WeekChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekChart.swift; sourceTree = "<group>"; };
 		8A6D65502A8D5E9B00B9E2CB /* HumidityState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HumidityState.swift; sourceTree = "<group>"; };
 		8A821ED82A8E27A1009A4656 /* Preferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Preferences.swift; sourceTree = "<group>"; };
 		8A82BA562A8E6DB00039B1B7 /* WidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = WidgetExtension.entitlements; sourceTree = "<group>"; };
@@ -307,6 +315,10 @@
 		8AF06D862A8AAA8900D30A83 /* Measurement */ = {
 			isa = PBXGroup;
 			children = (
+				8A6919FB2E50EA5500B6B0A8 /* AllChart.swift */,
+				8A6919FC2E50EA5500B6B0A8 /* DayChart.swift */,
+				8A6919FD2E50EA5500B6B0A8 /* MonthChart.swift */,
+				8A6919FE2E50EA5500B6B0A8 /* WeekChart.swift */,
 				8A163D4A2A8FA78A00AB3C95 /* MesurementChart.swift */,
 				8A687C112A93AF3B00AD1285 /* MeasurementAnnotation.swift */,
 				8AC5F6E52A93C05A00677531 /* ChartModel.swift */,
@@ -594,6 +606,10 @@
 				8A687C122A93AF3B00AD1285 /* MeasurementAnnotation.swift in Sources */,
 				8A6D65512A8D5E9B00B9E2CB /* HumidityState.swift in Sources */,
 				8AACAC2B2A857B9D0032CC1C /* ApiHandler.swift in Sources */,
+				8A6919FF2E50EA5500B6B0A8 /* DayChart.swift in Sources */,
+				8A691A002E50EA5500B6B0A8 /* MonthChart.swift in Sources */,
+				8A691A012E50EA5500B6B0A8 /* WeekChart.swift in Sources */,
+				8A691A022E50EA5500B6B0A8 /* AllChart.swift in Sources */,
 				8A3D136D2A87D12B00DF4EF1 /* Settings.swift in Sources */,
 				8A6842D32A8CED0300B4B9A7 /* MeasurementStore.swift in Sources */,
 				8ADDF66A2AF2DEF8004A0066 /* SimpleAnalytics+shared.swift in Sources */,
@@ -870,7 +886,7 @@
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 13.3;
@@ -916,7 +932,7 @@
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 13.3;

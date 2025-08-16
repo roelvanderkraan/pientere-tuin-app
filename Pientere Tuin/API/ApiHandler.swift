@@ -34,7 +34,7 @@ class ApiHandler {
     ///   - context: Context to store the measurements in
     ///   - page: Page to start parsing
     ///   - loadAll: Should the parser load all or just the 1st page
-    func updateTuinData(context: NSManagedObjectContext, page: Int = 0, loadAll: Bool = false, garden: Garden, isRetry: Bool = false) async throws {
+    func updateTuinData(context: NSManagedObjectContext, page: Int = 0, loadAll: Bool = true, garden: Garden, isRetry: Bool = false) async throws {
         debugPrint("Requesting page \(page)")
         guard garden.apiKey != nil else {
             debugPrint("Warning, API key empty")
