@@ -83,6 +83,25 @@ class ChartModel: ObservableObject {
         return hourlyMeasurements
     }
     
+    private func getYearlyAverages(measurements: SectionedFetchResults<Date, MeasurementProjection>) -> [ChartableMeasurement] {
+        var yearlyAverages: [ChartableMeasurement] = []
+        let calendar = Calendar.current
+        
+        // Group by year
+        let groups = Dictionary(grouping: measurements.flatMap { $0 }) { (item) -> Int in
+            calendar.component(.year, from: item.measuredAt ?? Date())
+        }
+        
+        for (year, group) in groups.sorted(by: { $0.key < $1.key }) {
+            let averages = MeasurementStore.getAverage(measurements: group, type: chartType)
+            // Use January 1st of the year as the date
+            if let date = calendar.date(from: DateComponents(year: year, month: 1, day: 1)) {
+                yearlyAverages.append(ChartableMeasurement(date: date, value: averages.averageValue))
+            }
+        }
+        return yearlyAverages
+    }
+    
     private func getValue(item: MeasurementProjection, chartType: ChartType) -> Float? {
         switch chartType {
         case .moisture:
@@ -129,8 +148,10 @@ class ChartModel: ObservableObject {
         switch preferences.chartScale {
         case .day, .week:
             return getHourlyMeasurements(measurements: measurements)
-        case .month, .all:
+        case .month:
             return getDailyAverages(measurements: measurements)
+        case .all:
+            return getYearlyAverages(measurements: measurements)
         }
     }
     
