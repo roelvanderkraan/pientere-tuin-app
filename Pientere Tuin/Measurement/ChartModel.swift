@@ -83,6 +83,25 @@ class ChartModel: ObservableObject {
         return hourlyMeasurements
     }
     
+    private func getYearlyAverages(measurements: SectionedFetchResults<Date, MeasurementProjection>) -> [ChartableMeasurement] {
+        var yearlyAverages: [ChartableMeasurement] = []
+        let calendar = Calendar.current
+        
+        // Group by year
+        let groups = Dictionary(grouping: measurements.flatMap { $0 }) { (item) -> Int in
+            calendar.component(.year, from: item.measuredAt ?? Date())
+        }
+        
+        for (year, group) in groups.sorted(by: { $0.key < $1.key }) {
+            let averages = MeasurementStore.getAverage(measurements: group, type: chartType)
+            // Use January 1st of the year as the date
+            if let date = calendar.date(from: DateComponents(year: year, month: 1, day: 1)) {
+                yearlyAverages.append(ChartableMeasurement(date: date, value: averages.averageValue))
+            }
+        }
+        return yearlyAverages
+    }
+    
     private func getValue(item: MeasurementProjection, chartType: ChartType) -> Float? {
         switch chartType {
         case .moisture:
@@ -104,6 +123,29 @@ class ChartModel: ObservableObject {
         }
         
         return averageHumidities
+    }
+    
+    private func getMonthlyAverages(measurements: SectionedFetchResults<Date, MeasurementProjection>) -> [ChartableMeasurement] {
+        var monthlyAverages: [ChartableMeasurement] = []
+        let calendar = Calendar.current
+        
+        // Group by year and month
+        let groups = Dictionary(grouping: measurements.flatMap { $0 }) { (item) -> DateComponents in
+            calendar.dateComponents([.year, .month], from: item.measuredAt ?? Date())
+        }
+        
+        for (dateComponents, group) in groups.sorted(by: { 
+            guard let date1 = calendar.date(from: $0.key),
+                  let date2 = calendar.date(from: $1.key) else { return false }
+            return date1 < date2
+        }) {
+            let averages = MeasurementStore.getAverage(measurements: group, type: chartType)
+            // Use the 1st of the month as the date
+            if let date = calendar.date(from: dateComponents) {
+                monthlyAverages.append(ChartableMeasurement(date: date, value: averages.averageValue))
+            }
+        }
+        return monthlyAverages
     }
     
     private func getAverage(measurements: [ChartableMeasurement]) -> MeasurementAverage {
@@ -129,8 +171,10 @@ class ChartModel: ObservableObject {
         switch preferences.chartScale {
         case .day, .week:
             return getHourlyMeasurements(measurements: measurements)
-        case .month, .all:
+        case .month:
             return getDailyAverages(measurements: measurements)
+        case .year:
+            return getMonthlyAverages(measurements: measurements)
         }
     }
     
