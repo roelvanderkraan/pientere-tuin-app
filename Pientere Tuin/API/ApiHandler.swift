@@ -56,13 +56,24 @@ class ApiHandler {
                     debugPrint(json.totalPages)
                     writeToCoreData(apiData: json.content, context: context, garden: garden)
                     
-                    // Check if there are more pages to parse. Continue until we hit the last page
-                    if loadAll && json.content?.count ?? 0 > 0 && !(json.last ?? true) {
+                    // Check if there are more pages to parse.
+                    // Continue if loading all data, or if there's a gap (oldest measurement on this page isn't stored yet).
+                    let oldestDateOnPage = json.content?.compactMap { $0.measuredAt }.min()
+                    let alreadyHaveOldest = if let oldest = oldestDateOnPage {
+                        measurementExists(for: oldest, in: context)
+                    } else {
+                        true // no data = nothing to catch up on
+                    }
+                    let shouldContinuePaging = (loadAll || !alreadyHaveOldest)
+                        && json.content?.count ?? 0 > 0
+                        && !(json.last ?? true)
+
+                    if shouldContinuePaging {
                         Task {
                             let interval = apiRequestInterval + 1 // API has 10 seconds rate limit
                             debugPrint("Scheduling next parse for page \(page+1) in \(interval) seconds")
                             try await Task.sleep(for: .seconds(interval)) // API has 10 seconds rate limit
-                            try await updateTuinData(context: context, page: page+1, loadAll: true, garden: garden)
+                            try await updateTuinData(context: context, page: page+1, loadAll: loadAll, garden: garden)
                         }
                     }
                     // Only when new data?
@@ -153,6 +164,17 @@ class ApiHandler {
         }
     }
     
+    private func measurementExists(for date: Date, in context: NSManagedObjectContext) -> Bool {
+        var exists = false
+        context.performAndWait {
+            let fetchRequest = MeasurementProjection.fetchRequest()
+            fetchRequest.predicate = NSPredicate(format: "measuredAt == %@", date as NSDate)
+            fetchRequest.fetchLimit = 1
+            exists = (try? context.count(for: fetchRequest)) ?? 0 > 0
+        }
+        return exists
+    }
+
     private func resetWidgets() {
         WidgetCenter.shared.reloadTimelines(ofKind: "studio.skipper.Pientere-Tuin.widget")
     }
