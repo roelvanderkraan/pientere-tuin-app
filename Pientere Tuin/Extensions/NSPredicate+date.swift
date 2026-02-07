@@ -18,8 +18,8 @@ extension NSPredicate {
             offsetComponents.month = -1
         case .week:
             offsetComponents.weekOfYear = -1
-        case .all:
-            return nil
+        case .year:
+            offsetComponents.year = -1
         case .day:
             offsetComponents.day = -1
         }

@@ -23,9 +23,10 @@ struct MesurementChart: View {
     
     @State var selectedDate: Date?
     @State var annotationPosition: AnnotationPosition = .automatic
-    @State var chartTopPadding: CGFloat = 0
     @State private var periodOffset: Int = 0
     @State var chartScrolledToDate: Date = Date()
+    @State private var isScrolledAwayFromPresent: Bool = false
+    @State private var scrollDebounceTask: Task<Void, Never>?
     var annotationHeight: CGFloat = 60
 
     /// The length of the visible range for the current chart scale
@@ -40,7 +41,7 @@ struct MesurementChart: View {
         case .month:
             guard let monthInterval = calendar.dateInterval(of: .month, for: now) else { return nil }
             return monthInterval.duration
-        case .all:
+        case .year:
             return 31_536_000 // 1 year (365 * 24 * 60 * 60)
         }
     }
@@ -75,44 +76,106 @@ struct MesurementChart: View {
     var body: some View {
         let chartYScale = chartModel.getYScale()
         let dryValue = chartModel.getDryValue()
-        VStack(alignment: .leading) {
-            chartScalePicker
-            if selectedDate == nil, let average = chartModel.chartAverage {
-                ChartAverageHeader(
-                    chartModel: chartModel,
-                    average: average,
-                    annotationHeight: annotationHeight,
-                    visibleChartRange: visibleChartRange // <- Pass the range here
-                )
-                .id(chartScrolledToDate) // This forces it to update on scroll
+        ZStack(alignment: .bottomTrailing) {
+            VStack(alignment: .leading, spacing: 8) {
+                chartScalePicker
+                
+                ZStack(alignment: .topLeading) {
+                    // Chart - always present with fixed layout
+                    ChartContent(
+                        chartModel: chartModel,
+                        preferences: preferences,
+                        selectedDate: $selectedDate,
+                        annotationPosition: $annotationPosition,
+                        annotationHeight: annotationHeight,
+                        chartYScale: chartYScale,
+                        dryValue: dryValue,
+                        periodOffset: $periodOffset,
+                        chartScrolledToDate: $chartScrolledToDate
+                    )
+                    .frame(height: 280)
+                    
+                    // Header overlay - always present, just hidden when selecting
+                    if let average = chartModel.chartAverage {
+                        VStack(alignment: .leading, spacing: 0) {
+                            ChartAverageHeader(
+                                chartModel: chartModel,
+                                average: average,
+                                annotationHeight: annotationHeight,
+                                visibleChartRange: visibleChartRange
+                            )
+                            .id(chartScrolledToDate)
+                            .opacity(selectedDate == nil ? 1 : 0)
+                            .allowsHitTesting(selectedDate == nil)
+                            
+                            Spacer()
+                        }
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                    }
+                }
             }
-            ChartContent(
-                chartModel: chartModel,
-                preferences: preferences,
-                selectedDate: $selectedDate,
-                annotationPosition: $annotationPosition,
-                annotationHeight: annotationHeight,
-                chartYScale: chartYScale,
-                dryValue: dryValue,
-                periodOffset: $periodOffset,
-                chartScrolledToDate: $chartScrolledToDate
-            )
+            
+            // Back to Present button
+            if isScrolledAwayFromPresent {
+                Button {
+                    withAnimation {
+                        chartScrolledToDate = getInitialScrollPosition()
+                    }
+                    SimpleAnalytics.shared.track(event: "chart-back-to-present")
+                } label: {
+                    Label("Nu", systemImage: "arrow.forward.to.line")
+                        .font(.caption)
+                        .padding(.horizontal, 12)
+                        .padding(.vertical, 8)
+                        .background(Color.accentColor)
+                        .foregroundColor(.white)
+                        .clipShape(Capsule())
+                        .shadow(radius: 4)
+                }
+                .padding()
+            }
         }
         .onChange(of: preferences.chartScale) { newValue in
 //            sectionedMeasurements.nsPredicate = .filter(key: "measuredAt", date: Date(), scale: newValue)
             chartModel.reloadData(measurements: sectionedMeasurements)
             selectedDate = nil
+            // Reset to latest measurement when scale changes (snapped to period start)
+            chartScrolledToDate = getInitialScrollPosition()
             SimpleAnalytics.shared.track(event: "chartscale-\(newValue)")
         }
         .onAppear {
 //            sectionedMeasurements.nsPredicate = .filter(key: "measuredAt", date: Date(), scale: preferences.chartScale)
             chartModel.reloadData(measurements: sectionedMeasurements)
+            // Initialize scroll to latest measurement (snapped to period start)
+            chartScrolledToDate = getInitialScrollPosition()
         }
-        .onChange(of: selectedDate) { newValue in
-            if newValue == nil {
-                chartTopPadding = 0
-            } else {
-                chartTopPadding = annotationHeight + 8
+        .onChange(of: chartScrolledToDate) { newValue in
+            // Check if scrolled away from latest data
+            if let latestDate = chartModel.chartData.map(\.date).max() {
+                let threshold: TimeInterval = 3600 // 1 hour threshold
+                isScrolledAwayFromPresent = newValue.addingTimeInterval(threshold) < latestDate
+            }
+            
+            // Snap to period boundaries after user stops scrolling
+            // BUT: Don't snap if we're viewing the current period (to allow "back to present")
+            scrollDebounceTask?.cancel()
+            scrollDebounceTask = Task { @MainActor in
+                try? await Task.sleep(for: .milliseconds(300))
+                guard !Task.isCancelled else { return }
+                
+                // Check if we're in the current period
+                guard let latestDate = chartModel.chartData.map(\.date).max() else { return }
+                let isInCurrentPeriod = Calendar.current.isDate(newValue, equalTo: latestDate, toGranularity: getPeriodGranularity(for: preferences.chartScale))
+                
+                // Only snap if not in current period
+                if !isInCurrentPeriod {
+                    let snappedDate = snapToStartOfPeriod(newValue, scale: preferences.chartScale)
+                    if snappedDate != chartScrolledToDate {
+                        withAnimation(.easeOut(duration: 0.2)) {
+                            chartScrolledToDate = snappedDate
+                        }
+                    }
+                }
             }
         }
     }
@@ -122,7 +185,7 @@ struct MesurementChart: View {
             Text("Dag").tag(ChartScale.day)
             Text("Week").tag(ChartScale.week)
             Text("Maand").tag(ChartScale.month)
-            Text("Alles").tag(ChartScale.all)
+            Text("Jaar").tag(ChartScale.year)
         }
         .pickerStyle(.segmented)
         .padding([.top, .bottom], 12)
@@ -142,14 +205,9 @@ struct MesurementChart: View {
         case .month:
             let monthInterval = calendar.dateInterval(of: .month, for: ref)!
             return monthInterval.start...(monthInterval.end.addingTimeInterval(-1))
-        case .all:
-            if let minDate = chartModel.chartData.map(\.date).min(),
-               let maxDate = chartModel.chartData.map(\.date).max() {
-                return minDate...maxDate
-            } else {
-                let today = calendar.startOfDay(for: ref)
-                return today...today
-            }
+        case .year:
+            let yearInterval = calendar.dateInterval(of: .year, for: ref)!
+            return yearInterval.start...(yearInterval.end.addingTimeInterval(-1))
         }
     }
 
@@ -158,7 +216,7 @@ struct MesurementChart: View {
         case .day: return .day
         case .week: return .weekOfYear
         case .month: return .month
-        case .all: return .year // only used for offsetting the reference
+        case .year: return .year
         }
     }
     
@@ -187,13 +245,55 @@ struct MesurementChart: View {
     
     private func hourDate(of selectedDate: Date, data: [ChartableMeasurement]) -> Date? {
         var granularity: Calendar.Component = .hour
-        if preferences.chartScale == .month || preferences.chartScale == .all {
+        if preferences.chartScale == .month || preferences.chartScale == .year {
             granularity = .day
         }
         let results = data.filter({ measurement in
             Calendar.current.isDate(measurement.date, equalTo: selectedDate, toGranularity: granularity)
         })
         return results.first?.date
+    }
+    
+    // Snaps a date to the start of its calendar period
+    private func snapToStartOfPeriod(_ date: Date, scale: ChartScale) -> Date {
+        let calendar = Calendar.current
+        switch scale {
+        case .day:
+            return calendar.startOfDay(for: date)
+        case .week:
+            guard let weekStart = calendar.dateInterval(of: .weekOfYear, for: date)?.start else {
+                return date
+            }
+            return weekStart
+        case .month:
+            guard let monthStart = calendar.dateInterval(of: .month, for: date)?.start else {
+                return date
+            }
+            return monthStart
+        case .year:
+            let year = calendar.component(.year, from: date)
+            return calendar.date(from: DateComponents(year: year, month: 1, day: 1)) ?? date
+        }
+    }
+    
+    // Gets the appropriate initial scroll position
+    // Returns the latest date WITHOUT snapping to allow viewing current incomplete periods
+    private func getInitialScrollPosition() -> Date {
+        guard let latestDate = chartModel.chartData.map(\.date).max() else {
+            return Date()
+        }
+        // Return the actual latest date (not snapped) to show current data
+        return latestDate
+    }
+    
+    // Gets the calendar granularity for a given chart scale
+    private func getPeriodGranularity(for scale: ChartScale) -> Calendar.Component {
+        switch scale {
+        case .day: return .day
+        case .week: return .weekOfYear
+        case .month: return .month
+        case .year: return .year
+        }
     }
 }
 
@@ -224,7 +324,6 @@ private struct ChartAverageHeader: View {
                     .foregroundColor(.secondary)
             }
         }
-        .frame(height: annotationHeight)
     }
 }
 
@@ -252,12 +351,12 @@ private struct ChartContent: View {
         case .month:
             guard let monthInterval = calendar.dateInterval(of: .month, for: now) else { return nil }
             return monthInterval.duration
-        case .all:
+        case .year:
             return 31_536_000 // 1 year (365 * 24 * 60 * 60)
         }
     }
     
-    // Helper for scroll target "unit" (in seconds)
+    // Helper for scroll target "unit" (in seconds) - used for fine-grained snapping
     private func scrollTargetUnit(for scale: ChartScale) -> Double {
         switch scale {
         case .day:
@@ -265,9 +364,9 @@ private struct ChartContent: View {
         case .week:
             return 86_400 // 1 day
         case .month:
-            return 86_400 * 5 // 5 days
-        case .all:
-            return 31_536_000 // 1 year (365 * 24 * 60 * 60)
+            return 86_400 // 1 day (snap to days within months)
+        case .year:
+            return 2_592_000 // ~30 days (1 month approximation)
         }
     }
     
@@ -305,7 +404,7 @@ private struct ChartContent: View {
                 .foregroundStyle(chartModel.typeColor)
                 .accessibilityHidden(true)
                 .lineStyle(StrokeStyle(lineWidth: 2))
-                if preferences.chartScale != .week && preferences.chartScale != .all {
+                if preferences.chartScale != .week && preferences.chartScale != .year {
                     PointMark(
                         x: .value("Day", dayAverage.date, unit: .hour),
                         y: .value(chartModel.typeText, dayAverage.value)
@@ -368,6 +467,9 @@ private struct ChartContent: View {
         .chartLegend(.hidden)
         .chartYScale(domain: chartYScale)
         .chartYAxisLabel(chartModel.valueUnit)
+        .chartPlotStyle { plotArea in
+            plotArea.padding(.top, 80)
+        }
         .chartScrollableAxes(.horizontal)
         .chartScrollTargetBehavior(.valueAligned(unit: scrollTargetUnit(for: preferences.chartScale), majorAlignment: .page))
         .modifier(ChartVisibleDomainModifier(
@@ -375,10 +477,28 @@ private struct ChartContent: View {
             allRange: allDataRange(),
             visibleLength: visibleLength(for: preferences.chartScale)
         ))
-        .padding(EdgeInsets(top: 0, leading: 0, bottom: 16, trailing: 8))
+        .padding(EdgeInsets(top: 8, leading: 0, bottom: 16, trailing: 8))
         .modifier(ChartXAxisModifier(chartScale: preferences.chartScale))
-        .chartScrollPosition(initialX: Date())
         .chartScrollPosition(x: $chartScrolledToDate)
+        .chartXSelection(value: $selectedDate)
+        .onChange(of: selectedDate) { newValue in
+            // Snap selected date to nearest data point
+            if let tappedDate = newValue {
+                selectedDate = findNearestDataPoint(to: tappedDate)
+            }
+        }
+    }
+    
+    // Find the nearest data point to the tapped date
+    private func findNearestDataPoint(to date: Date) -> Date? {
+        let granularity: Calendar.Component = (preferences.chartScale == .month || preferences.chartScale == .year) ? .day : .hour
+        
+        // Find data point matching the tapped date at the appropriate granularity
+        let matching = chartModel.chartData.first { measurement in
+            Calendar.current.isDate(measurement.date, equalTo: date, toGranularity: granularity)
+        }
+        
+        return matching?.date
     }
 }
 
@@ -438,10 +558,10 @@ private struct ChartXAxisModifier: ViewModifier {
                     AxisGridLine()
                     AxisTick()
                 }
-            case .all:
-                AxisMarks(values: .stride(by: .year, count: 1)) { value in
+            case .year:
+                AxisMarks(values: .stride(by: .month, count: 1)) { value in
                     if value.as(Date.self) != nil {
-                        AxisValueLabel(format: .dateTime.year())
+                        AxisValueLabel(format: .dateTime.month(.abbreviated))
                     }
                     AxisGridLine()
                     AxisTick()

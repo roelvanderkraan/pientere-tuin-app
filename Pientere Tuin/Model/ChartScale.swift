@@ -11,7 +11,7 @@ enum ChartScale: String, CaseIterable, Identifiable, Equatable {
     case week
     case month
     case day
-    case all
+    case year
     var id: Self { self }
 }
 
