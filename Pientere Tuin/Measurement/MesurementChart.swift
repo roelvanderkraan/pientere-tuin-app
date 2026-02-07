@@ -157,18 +157,22 @@ struct MesurementChart: View {
             }
             
             // Snap to period boundaries after user stops scrolling
-            // BUT: Don't snap if we're viewing the current period (to allow "back to present")
+            // BUT: Don't snap if we're viewing the current/latest data (to allow "back to present")
             scrollDebounceTask?.cancel()
             scrollDebounceTask = Task { @MainActor in
                 try? await Task.sleep(for: .milliseconds(300))
                 guard !Task.isCancelled else { return }
                 
-                // Check if we're in the current period
+                // Check if we're near the latest data point
                 guard let latestDate = chartModel.chartData.map(\.date).max() else { return }
-                let isInCurrentPeriod = Calendar.current.isDate(newValue, equalTo: latestDate, toGranularity: getPeriodGranularity(for: preferences.chartScale))
+                guard let visibleLength = self.visibleLength else { return }
                 
-                // Only snap if not in current period
-                if !isInCurrentPeriod {
+                // If the visible window includes the latest data, don't snap
+                let visibleEnd = newValue.addingTimeInterval(visibleLength)
+                let isViewingLatestData = visibleEnd >= latestDate
+                
+                // Only snap if not viewing latest data
+                if !isViewingLatestData {
                     let snappedDate = snapToStartOfPeriod(newValue, scale: preferences.chartScale)
                     if snappedDate != chartScrolledToDate {
                         withAnimation(.easeOut(duration: 0.2)) {
