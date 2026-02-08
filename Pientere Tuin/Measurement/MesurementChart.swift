@@ -12,7 +12,8 @@ import SimpleAnalytics
 struct MesurementChart: View {
     @SectionedFetchRequest<Date, MeasurementProjection>(
         sectionIdentifier: \.sectionMeasuredAt,
-        sortDescriptors: [SortDescriptor(\.measuredAt, order: .reverse)]
+        sortDescriptors: [SortDescriptor(\.measuredAt, order: .reverse)],
+        predicate: NSPredicate.recentData(key: "measuredAt", monthsBack: 6)
     )
     private var sectionedMeasurements: SectionedFetchResults<Date, MeasurementProjection>
         
@@ -27,6 +28,8 @@ struct MesurementChart: View {
     @State var chartScrolledToDate: Date = Date()
     @State private var isScrolledAwayFromPresent: Bool = false
     @State private var scrollDebounceTask: Task<Void, Never>?
+    @State private var loadedMonthsBack: Int = 6 // Track how far back we've loaded
+    @State private var isLoadingMore: Bool = false // Prevent reload loops
     var annotationHeight: CGFloat = 60
 
     /// The length of the visible range for the current chart scale
@@ -46,13 +49,9 @@ struct MesurementChart: View {
         }
     }
 
-    /// Returns the available range of data in chartModel
+    /// Returns the available range of data in chartModel (cached in ChartModel)
     private var allDataRange: ClosedRange<Date>? {
-        guard let minDate = chartModel.chartData.map(\.date).min(),
-              let maxDate = chartModel.chartData.map(\.date).max() else {
-            return nil
-        }
-        return minDate...maxDate
+        chartModel.cachedDataRange
     }
 
     /// Computes the currently visible date range in the chart, clamped to the data's available range
@@ -104,7 +103,6 @@ struct MesurementChart: View {
                                 annotationHeight: annotationHeight,
                                 visibleChartRange: visibleChartRange
                             )
-                            .id(chartScrolledToDate)
                             .opacity(selectedDate == nil ? 1 : 0)
                             .allowsHitTesting(selectedDate == nil)
                             
@@ -144,43 +142,68 @@ struct MesurementChart: View {
             SimpleAnalytics.shared.track(event: "chartscale-\(newValue)")
         }
         .onAppear {
-//            sectionedMeasurements.nsPredicate = .filter(key: "measuredAt", date: Date(), scale: preferences.chartScale)
             chartModel.reloadData(measurements: sectionedMeasurements)
-            // Initialize scroll to latest measurement (snapped to period start)
+            // Initialize scroll to latest measurement
             chartScrolledToDate = getInitialScrollPosition()
+        }
+        .onChange(of: sectionedMeasurements.count) { _ in
+            // Reload chart data when fetch results change (progressive loading)
+            if isLoadingMore {
+                chartModel.reloadData(measurements: sectionedMeasurements)
+                isLoadingMore = false
+            }
         }
         .onChange(of: chartScrolledToDate) { newValue in
             // Check if scrolled away from latest data
-            if let latestDate = chartModel.chartData.map(\.date).max() {
+            if let latestDate = chartModel.cachedDataRange?.upperBound {
                 let threshold: TimeInterval = 3600 // 1 hour threshold
                 isScrolledAwayFromPresent = newValue.addingTimeInterval(threshold) < latestDate
             }
             
-            // Snap to period boundaries after user stops scrolling
-            // BUT: Don't snap if we're viewing the current/latest data (to allow "back to present")
-            scrollDebounceTask?.cancel()
-            scrollDebounceTask = Task { @MainActor in
-                try? await Task.sleep(for: .milliseconds(300))
-                guard !Task.isCancelled else { return }
-                
-                // Check if we're near the latest data point
-                guard let latestDate = chartModel.chartData.map(\.date).max() else { return }
-                guard let visibleLength = self.visibleLength else { return }
-                
-                // If the visible window includes the latest data, don't snap
-                let visibleEnd = newValue.addingTimeInterval(visibleLength)
-                let isViewingLatestData = visibleEnd >= latestDate
-                
-                // Only snap if not viewing latest data
-                if !isViewingLatestData {
-                    let snappedDate = snapToStartOfPeriod(newValue, scale: preferences.chartScale)
-                    if snappedDate != chartScrolledToDate {
-                        withAnimation(.easeOut(duration: 0.2)) {
-                            chartScrolledToDate = snappedDate
-                        }
-                    }
-                }
-            }
+            // Progressive loading: Check if we need to load more historical data
+            checkAndExpandDataRange(scrolledTo: newValue)
+        }
+    }
+    
+    /// Checks if the user is scrolling close to the oldest loaded data and expands the fetch range
+    private func checkAndExpandDataRange(scrolledTo date: Date) {
+        // Don't trigger if already loading
+        guard !isLoadingMore else { return }
+        
+        guard let oldestLoadedDate = chartModel.cachedDataRange?.lowerBound else { return }
+        
+        let calendar = Calendar.current
+        let threshold: TimeInterval
+        
+        // Set threshold based on chart scale
+        switch preferences.chartScale {
+        case .day:
+            threshold = 86_400 * 7 // 7 days
+        case .week:
+            threshold = 604_800 * 4 // 4 weeks
+        case .month:
+            threshold = 2_592_000 * 2 // 2 months
+        case .year:
+            threshold = 2_592_000 * 6 // 6 months
+        }
+        
+        // Calculate distance from scrolled position to oldest loaded data
+        let distanceToOldest = date.timeIntervalSince(oldestLoadedDate)
+        
+        // Trigger when scrolled date is within threshold of the oldest date
+        if distanceToOldest > 0 && distanceToOldest < threshold && loadedMonthsBack < 36 { // Max 3 years
+            isLoadingMore = true
+            
+            // Expand by 6 more months
+            loadedMonthsBack += 6
+            let newStartDate = calendar.date(byAdding: .month, value: -loadedMonthsBack, to: Date()) ?? Date()
+            
+            // Update the fetch request predicate
+            sectionedMeasurements.nsPredicate = NSPredicate.dateRange(
+                key: "measuredAt",
+                from: newStartDate,
+                to: Date()
+            )
         }
     }
     
@@ -233,9 +256,7 @@ struct MesurementChart: View {
             y: at.y - origin.y
         )
         if let (date, humidity) = proxy.value(at: location, as: (Date, Float).self) {
-            debugPrint("Selected date: \(date), humidity: \(humidity)")
             selectedDate = hourDate(of: date, data: data)
-            debugPrint("\(String(describing: selectedDate))")
         }
 
         if location.x < annotationWidth {
@@ -283,11 +304,8 @@ struct MesurementChart: View {
     // Gets the appropriate initial scroll position
     // Returns the latest date WITHOUT snapping to allow viewing current incomplete periods
     private func getInitialScrollPosition() -> Date {
-        guard let latestDate = chartModel.chartData.map(\.date).max() else {
-            return Date()
-        }
-        // Return the actual latest date (not snapped) to show current data
-        return latestDate
+        // Optimized: direct access to last element
+        return chartModel.chartData.last?.date ?? Date()
     }
     
     // Gets the calendar granularity for a given chart scale
@@ -375,94 +393,64 @@ private struct ChartContent: View {
     }
     
     private func allDataRange() -> ClosedRange<Date>? {
-        guard let minDate = chartModel.chartData.map(\.date).min(),
-              let maxDate = chartModel.chartData.map(\.date).max() else {
-            return nil
-        }
-        return minDate...maxDate
+        chartModel.cachedDataRange
     }
     
     var body: some View {
         Chart {
+            // Dry threshold line (if applicable)
             if chartModel.chartType == .moisture, let dryValue = dryValue {
-                RuleMark(
-                    y: .value("Droog", dryValue*100)
-                )
-                .foregroundStyle(Color.orange.opacity(0.3))
-                .annotation(
-                    position: .top,
-                    alignment: .trailing,
-                    spacing: 0
-                ) {
-                    Text("Droog")
-                        .foregroundStyle(.orange)
-                        .font(.footnote)
-                }
+                RuleMark(y: .value("Droog", dryValue*100))
+                    .foregroundStyle(Color.orange.opacity(0.3))
+                    .annotation(position: .top, alignment: .trailing, spacing: 0) {
+                        Text("Droog")
+                            .foregroundStyle(.orange)
+                            .font(.footnote)
+                    }
             }
             
-            ForEach(chartModel.chartData) { dayAverage in
+            // Main data line and points
+            ForEach(chartModel.chartData) { measurement in
                 LineMark(
-                    x: .value("Day", dayAverage.date, unit: .hour),
-                    y: .value(chartModel.typeText, dayAverage.value)
+                    x: .value("Time", measurement.date, unit: .hour),
+                    y: .value(chartModel.typeText, measurement.value)
                 )
                 .foregroundStyle(chartModel.typeColor)
-                .accessibilityHidden(true)
                 .lineStyle(StrokeStyle(lineWidth: 2))
-                if preferences.chartScale != .week && preferences.chartScale != .year {
+                
+                // Show points for day and month views only
+                if preferences.chartScale == .day || preferences.chartScale == .month {
                     PointMark(
-                        x: .value("Day", dayAverage.date, unit: .hour),
-                        y: .value(chartModel.typeText, dayAverage.value)
+                        x: .value("Time", measurement.date, unit: .hour),
+                        y: .value(chartModel.typeText, measurement.value)
                     )
                     .foregroundStyle(chartModel.typeColor)
                 }
-                
-                if selectedDate == dayAverage.date {
-                    if #available(iOS 17.0, *) {
-                        RuleMark(
-                            x: .value("Selected", dayAverage.date, unit: .hour)
-                        )
-                        .foregroundStyle(Color.gray.opacity(0.3))
-                        .zIndex(-1)
-                        .annotation(
-                            position: .top,
-                            spacing: 0,
-                            overflowResolution: .init (
-                                x: .fit(to: .chart),
-                                y: .disabled
-                            )
-                        ) {
-                            if selectedDate == dayAverage.date {
-                                switch preferences.chartScale {
-                                case .day, .week:
-                                    MeasurementAnnotation(caption: Formatters.itemFormatter.string(from: dayAverage.date), value: dayAverage.value, unit: chartModel.valueUnit, specifier: chartModel.valueSpecifier)
-                                default:
-                                    MeasurementAnnotation(caption: Formatters.dateFormatter.string(from: dayAverage.date), value: dayAverage.value, unit: chartModel.valueUnit, specifier: "%.1f")
-                                }
+            }
+            
+            // Selection indicator (outside ForEach for performance)
+            if let selectedDate,
+               let selectedValue = chartModel.chartData.first(where: { $0.date == selectedDate })?.value {
+                RuleMark(x: .value("Selected", selectedDate, unit: .hour))
+                    .foregroundStyle(Color.gray.opacity(0.3))
+                    .annotation(position: .top, spacing: 0) {
+                        VStack(alignment: .leading, spacing: 4) {
+                            HStack(alignment: .firstTextBaseline, spacing: 4) {
+                                Text("\(selectedValue, specifier: chartModel.valueSpecifier)")
+                                    .font(.system(.title, design: .rounded, weight: .bold))
+                                Text(chartModel.valueUnit)
+                                    .font(.body)
+                                    .foregroundColor(.secondary)
                             }
+                            Text(formatDate(selectedDate))
+                                .font(.caption)
+                                .foregroundColor(.secondary)
                         }
-                    } else {
-                        RuleMark(
-                            x: .value("Selected", dayAverage.date, unit: .hour)
-                        )
-                        .foregroundStyle(Color.gray.opacity(0.3))
-                        .annotation(
-                            position: annotationPosition,
-                            alignment: .center,
-                            spacing: 0
-                        ) {
-                            if selectedDate == dayAverage.date {
-                                switch preferences.chartScale {
-                                case .day, .week:
-                                    MeasurementAnnotation(caption: Formatters.itemFormatter.string(from: dayAverage.date), value: dayAverage.value, unit: chartModel.valueUnit, specifier: chartModel.valueSpecifier)
-                                        .frame(height: annotationHeight-8)
-                                default:
-                                    MeasurementAnnotation(caption: Formatters.dateFormatter.string(from: dayAverage.date), value: dayAverage.value, unit: chartModel.valueUnit, specifier: "%.1f")
-                                        .frame(height: annotationHeight-8)
-                                }
-                            }
-                        }
+                        .padding(8)
+                        .background(Color(uiColor: .systemBackground).opacity(0.9))
+                        .cornerRadius(8)
+                        .shadow(radius: 2)
                     }
-                }
             }
         }
         .chartForegroundStyleScale([
@@ -504,9 +492,19 @@ private struct ChartContent: View {
         
         return matching?.date
     }
+    
+    // Format date for annotation based on chart scale
+    private func formatDate(_ date: Date) -> String {
+        switch preferences.chartScale {
+        case .day, .week:
+            return Formatters.itemFormatter.string(from: date)
+        default:
+            return Formatters.dateFormatter.string(from: date)
+        }
+    }
 }
 
-// This modifier switches between .chartXVisibleDomain(length:) and .chartXVisibleDomain(_:) based on chartScale
+// This modifier sets the visible domain and scroll bounds for the chart
 private struct ChartVisibleDomainModifier: ViewModifier {
     let chartScale: ChartScale
     let allRange: ClosedRange<Date>?
@@ -514,7 +512,16 @@ private struct ChartVisibleDomainModifier: ViewModifier {
     
     @ViewBuilder
     func body(content: Content) -> some View {
-        if let visibleLength {
+        if let allRange {
+            if let visibleLength {
+                content
+                    .chartXVisibleDomain(length: visibleLength)
+                    .chartXScale(domain: allRange)
+            } else {
+                content
+                    .chartXScale(domain: allRange)
+            }
+        } else if let visibleLength {
             content.chartXVisibleDomain(length: visibleLength)
         } else {
             content

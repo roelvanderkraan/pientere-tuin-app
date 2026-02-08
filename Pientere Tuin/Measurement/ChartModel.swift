@@ -12,8 +12,9 @@ class ChartModel: ObservableObject {
     
     @Published private(set) var chartData: [ChartableMeasurement] = []
     @Published private(set) var chartAverage: MeasurementAverage?
+    @Published private(set) var cachedDataRange: ClosedRange<Date>?
     private var latestMeasurement: MeasurementProjection?
-    var chartType: ChartType
+    let chartType: ChartType
     
     var valueUnit: String {
         switch chartType {
@@ -66,115 +67,75 @@ class ChartModel: ObservableObject {
         
     func reloadData(measurements: SectionedFetchResults<Date, MeasurementProjection>) {
         chartData = getChartData(measurements: measurements)
+        chartData.sort { $0.date < $1.date }
+        
         chartAverage = getAverage(measurements: chartData)
+        cachedDataRange = computeDataRange()
         latestMeasurement = measurements.last?.last
     }
-    
-    private func getHourlyMeasurements(measurements: SectionedFetchResults<Date, MeasurementProjection>) -> [ChartableMeasurement] {
-        var hourlyMeasurements: [ChartableMeasurement] = []
 
-        for section in measurements {
-            for measurement in section {
-                if let value = getValue(item: measurement, chartType: chartType) {
-                    hourlyMeasurements.append(ChartableMeasurement(date: measurement.measuredAt ?? Date(), value: value))
-                }
-            }
-        }
-        return hourlyMeasurements
+    private func computeDataRange() -> ClosedRange<Date>? {
+        guard let first = chartData.first?.date, let last = chartData.last?.date else { return nil }
+        return first...last
     }
     
-    private func getYearlyAverages(measurements: SectionedFetchResults<Date, MeasurementProjection>) -> [ChartableMeasurement] {
-        var yearlyAverages: [ChartableMeasurement] = []
+    /// Generic aggregation method that groups measurements by date components
+    private func aggregateMeasurements(
+        _ measurements: SectionedFetchResults<Date, MeasurementProjection>,
+        components: [Calendar.Component]
+    ) -> [ChartableMeasurement] {
         let calendar = Calendar.current
+        let allMeasurements = measurements.flatMap { $0 }
         
-        // Group by year
-        let groups = Dictionary(grouping: measurements.flatMap { $0 }) { (item) -> Int in
-            calendar.component(.year, from: item.measuredAt ?? Date())
+        // Group by creating a normalized date (start of hour/day/month/year)
+        let groups = Dictionary(grouping: allMeasurements) { item -> Date in
+            guard let measuredDate = item.measuredAt else {
+                return Date.distantPast
+            }
+            
+            // Create a date with only the specified components
+            let dateComps = calendar.dateComponents(Set(components), from: measuredDate)
+            return calendar.date(from: dateComps) ?? Date.distantPast
         }
         
-        for (year, group) in groups.sorted(by: { $0.key < $1.key }) {
+        // Calculate average for each group and sort by date
+        return groups.compactMap { date, group -> ChartableMeasurement? in
+            guard date != Date.distantPast else { return nil }
             let averages = MeasurementStore.getAverage(measurements: group, type: chartType)
-            // Use January 1st of the year as the date
-            if let date = calendar.date(from: DateComponents(year: year, month: 1, day: 1)) {
-                yearlyAverages.append(ChartableMeasurement(date: date, value: averages.averageValue))
-            }
-        }
-        return yearlyAverages
-    }
-    
-    private func getValue(item: MeasurementProjection, chartType: ChartType) -> Float? {
-        switch chartType {
-        case .moisture:
-            return item.moisturePercentage*100
-        case .temperature:
-            if let temperature = item.temperatureCelcius?.floatValue {
-                return temperature
-            }
-        }
-        return nil
+            return ChartableMeasurement(date: date, value: averages.averageValue)
+        }.sorted { $0.date < $1.date }
     }
     
     private func getDailyAverages(measurements: SectionedFetchResults<Date, MeasurementProjection>) -> [ChartableMeasurement] {
-        var averageHumidities: [ChartableMeasurement] = []
-
-        for section in measurements {
+        // Use pre-sectioned data (already grouped by day)
+        return measurements.map { section in
             let averages = MeasurementStore.getAverage(measurements: section, type: chartType)
-            averageHumidities.append(ChartableMeasurement(date: section.id, value: averages.averageValue))
+            return ChartableMeasurement(date: section.id, value: averages.averageValue)
         }
-        
-        return averageHumidities
-    }
-    
-    private func getMonthlyAverages(measurements: SectionedFetchResults<Date, MeasurementProjection>) -> [ChartableMeasurement] {
-        var monthlyAverages: [ChartableMeasurement] = []
-        let calendar = Calendar.current
-        
-        // Group by year and month
-        let groups = Dictionary(grouping: measurements.flatMap { $0 }) { (item) -> DateComponents in
-            calendar.dateComponents([.year, .month], from: item.measuredAt ?? Date())
-        }
-        
-        for (dateComponents, group) in groups.sorted(by: { 
-            guard let date1 = calendar.date(from: $0.key),
-                  let date2 = calendar.date(from: $1.key) else { return false }
-            return date1 < date2
-        }) {
-            let averages = MeasurementStore.getAverage(measurements: group, type: chartType)
-            // Use the 1st of the month as the date
-            if let date = calendar.date(from: dateComponents) {
-                monthlyAverages.append(ChartableMeasurement(date: date, value: averages.averageValue))
-            }
-        }
-        return monthlyAverages
     }
     
     private func getAverage(measurements: [ChartableMeasurement]) -> MeasurementAverage {
-        let sum = measurements.reduce(0) {
-            $0 + $1.value
-        }
-       
-        let max = measurements.reduce(0, { partialResult, measurement in
-            Float.maximum(partialResult, measurement.value)
-        })
-        let min = measurements.reduce(100, { partialResult, measurement in
-            Float.minimum(partialResult, measurement.value)
-        })
-        let count = Float(measurements.count)
-        if count > 0 {
-            return MeasurementAverage(averageValue: sum/count, minValue: min, maxValue: max)
-        } else {
+        guard !measurements.isEmpty else {
             return MeasurementAverage(averageValue: 0, minValue: 0, maxValue: 0)
         }
+        
+        let values = measurements.map(\.value)
+        let sum = values.reduce(0, +)
+        let average = sum / Float(measurements.count)
+        let min = values.min() ?? 0
+        let max = values.max() ?? 0
+        
+        return MeasurementAverage(averageValue: average, minValue: min, maxValue: max)
     }
     
     private func getChartData(measurements: SectionedFetchResults<Date, MeasurementProjection>) -> [ChartableMeasurement] {
         switch preferences.chartScale {
         case .day, .week:
-            return getHourlyMeasurements(measurements: measurements)
+            return aggregateMeasurements(measurements, components: [.year, .month, .day, .hour])
         case .month:
             return getDailyAverages(measurements: measurements)
         case .year:
-            return getMonthlyAverages(measurements: measurements)
+            return aggregateMeasurements(measurements, components: [.year, .month])
         }
     }
     
@@ -197,17 +158,12 @@ class ChartModel: ObservableObject {
     }
     
     func getDryValue() -> Float? {
-        if let measurement = latestMeasurement {
-            return measurement.stressHumidity?.upperBound
-        }
-        return nil
+        latestMeasurement?.stressHumidity?.upperBound
     }
 }
 
 struct ChartableMeasurement: Identifiable {
     var date: Date
-//    var moisturePercentage: Float
-//    var temperatureCelcius: Float
     var value: Float
-    var id = UUID()
+    var id: Date { date }
 }

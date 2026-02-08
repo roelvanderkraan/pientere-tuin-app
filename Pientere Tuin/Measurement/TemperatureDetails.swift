@@ -9,12 +9,13 @@ import SwiftUI
 import SimpleAnalytics
 
 struct TemperatureDetails: View {
-    @Environment(\.managedObjectContext) private var viewContext    
-    
+    @Environment(\.managedObjectContext) private var viewContext
+    @StateObject private var chartModel = ChartModel(chartType: .temperature)
+
     var body: some View {
         List {
             Section {
-                MesurementChart(chartModel: ChartModel(chartType: .temperature))
+                MesurementChart(chartModel: chartModel)
                     .environment(\.managedObjectContext, viewContext)
                     .frame(idealHeight: 400)
             }

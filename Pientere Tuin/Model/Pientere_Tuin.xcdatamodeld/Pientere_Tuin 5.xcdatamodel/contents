@@ -21,6 +21,9 @@
         <attribute name="soilType" optional="YES" attributeType="String"/>
         <attribute name="temperatureCelcius" optional="YES" attributeType="Float" usesScalarValueType="NO"/>
         <relationship name="inGarden" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Garden" inverseName="measurements" inverseEntity="Garden"/>
+        <fetchIndex name="byMeasuredAtIndex">
+            <fetchIndexElement property="measuredAt" type="Binary" order="ascending"/>
+        </fetchIndex>
         <uniquenessConstraints>
             <uniquenessConstraint>
                 <constraint value="apiUUID"/>
