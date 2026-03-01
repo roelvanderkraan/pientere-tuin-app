@@ -11,23 +11,18 @@ import SimpleAnalytics
 
 struct GardenDetails: View {
     var latestMeasurement: MeasurementProjection
-    @State private var region: MKCoordinateRegion
+    private let region: MKCoordinateRegion
     
     var body: some View {
         List {
             Section("Locatie") {
-                if #available(iOS 17.0, *) {
-                    Map(bounds: MapCameraBounds(centerCoordinateBounds: region, minimumDistance: 100)) {
-                        Marker("Tuin", coordinate: region.center)
-                            .tint(.green)
-                    }
-                    .frame(idealHeight: 200)
-                    .clipShape(RoundedRectangle(cornerSize: CGSize(width: 8, height: 8)))
-                    .padding(EdgeInsets(top: 10, leading: 0, bottom: 10, trailing: 0))
-                } else {
-                    Map(coordinateRegion: $region)
-                        .frame(idealHeight: 200)
+                Map(bounds: MapCameraBounds(centerCoordinateBounds: region, minimumDistance: 100)) {
+                    Marker("Tuin", coordinate: region.center)
+                        .tint(.green)
                 }
+                .frame(idealHeight: 200)
+                .clipShape(RoundedRectangle(cornerSize: CGSize(width: 8, height: 8)))
+                .padding(EdgeInsets(top: 10, leading: 0, bottom: 10, trailing: 0))
             }
             Section {
                 if let gardenSize = latestMeasurement.gardenSizeString {
