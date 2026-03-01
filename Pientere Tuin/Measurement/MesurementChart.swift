@@ -91,7 +91,16 @@ struct MesurementChart: View {
         }
 
         let distanceToOldest = date.timeIntervalSince(oldestLoadedDate)
-        guard distanceToOldest > 0 && distanceToOldest < threshold && loadedMonthsBack < 36 else { return }
+
+        // Year scale: the visible window (1 year) is often larger than the loaded domain (6 months),
+        // so the chart never scrolls and onChange(of: chartScrolledToDate) only fires once.
+        // Proactively expand until we have at least 12 months loaded.
+        let needsMoreForYearView = preferences.chartScale == .year && loadedMonthsBack < 12
+
+        // >= 0 (not > 0): also trigger when scroll is exactly at the oldest loaded date,
+        // which happens when the chart snaps to the leftmost page on month/week scale.
+        guard (distanceToOldest >= 0 && distanceToOldest < threshold) || needsMoreForYearView else { return }
+        guard loadedMonthsBack < 36 else { return }
 
         isLoadingMore = true
         loadedMonthsBack += 6
@@ -318,6 +327,11 @@ private struct ChartContent: View {
                 }
                 .onChange(of: scrollToLatestTrigger) { _ in
                     withAnimation { chartScrolledToDate = getInitialScrollPosition() }
+                }
+                .onChange(of: allDataRange?.lowerBound) { _ in
+                    // When new data loads (domain expands), re-check whether more is needed.
+                    // This drives repeated expansion on year scale, which can't scroll to trigger it.
+                    onScrolledNearOldest(chartScrolledToDate)
                 }
                 .onChange(of: chartScrolledToDate) { newValue in
                     // Immediate: cheap check for "back to present" button visibility
