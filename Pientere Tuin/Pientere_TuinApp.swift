@@ -35,6 +35,7 @@ struct Pientere_TuinApp: App {
             switch newPhase {
             case .background: scheduleAppRefresh()
             case .active:
+                Task { await NotificationHandler.shared.requestAuthorization() }
                 if apiTimer.isParseAllowed() {
                     Task {
                         await refreshData()
@@ -59,6 +60,7 @@ struct Pientere_TuinApp: App {
         let garden = GardenStore.getGarden(in: viewContext)
         if garden.apiKey != nil {
             try? await ApiHandler.shared.updateTuinData(context: viewContext, garden: garden)
+            await NotificationHandler.shared.evaluateAndNotify(context: viewContext)
         }
     }
     
