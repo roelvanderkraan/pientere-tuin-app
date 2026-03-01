@@ -11,7 +11,6 @@ extension NSPredicate {
     // https://stackoverflow.com/questions/8364495/nspredicate-for-finding-events-that-occur-between-a-certain-date-range
 
     static func filter(key: String, date: Date, calendar: Calendar = Calendar(identifier: .gregorian), scale: ChartScale) -> NSPredicate? {
-
         let offsetComponents = NSDateComponents()
         switch scale {
         case .month:
@@ -24,8 +23,21 @@ extension NSPredicate {
             offsetComponents.day = -1
         }
         let startDate = calendar.date(byAdding: offsetComponents as DateComponents, to: date)!
-        debugPrint("\(startDate) - \(date)")
-        return NSPredicate(format: "\(key) >= %@",
-                           startDate as NSDate)
+        return NSPredicate(format: "\(key) >= %@", startDate as NSDate)
+    }
+    
+    /// Creates a predicate for a date range with lookback from the current date
+    static func dateRange(key: String, from startDate: Date, to endDate: Date = Date()) -> NSPredicate {
+        NSPredicate(format: "\(key) >= %@ AND \(key) <= %@", startDate as NSDate, endDate as NSDate)
+    }
+    
+    /// Creates a predicate for loading recent data with progressive expansion
+    /// - Parameters:
+    ///   - key: The date attribute key
+    ///   - monthsBack: How many months of data to load
+    static func recentData(key: String, monthsBack: Int = 3) -> NSPredicate {
+        let endDate = Date()
+        let startDate = Calendar.current.date(byAdding: .month, value: -monthsBack, to: endDate) ?? endDate
+        return dateRange(key: key, from: startDate, to: endDate)
     }
 }

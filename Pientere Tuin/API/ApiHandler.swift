@@ -29,12 +29,11 @@ class ApiHandler {
         }
     }
     
-    /// Loads measurements from Pientere Tuinen API
+    /// Loads measurements from Pientere Tuinen API, paging until all new data is fetched.
     /// - Parameters:
     ///   - context: Context to store the measurements in
     ///   - page: Page to start parsing
-    ///   - loadAll: Should the parser load all or just the 1st page
-    func updateTuinData(context: NSManagedObjectContext, page: Int = 0, loadAll: Bool = false, garden: Garden, isRetry: Bool = false) async throws {
+    func updateTuinData(context: NSManagedObjectContext, page: Int = 0, garden: Garden, isRetry: Bool = false) async throws {
         debugPrint("Requesting page \(page)")
         guard garden.apiKey != nil else {
             debugPrint("Warning, API key empty")
@@ -54,26 +53,24 @@ class ApiHandler {
                 case .json(let json):
                     debugPrint(json.content)
                     debugPrint(json.totalPages)
+
+                    // Check BEFORE writing: how many items on this page are not yet in Core Data?
+                    // Stop only when the entire page is already known — this handles gaps correctly,
+                    // since a partial match means there's still new data to fetch.
+                    let pageDates = json.content?.compactMap { $0.measuredAt } ?? []
+                    let newItemCount = pageDates.count - countExistingMeasurements(for: pageDates, in: context)
+
                     writeToCoreData(apiData: json.content, context: context, garden: garden)
-                    
-                    // Check if there are more pages to parse.
-                    // Continue if loading all data, or if there's a gap (oldest measurement on this page isn't stored yet).
-                    let oldestDateOnPage = json.content?.compactMap { $0.measuredAt }.min()
-                    let alreadyHaveOldest = if let oldest = oldestDateOnPage {
-                        measurementExists(for: oldest, in: context)
-                    } else {
-                        true // no data = nothing to catch up on
-                    }
-                    let shouldContinuePaging = (loadAll || !alreadyHaveOldest)
-                        && json.content?.count ?? 0 > 0
-                        && !(json.last ?? true)
+
+                    let shouldContinuePaging = newItemCount > 0
+                        && !(json.last ?? false)
 
                     if shouldContinuePaging {
                         Task {
                             let interval = apiRequestInterval + 1 // API has 10 seconds rate limit
                             debugPrint("Scheduling next parse for page \(page+1) in \(interval) seconds")
                             try await Task.sleep(for: .seconds(interval)) // API has 10 seconds rate limit
-                            try await updateTuinData(context: context, page: page+1, loadAll: loadAll, garden: garden)
+                            try await updateTuinData(context: context, page: page+1, garden: garden)
                         }
                     }
                     // Only when new data?
@@ -164,15 +161,14 @@ class ApiHandler {
         }
     }
     
-    private func measurementExists(for date: Date, in context: NSManagedObjectContext) -> Bool {
-        var exists = false
+    private func countExistingMeasurements(for dates: [Date], in context: NSManagedObjectContext) -> Int {
+        var count = 0
         context.performAndWait {
             let fetchRequest = MeasurementProjection.fetchRequest()
-            fetchRequest.predicate = NSPredicate(format: "measuredAt == %@", date as NSDate)
-            fetchRequest.fetchLimit = 1
-            exists = (try? context.count(for: fetchRequest)) ?? 0 > 0
+            fetchRequest.predicate = NSPredicate(format: "measuredAt IN %@", dates as [NSDate])
+            count = (try? context.count(for: fetchRequest)) ?? 0
         }
-        return exists
+        return count
     }
 
     private func resetWidgets() {

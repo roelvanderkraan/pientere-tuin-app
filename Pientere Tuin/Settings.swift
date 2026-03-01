@@ -65,7 +65,7 @@ struct Settings: View {
                 Section {
                     Button {
                         Task {
-                            try? await ApiHandler.shared.updateTuinData(context: viewContext, loadAll: true, garden: garden)
+                            try? await ApiHandler.shared.updateTuinData(context: viewContext, garden: garden)
                         }
                         isPresented.toggle()
                         SimpleAnalytics.shared.track(event: "update-data", path: ["settings"])

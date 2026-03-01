@@ -133,7 +133,7 @@ struct LaunchView: View {
         }
         Task {
             do {
-                try await ApiHandler.shared.updateTuinData(context: viewContext, loadAll: true, garden: garden)
+                try await ApiHandler.shared.updateTuinData(context: viewContext, garden: garden)
                 isValidating = false
                 dismiss()
             } catch APIError.notAuthorized {

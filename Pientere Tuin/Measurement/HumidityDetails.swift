@@ -10,11 +10,12 @@ import SimpleAnalytics
 
 struct HumidityDetails: View {
     @Environment(\.managedObjectContext) private var viewContext
-        
+    @StateObject private var chartModel = ChartModel(chartType: .moisture)
+
     var body: some View {
         List {
             Section {
-                MesurementChart(chartModel: ChartModel(chartType: .moisture))
+                MesurementChart(chartModel: chartModel)
                 .environment(\.managedObjectContext, viewContext)
                 .frame(idealHeight: 400)
             }
