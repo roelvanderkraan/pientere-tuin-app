@@ -60,31 +60,18 @@ struct WidgetEntryView : View {
     @Environment(\.widgetFamily) var family
 
     var body: some View {
-        if #available(iOS 17.0, *) {
-            switch family {
-            case .accessoryCircular:
-                accessoryWidget
-            case .accessoryInline:
-                inlineWidget
-            case .accessoryRectangular:
-                accessoryRectangularWidget
-            default:
-                ios17Widget
-            }
-        } else {
-            ios16Widget
+        switch family {
+        case .accessoryCircular:
+            accessoryWidget
+        case .accessoryInline:
+            inlineWidget
+        case .accessoryRectangular:
+            accessoryRectangularWidget
+        default:
+            ios17Widget
         }
     }
-    
-    var ios16Widget: some View {
-        HStack {
-            baseWidget
-            .padding()
-            Spacer()
-        }
-    }
-    
-    @available(iOSApplicationExtension 17.0, *)
+
     var ios17Widget: some View {
         HStack {
             baseWidget
@@ -118,7 +105,6 @@ struct WidgetEntryView : View {
         }
     }
     
-    @available(iOSApplicationExtension 17.0, *)
     var accessoryWidget: some View {
         Gauge(value: entry.lastHumidity, in: 0...1) {
             Image(systemName: "drop.fill")
@@ -132,7 +118,6 @@ struct WidgetEntryView : View {
         }
     }
     
-    @available(iOSApplicationExtension 17.0, *)
     var inlineWidget: some View {
         Label("\(entry.lastHumidity * 100, specifier: "%.1f")%", systemImage: "drop.fill")
             .contentTransition(.numericText())
@@ -140,7 +125,6 @@ struct WidgetEntryView : View {
         }
     }
     
-    @available(iOSApplicationExtension 17.0, *)
     var accessoryRectangularWidget: some View {
         Gauge(value: entry.lastHumidity, in: 0...1) {
             Image(systemName: "drop.fill")
