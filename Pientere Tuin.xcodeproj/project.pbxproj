@@ -30,7 +30,6 @@
 		8A687C122A93AF3B00AD1285 /* MeasurementAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A687C112A93AF3B00AD1285 /* MeasurementAnnotation.swift */; };
 		8A6D65512A8D5E9B00B9E2CB /* HumidityState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A6D65502A8D5E9B00B9E2CB /* HumidityState.swift */; };
 		8A7A410E2C35BD8300A5CF8E /* SimpleAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 8A7A410D2C35BD8300A5CF8E /* SimpleAnalytics */; };
-		8A8061972F54A08E001C1521 /* PerformanceMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A8061962F54A08E001C1521 /* PerformanceMonitor.swift */; };
 		8A8061B12F54AB16001C1521 /* NotificationHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A8061B02F54AB16001C1521 /* NotificationHandler.swift */; };
 		8A821ED92A8E27A1009A4656 /* Preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A821ED82A8E27A1009A4656 /* Preferences.swift */; };
 		8A82BA4C2A8E65430039B1B7 /* Pientere_Tuin.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 8AFCA4352A83FA4B00D4B6C8 /* Pientere_Tuin.xcdatamodeld */; };
@@ -135,7 +134,6 @@
 		8A687C112A93AF3B00AD1285 /* MeasurementAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeasurementAnnotation.swift; sourceTree = "<group>"; };
 		8A68FD272A8662E600DF6F56 /* Pientere_Tuin 3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Pientere_Tuin 3.xcdatamodel"; sourceTree = "<group>"; };
 		8A6D65502A8D5E9B00B9E2CB /* HumidityState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HumidityState.swift; sourceTree = "<group>"; };
-		8A8061962F54A08E001C1521 /* PerformanceMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PerformanceMonitor.swift; sourceTree = "<group>"; };
 		8A8061B02F54AB16001C1521 /* NotificationHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationHandler.swift; sourceTree = "<group>"; };
 		8A821ED82A8E27A1009A4656 /* Preferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Preferences.swift; sourceTree = "<group>"; };
 		8A82BA562A8E6DB00039B1B7 /* WidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = WidgetExtension.entitlements; sourceTree = "<group>"; };
@@ -250,14 +248,6 @@
 				8AFAC2F42C7256E3007D4226 /* WeatherAttributionView.swift */,
 			);
 			path = Weather;
-			sourceTree = "<group>";
-		};
-		8A8061942F54A087001C1521 /* Debug */ = {
-			isa = PBXGroup;
-			children = (
-				8A8061962F54A08E001C1521 /* PerformanceMonitor.swift */,
-			);
-			path = Debug;
 			sourceTree = "<group>";
 		};
 		8A8061A82F54AB16001C1521 /* Notifications */ = {
@@ -386,7 +376,6 @@
 				8AFCA43A2A83FA4C00D4B6C8 /* Assets.xcassets */,
 				8AFCA43C2A83FA4C00D4B6C8 /* Pientere_Tuin.entitlements */,
 				8AFCA43D2A83FA4C00D4B6C8 /* Preview Content */,
-				8A8061942F54A087001C1521 /* Debug */,
 			);
 			path = "Pientere Tuin";
 			sourceTree = "<group>";
@@ -608,7 +597,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				8AFCA4322A83FA4B00D4B6C8 /* Pientere_TuinApp.swift in Sources */,
-				8A8061972F54A08E001C1521 /* PerformanceMonitor.swift in Sources */,
 				8A8061B12F54AB16001C1521 /* NotificationHandler.swift in Sources */,
 				8A6842D62A8CEDB800B4B9A7 /* Formatters.swift in Sources */,
 				8A138FD92A8B945C003247BA /* LaunchView.swift in Sources */,

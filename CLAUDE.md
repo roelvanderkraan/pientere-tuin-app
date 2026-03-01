@@ -33,7 +33,7 @@ API (OpenAPI client) → `ApiHandler` writes to Core Data → SwiftUI views use 
 
 - **`Model/`** - Core Data stack (`Persistence.swift`) uses app group container `group.studio.skipper.Pientere-Tuin` for shared access with the widget. Data model is `Pientere_Tuin.xcdatamodeld` (version 4) with two entities: `Garden` (API key, name) and `MeasurementProjection` (sensor readings). `GardenStore` and `MeasurementStore` provide fetch/query helpers.
 
-- **`Measurement/`** - Chart views and data processing. `ChartModel` transforms `SectionedFetchResults` into `ChartableMeasurement` arrays at different aggregation levels: hourly (day/week scale), daily averages (month scale), monthly averages (year scale). `MesurementChart.swift` (note: typo in filename) is the main chart view, decomposed into sub-views `ChartContent`, `ChartAverageHeader`, and view modifiers `ChartVisibleDomainModifier` and `ChartXAxisModifier`.
+- **`Measurement/`** - Chart views and data processing. `ChartModel` transforms `SectionedFetchResults` into `ChartableMeasurement` arrays at different aggregation levels: hourly (day/week scale), daily averages (month scale), monthly averages (year scale). `MesurementChart.swift` (note: typo in filename) is the main chart view, decomposed into sub-views `ChartContent`, `ChartAverageHeader`, and view modifiers `ChartVisibleDomainModifier` and `ChartXAxisModifier`. All scroll-driven state lives in `ChartContent` (not the parent) — `MesurementChart` communicates scale-reset via a `scrollToLatestTrigger: Int` counter and progressive-load via `onScrolledNearOldest` closure.
 
 - **`Garden/`** - Garden setup and API key validation (`LaunchView`).
 
@@ -90,9 +90,13 @@ Soil types: sand, lightClay, zavel, gardenSoil, pottingSoil (mapped to API raw v
 
 Xcode Cloud with `ci_scripts/ci_post_clone.sh` that disables OpenAPI plugin fingerprint validation for cloud builds.
 
+### Chart Performance Known Issue
+
+Day scale (`ChartScale.day`) is intentionally hidden from the picker — ~1246 data points cause `ChartContent.body` to re-render at ~2fps during scroll (SwiftUI re-runs `body` on every `@State chartScrolledToDate` change). All day scale code is intact; restore `Text("Dag").tag(ChartScale.day)` in `chartScalePicker` to re-enable. The `Debug/` folder (untracked) contains `BodyRateTracker` and `DebugOverlay` for performance instrumentation.
+
 ## Notes
 
 - UI text is in Dutch (e.g., "Vandaag", "Morgen", "vochtigheid bodem")
-- The app targets iOS 16+ with conditional iOS 17 features
+- The app targets iOS 16+ generally, but `MesurementChart` requires iOS 18+ (`LinePlot`/`PointPlot` are unconditional after removing the iOS 16/17 fallback)
 - Widget reloads are triggered after successful API data fetches via `WidgetCenter`
 - Preview data uses in-memory Core Data store (`PersistenceController.preview`)
