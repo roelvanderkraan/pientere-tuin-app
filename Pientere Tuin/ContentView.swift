@@ -90,7 +90,7 @@ struct ContentView: View {
             }
             .sheet(isPresented: $isAddingGarden) {
                 Task {
-                    try? await ApiHandler.shared.updateTuinData(context: viewContext, loadAll: true, garden: garden)
+                    try? await ApiHandler.shared.updateTuinData(context: viewContext, garden: garden)
                 }
             } content: {
                 LaunchView(garden: garden, isPresented: $isAddingGarden)
