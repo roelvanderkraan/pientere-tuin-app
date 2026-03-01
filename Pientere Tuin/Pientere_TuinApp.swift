@@ -59,6 +59,7 @@ struct Pientere_TuinApp: App {
         let garden = GardenStore.getGarden(in: viewContext)
         if garden.apiKey != nil {
             try? await ApiHandler.shared.updateTuinData(context: viewContext, garden: garden)
+            await NotificationHandler.shared.evaluateAndNotify(context: viewContext)
         }
     }
     

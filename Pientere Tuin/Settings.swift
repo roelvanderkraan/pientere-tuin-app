@@ -13,7 +13,8 @@ struct Settings: View {
     @ObservedObject var garden: Garden
     @Binding var isPresented: Bool
     @State var isDeletingAll: Bool = false
-    
+    @ObservedObject private var preferences = Preferences.shared
+
     @Environment(\.managedObjectContext) private var viewContext
     
     var body: some View {
@@ -41,6 +42,27 @@ struct Settings: View {
                     Link(destination: URL(string: "https://portal.goodcitysense.nl/pientere-tuinen")!) {
                         Label("Bewerk tuininformatie", systemImage: "safari")
                     }
+                }
+                Section {
+                    Toggle(isOn: $preferences.notificationsEnabled) {
+                        Label("Watergeefmeldingen", systemImage: "drop.circle")
+                    }
+                    .onChange(of: preferences.notificationsEnabled) { enabled in
+                        if enabled {
+                            Task { await NotificationHandler.shared.requestAuthorization() }
+                        }
+                    }
+                    if preferences.notificationsEnabled {
+                        Picker("Maximaal één melding per", selection: $preferences.notificationCooldownDays) {
+                            Text("dag").tag(1)
+                            Text("3 dagen").tag(3)
+                            Text("week").tag(7)
+                        }
+                    }
+                } header: {
+                    Text("Meldingen")
+                } footer: {
+                    Text("Ontvang een melding als de bodem te droog is.")
                 }
                 Section {
                     Link(destination: URL(string: "https://goeieplantjes.nl")!) {
