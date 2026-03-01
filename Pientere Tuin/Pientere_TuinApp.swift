@@ -35,7 +35,6 @@ struct Pientere_TuinApp: App {
             switch newPhase {
             case .background: scheduleAppRefresh()
             case .active:
-                Task { await NotificationHandler.shared.requestAuthorization() }
                 if apiTimer.isParseAllowed() {
                     Task {
                         await refreshData()
